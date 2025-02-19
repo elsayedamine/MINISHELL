@@ -34,3 +34,6 @@ go check it if u want f libft<br>
 lmochkil 2 : minishell$ ls        cat     -e<br>
 ls        cat     -e <br>
 hnaya kayn mchkil ano the spaces kaydkhlo wst lcommand<br>
+
+also 7awl tmchi l header chof dak enum o fhmo dghia dghia 7it han7tajoh
+o sir tel 3la the function (throw_error) (han7awlo nkhdmo b had l concept dial cpp 7it nadi) hia fach han7tajo had l "enums"
