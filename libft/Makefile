@@ -37,6 +37,7 @@ SOURCES = \
 		ft_strtrim.c \
 		ft_substr.c \
 		\
+		ft_init.c \
 		ft_bzero.c \
 		ft_calloc.c \
 		ft_memchr.c \
