@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
+/*   lst_addback.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 10:25:23 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/20 16:17:43 by aelsayed         ###   ########.fr       */
+/*   Created: 2025/02/16 19:20:54 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/02/16 19:30:05 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, int (*f)(char const *, ...))
+void	lst_addback(t_lst **lst, t_lst *new)
 {
-	if (lst && f)
+	t_lst	*end;
+
+	if (!lst || !new)
+		return ;
+	if (*lst == NULL)
+		*lst = new;
+	else
 	{
-		while (lst)
-		{
-			f("%s\n", (char *)lst->content);
-			lst = lst->next;
-		}
+		end = *lst;
+		while (end->next != NULL)
+			end = end->next;
+		end->next = new;
 	}
 }

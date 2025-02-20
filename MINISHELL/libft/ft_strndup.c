@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 10:25:23 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/20 16:17:43 by aelsayed         ###   ########.fr       */
+/*   Created: 2025/01/11 23:51:06 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/01/12 13:16:42 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, int (*f)(char const *, ...))
+char	*ft_strndup(char const *src, size_t n)
 {
-	if (lst && f)
+	size_t	i;
+	char	*dest;
+
+	i = 0;
+	if (!src)
+		return (NULL);
+	dest = (char *)malloc(n + 1);
+	if (!dest)
+		return (NULL);
+	while (src[i] && i < n)
 	{
-		while (lst)
-		{
-			f("%s\n", (char *)lst->content);
-			lst = lst->next;
-		}
+		dest[i] = src[i];
+		i++;
 	}
+	dest[i] = '\0';
+	return (dest);
 }

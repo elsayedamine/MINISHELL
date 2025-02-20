@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 10:25:23 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/20 16:17:43 by aelsayed         ###   ########.fr       */
+/*   Created: 2024/10/22 12:34:24 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/01/12 13:15:31 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, int (*f)(char const *, ...))
+char	*ft_strnstr(char const *str, char const *to_find, size_t len)
 {
-	if (lst && f)
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	if (to_find[i] == '\0')
+		return ((char *)str);
+	while (str[i] && i < len)
 	{
-		while (lst)
+		while (str[i] == to_find[j] && i < len)
 		{
-			f("%s\n", (char *)lst->content);
-			lst = lst->next;
+			i++;
+			j++;
+			if (to_find[j] == '\0')
+				return ((char *)&str[i - j]);
 		}
+		i = i - j;
+		i++;
+		j = 0;
 	}
+	return (NULL);
 }

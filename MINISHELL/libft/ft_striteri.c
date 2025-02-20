@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 10:25:23 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/20 16:17:43 by aelsayed         ###   ########.fr       */
+/*   Created: 2024/10/22 12:32:23 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/01/12 13:14:32 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, int (*f)(char const *, ...))
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	if (lst && f)
+	unsigned int	i;
+
+	i = 0;
+	while (s[i] != '\0')
 	{
-		while (lst)
-		{
-			f("%s\n", (char *)lst->content);
-			lst = lst->next;
-		}
+		f(i, &s[i]);
+		i++;
 	}
 }

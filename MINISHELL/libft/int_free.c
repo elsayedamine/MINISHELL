@@ -1,40 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   int_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 17:22:36 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/20 18:30:54 by aelsayed         ###   ########.fr       */
+/*   Created: 2025/01/14 05:05:42 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/01/14 05:30:31 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// function that expects only the address of an integer or a character
-void	ft_init(char *format, ...)
+static void	free1(int *s)
 {
-	va_list	args;
-	int		i;
-	int		*ptr;
-	char	*str;
+	if (s)
+	{
+		free(s);
+		s = NULL;
+	}
+}
+
+static void	free2(int **arr)
+{
+	int	i;
 
 	i = 0;
-	va_start(args, format);
-	while (format[i])
+	if (!arr)
+		return ;
+	while (arr[i])
 	{
-		if (format[i] == 'i')
-		{
-			ptr = va_arg(args, int *);
-			*ptr = 0;
-		}
-		else if (format[i] == 'c')
-		{
-			str = va_arg(args, char *);
-			*str = 0;
-		}
+		free(arr[i]);
+		arr[i] = NULL;
 		i++;
 	}
-	va_end(args);
+	free(arr);
+	arr = NULL;
+}
+
+void	*int_free(char *format, ...)
+{
+	va_list	arg;
+	int		i;
+
+	i = 0;
+	va_start(arg, format);
+	while (format[i])
+	{
+		if (format[i] == '1')
+			free1(va_arg(arg, int *));
+		if (format[i] == '2')
+			free2(va_arg(arg, int **));
+		i++;
+	}
+	va_end(arg);
+	return (NULL);
 }

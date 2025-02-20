@@ -6,11 +6,13 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/20 18:27:11 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:36:30 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// your important task to create variadic function to set the variables to 0;
 
 t_shell	g_vars;
 
@@ -44,7 +46,7 @@ void	prompt_loop(void)
 	signal(SIGINT, foo);
 	while (1)
 	{
-		ft_init("iiiiii", &g_vars.check.dquot, &g_vars.check.squot, \
+		ft_init("cccccc", &g_vars.check.dquot, &g_vars.check.squot, \
 			&g_vars.check.par, &g_vars.check.special, &g_vars.check.fpar, \
 				&g_vars.check.lpar);
 		g_vars.cmd = read_cmd(g_vars.cmd);
