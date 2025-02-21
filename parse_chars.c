@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/20 18:31:55 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:38:12 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,38 +73,20 @@ int	ft_isvalid(char c)
 	}
 	return (TRUE);
 }
-
-void	add_node(char const *s, size_t n)
-{
-	ft_lstadd_back(&g_vars.args, ft_lstnew(ft_strndup(s, n)));
-}
-
+ 
 void	fill_args(char *str)
 {
-	int		str_i;
-	int		k;
+	char	*token;
 
-	str_i = 0;
-	while (str[str_i])
+	token = ft_strtok(str, "\"\'()|&");
+	while (token)
 	{
-		if (str[str_i] && (ft_isalnum(str[str_i]) || \
-			!ft_strchr("\"\'()|&", str[str_i])))
-		{
-			k = str_i;
-			while (str[str_i] && (ft_isalnum(str[str_i]) \
-				|| !ft_strchr("\"\'()|&", str[str_i])))
-				str_i++;
-			if (str_i > k)
-				add_node(str + k, str_i - k);
-		}
-		else if (str[str_i])
-		{
-			ft_isvalid(str[str_i]);
-			add_node(&str[str_i], 1);
-			str_i++;
-		}
+		if (ft_strchr("\"\'()|&", *token))
+			ft_isvalid(*token);
+		ft_lstadd_back(&g_vars.args, ft_lstnew(token));
+		token = ft_strtok(NULL, "\"\'()|&");
 	}
-	g_vars.tmp = g_vars.args;
 	ft_check();
+	g_vars.tmp = g_vars.args;
 	ft_lstiter(g_vars.tmp, printf);
 }
