@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/20 18:26:44 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:47:36 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ typedef struct s_shell
 }				t_shell;
 
 // Parsing Functions
-void	fill_args(char *str);
+int	fill_args(char *str);
 
 #endif

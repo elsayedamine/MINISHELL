@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/21 16:42:12 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/21 23:35:59 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_type
 }			t_type;
 
 // memory functions
-void	ft_init(char *format, ...);
+void	ft_init(int count, ...);
 void	*ft_memset(void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);

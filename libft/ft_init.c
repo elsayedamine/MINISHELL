@@ -6,34 +6,25 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:22:36 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/20 18:30:54 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/21 23:36:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 // function that expects only the address of an integer or a character
-void	ft_init(char *format, ...)
+void	ft_init(int count, ...)
 {
 	va_list	args;
 	int		i;
 	int		*ptr;
-	char	*str;
 
 	i = 0;
-	va_start(args, format);
-	while (format[i])
+	va_start(args, count);
+	while (i < count)
 	{
-		if (format[i] == 'i')
-		{
-			ptr = va_arg(args, int *);
-			*ptr = 0;
-		}
-		else if (format[i] == 'c')
-		{
-			str = va_arg(args, char *);
-			*str = 0;
-		}
+		ptr = va_arg(args, int *);
+		*ptr = 0;
 		i++;
 	}
 	va_end(args);

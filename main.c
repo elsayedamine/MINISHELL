@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/20 18:27:11 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/21 23:36:11 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	prompt_loop(void)
 	signal(SIGINT, foo);
 	while (1)
 	{
-		ft_init("iiiiii", &g_vars.check.dquot, &g_vars.check.squot, \
+		ft_init(6, &g_vars.check.dquot, &g_vars.check.squot, \
 			&g_vars.check.par, &g_vars.check.special, &g_vars.check.fpar, \
 				&g_vars.check.lpar);
 		g_vars.cmd = read_cmd(g_vars.cmd);
