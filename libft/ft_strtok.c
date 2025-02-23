@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:16:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/22 00:55:02 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/23 01:25:20 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static char	*handle_redirect(char **next_token)
 		return ((*next_token) += 2, ft_strdup("<<"));
 	if (**next_token == '&' && *(*next_token + 1) == '&')
 		return ((*next_token) += 2, ft_strdup("&&"));
+	if (**next_token == '|' && *(*next_token + 1) == '|')
+		return ((*next_token) += 2, ft_strdup("||"));
 	(*next_token)++;
 	return (ft_strndup(start, 1));
 }
@@ -52,7 +54,7 @@ char	*ft_strtok(char *str, char const *delim)
 		return (NULL);
 	if (*next_token == '\'' || *next_token == '"')
 		return (handle_quotes(&next_token));
-	if (ft_strchr("<>&", *next_token))
+	if (ft_strchr("<>&|", *next_token))
 		return (handle_redirect(&next_token));
 	if (ft_strchr(delim, *next_token))
 		return (ft_strndup(next_token++, 1));

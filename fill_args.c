@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/22 00:59:02 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/02/23 01:47:18 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	throw_error(int error)
 		printf("Invalid Syntax : Something is missing \" or ' or ( or )\n");
 	if (error == CHARS)
 		printf("Invalid Character => ; or \\ or #\n");
+	g_vars.exit = 127;
 }
 
 int	ft_check(void)
