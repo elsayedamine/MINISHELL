@@ -1,7 +1,7 @@
-NAME = minishell
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-LIB_DIR = ./libft
+NAME := minishell
+CC := cc
+CFLAGS := -Wall -Wextra -Werror
+LIB_DIR := ./libft
 lib = $(LIB_DIR)/libft.a
 
 sources = \
