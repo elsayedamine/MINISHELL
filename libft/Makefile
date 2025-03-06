@@ -15,6 +15,7 @@ SOURCES = \
 		ft_isprint.c \
 		ft_tolower.c \
 		ft_toupper.c \
+		ft_iswhitespace.c \
 		\
 		ft_atoi.c \
 		ft_itoa.c \

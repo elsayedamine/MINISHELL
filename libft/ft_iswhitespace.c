@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 10:25:23 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/05 03:36:12 by ahakki           ###   ########.fr       */
+/*   Created: 2025/03/06 01:13:22 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/03/06 01:13:36 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, int (*f)(char const *, ...))
+int	ft_iswhitespace(char *str)
 {
-	if (lst && f)
+	int i;
+
+	i = 0;
+	if (str)
 	{
-		while (lst)
-		{
-			f("%s$\n", (char *)lst->content);
-			lst = lst->next;
-		}
+		while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+			i++;
+		if (str[i] == '\0')
+			return (TRUE);
 	}
+	return (FALSE);
 }

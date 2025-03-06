@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/21 23:35:59 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/06 01:14:07 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int		ft_isascii(int c);
 int		ft_isprint(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
+int		ft_iswhitespace(char *str);
 
 // file desriptor
 void	ft_putchar_fd(char c, int ft);

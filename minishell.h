@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/02/23 02:27:41 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:54:10 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 typedef enum error
 {
 	SYNTAX,
 	CHARS,
+	OP,
 	CMD_NOT_FOUND
 }			t_error;
 
@@ -46,6 +48,12 @@ typedef struct s_shell
 }				t_shell;
 
 // Parsing Functions
-int	fill_args(char *str);
+int		fill_args(void);
+int		isvalid_par(void);
+int		is_op(char *str);
+int		is_par(char *str);
+int		isvalid_quotes(void);
+void	throw_error(int error);
+
 
 #endif
