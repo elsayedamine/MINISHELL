@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/06 01:14:07 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/07 01:32:50 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <string.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <stddef.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdarg.h>
@@ -144,5 +145,10 @@ int		fd_putstr(int fd, char const *s);
 int		fd_putptr(int fd, void *s);
 int		fd_checker(int fd, int c, ...);
 int		printfd(int fd, char const *s, ...);
+// ft_printf
+int		ft_printf(const char *format, ...);
+
+//new added functions
+void	ft_swap(int *a, int *b);
 
 #endif

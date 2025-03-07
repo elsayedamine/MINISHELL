@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/06 02:14:42 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/07 00:13:39 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,5 @@ int	fill_args(void)
 	return (ft_lstiter(g_vars.tmp, printf), 0);
 }
 
-// amine shoud implement the fct that parse the peripheric of the paranthesis
+// amine shoud implement the fct that parses the peripheric of the paranthesis
 // () )(  &(&)  ()|  ()a : nooooo
