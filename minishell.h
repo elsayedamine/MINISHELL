@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/05 20:54:10 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/07 05:41:25 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ typedef enum error
 	OP,
 	CMD_NOT_FOUND
 }			t_error;
+
+typedef enum e_pipe_ends
+{
+	READ_END,
+	WRITE_END
+}	t_pipe_ends;
 
 typedef struct s_check
 {
@@ -49,7 +55,10 @@ typedef struct s_shell
 
 // Parsing Functions
 int		fill_args(void);
+int		ft_check(void);
 int		isvalid_par(void);
+int		ft_nodejoin(void);
+int		isvalid_op(void);
 int		is_op(char *str);
 int		is_par(char *str);
 int		isvalid_quotes(void);

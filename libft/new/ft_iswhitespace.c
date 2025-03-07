@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 01:13:22 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/07 00:28:42 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/07 03:18:20 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_iswhitespace(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str)

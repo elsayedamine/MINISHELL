@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 01:00:18 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/07 01:03:06 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/07 03:18:50 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_printf(const char *format, ...)
 {
-	va_list args;
+	va_list	args;
 	int		ret;
 
 	va_start(args, format);

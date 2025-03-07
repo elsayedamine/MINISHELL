@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/07 01:32:50 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/07 05:34:22 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
+	struct s_list	*child;
 }					t_list;
 
 typedef struct s_lst
