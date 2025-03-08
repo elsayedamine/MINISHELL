@@ -3,22 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/04 13:16:39 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/08 01:46:14 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_shell	g_vars;
-
-void	parse_command(void)
-{
-	g_vars.args = NULL;
-	fill_args();
-}
 
 char	*read_cmd(char *cmd)
 {
@@ -50,8 +44,15 @@ void	prompt_loop(void)
 		g_vars.cmd = read_cmd(g_vars.cmd);
 		if (!g_vars.cmd)
 			return (rl_clear_history(), exit(EXIT_SUCCESS));
-		parse_command();
+		fill_args();
 		free(g_vars.cmd);
+		g_vars.tmp = g_vars.args;
+		while (g_vars.tmp)
+		{
+			if (g_vars.tmp->arr)
+				ft_free("2", g_vars.tmp->arr);
+			g_vars.tmp = g_vars.tmp->next;
+		}
 		ft_lstclear(&g_vars.args, free);
 	}
 }

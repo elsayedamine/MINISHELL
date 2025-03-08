@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:14:18 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/07 00:28:42 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:01:47 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 int	ft_lstsize(t_list *lst)
 {
-	int	node_nbr;
+	int		node_nbr;
+	t_list	*tmp;
 
 	node_nbr = 0;
-	while (lst != NULL)
+	tmp = lst;
+	while (tmp != NULL)
 	{
 		node_nbr++;
-		lst = lst->next;
+		tmp = tmp->next;
 	}
 	return (node_nbr);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   kharba9_tatsda9.c                                  :+:      :+:    :+:   */
+/*   removequotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/03/04 13:48:43 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/08 01:00:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	count_char(char *str, char c)
 {
-	int	count = 0;
+	int (count) = 0;
 	while (*str)
 	{
 		if (*str == c)
@@ -24,51 +24,31 @@ int	count_char(char *str, char c)
 	return (count);
 }
 
-char	*removequotes(char *str, char quote)
+char	*removequotes(char *str)
 {
 	char	*result;
 
-	int (i), (j), (len);
+	int (i), (j), (c);
 	if (!str || !(*str))
 		return (NULL);
-	if (count_char(str, quote) == 0)
+	if (count_char(str, '\'') == 0 && count_char(str, '"') == 0)
 		return (str);
-	len = ft_strlen(str);
-	result = malloc(len + 1);
+	result = (char *)malloc(ft_strlen(str) + 1);
 	if (!result)
 		return (free(str), NULL);
-	ft_init(2, &i, &j);
+	ft_init(3, &i, &j, &c);
 	while (str[i])
 	{
-		if (str[i] == quote && str[i + 1] == quote)
+		if ((str[i] == '\'' || str[i] == '"') && c == 0)
+			c = str[i++];
+		else if (str[i] == c)
 		{
-			i += 2;
-			continue;
+			c = 0;
+			i++;
 		}
-		result[j++] = str[i++];
+		else
+			result[j++] = str[i++];
 	}
 	result[j] = '\0';
-	return (result);
+	return (free(str), result);
 }
-
-// char	*checkquotes(char *str, char quote)
-// {
-// 	char	*result;
-
-// 	int (i), (j), (len);
-// 	if (!str || !(*str))
-// 		return (NULL);
-// 	len = ft_strlen(str);
-// 	result = malloc(len + 1);
-// 	if (!result)
-// 		return (free(str), NULL);
-// 	while (str[i])
-// 	{
-// 		if (str[i] == quote && str[i + 1] == quote)
-// 		{
-// 			i += 2;
-// 			continue;
-// 		}
-// 		result[j++] = str[i++];
-// 	}
-// }

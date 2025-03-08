@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/07 05:41:25 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:33:43 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@ typedef enum error
 	OP,
 	CMD_NOT_FOUND
 }			t_error;
-
-typedef enum e_pipe_ends
-{
-	READ_END,
-	WRITE_END
-}	t_pipe_ends;
 
 typedef struct s_check
 {
@@ -64,5 +58,6 @@ int		is_par(char *str);
 int		isvalid_quotes(void);
 void	throw_error(int error);
 
+char	*removequotes(char *str);
 
 #endif

@@ -6,8 +6,9 @@ lib = $(LIB_DIR)/libft.a
 
 sources = \
 		main.c \
-		fill_args.c\
-		ft_isvalid.c
+		fill_args.c \
+		ft_isvalid.c \
+		removequotes.c \
 
 object = $(sources:.c=.o)
 

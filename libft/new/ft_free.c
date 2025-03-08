@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 16:02:25 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/07 00:28:42 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/08 01:16:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	free2(char **arr)
 		return ;
 	while (arr[i])
 	{
-		free(arr[i]);
+		free1(arr[i]);
 		arr[i] = NULL;
 		i++;
 	}
