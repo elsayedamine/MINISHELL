@@ -1,14 +1,16 @@
 NAME := minishell
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -g
+CFLAGS := -g #-Wall -Wextra -Werror
 LIB_DIR := ./libft
 lib = $(LIB_DIR)/libft.a
 
 sources = \
 		main.c \
-		fill_args.c \
-		ft_isvalid.c \
-		removequotes.c \
+		parsing/fill_args.c \
+		parsing/ft_isvalid.c \
+		parsing/removequotes.c \
+		parsing/ft_check.c \
+		execution/execution.c \
 
 object = $(sources:.c=.o)
 

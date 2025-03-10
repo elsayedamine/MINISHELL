@@ -6,23 +6,11 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/03/08 01:00:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:30:54 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int	count_char(char *str, char c)
-{
-	int (count) = 0;
-	while (*str)
-	{
-		if (*str == c)
-			count++;
-		str++;
-	}
-	return (count);
-}
+#include "../minishell.h"
 
 char	*removequotes(char *str)
 {
@@ -31,7 +19,7 @@ char	*removequotes(char *str)
 	int (i), (j), (c);
 	if (!str || !(*str))
 		return (NULL);
-	if (count_char(str, '\'') == 0 && count_char(str, '"') == 0)
+	if (ft_count_char(str, '\'') == 0 && ft_count_char(str, '"') == 0)
 		return (str);
 	result = (char *)malloc(ft_strlen(str) + 1);
 	if (!result)

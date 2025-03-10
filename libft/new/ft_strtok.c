@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:16:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/08 00:39:05 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:08:14 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ char	*ft_strtok(char *str, char const *delim)
 		next_token = str;
 	if (!next_token || !*next_token)
 		return (NULL);
-	if ((*next_token == '\'' || *next_token == '"') && (ft_strchr(delim, '\'') || ft_strchr(delim, '"')))
+	if ((*next_token == '\'' || *next_token == '"') && \
+		(ft_strchr(delim, '\'') || ft_strchr(delim, '"')))
 		return (handle_quotes(&next_token));
 	if (ft_strchr("<>&|", *next_token))
 		return (handle_redirect(&next_token));

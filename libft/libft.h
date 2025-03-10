@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/07 23:32:01 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:25:14 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_alloc	*ft_malloc(char *format, int len, int wd, int slen);
 // string fnctions
 size_t	ft_strlen(const char *s);
 size_t	ft_arrlen(char **arr);
+int		ft_count_char(char *str, char c);
 char	*ft_strdup(const char *src);
 char	*ft_strndup(const char *src, size_t n);
 char	*ft_strtok(char *str, char const *delim);
@@ -98,6 +99,7 @@ char	*ft_strtrim(char const *s, char const *set);
 char	**ft_split(char const *s, char b);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+char	*ft_insert_char(char *str, int index, char c);
 
 // ft_is fuctions
 int		ft_isalpha(int c);

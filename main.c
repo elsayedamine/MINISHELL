@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/08 01:46:14 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:23:52 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,21 @@ void	foo(int sig)
 	rl_redisplay();
 }
 
+void	free_args(void)
+{
+	free(g_vars.cmd);
+	g_vars.tmp = g_vars.args;
+	while (g_vars.tmp)
+	{
+		if (g_vars.tmp->arr)
+			ft_free("2", g_vars.tmp->arr);
+		g_vars.tmp = g_vars.tmp->next;
+	}
+	ft_lstclear(&g_vars.args, free);
+}
+
 void	prompt_loop(void)
 {
-	signal(SIGINT, foo);
 	while (1)
 	{
 		ft_init(6, &g_vars.check.dquot, &g_vars.check.squot, \
@@ -44,16 +56,9 @@ void	prompt_loop(void)
 		g_vars.cmd = read_cmd(g_vars.cmd);
 		if (!g_vars.cmd)
 			return (rl_clear_history(), exit(EXIT_SUCCESS));
-		fill_args();
-		free(g_vars.cmd);
-		g_vars.tmp = g_vars.args;
-		while (g_vars.tmp)
-		{
-			if (g_vars.tmp->arr)
-				ft_free("2", g_vars.tmp->arr);
-			g_vars.tmp = g_vars.tmp->next;
-		}
-		ft_lstclear(&g_vars.args, free);
+		if (fill_args())
+			execution();
+		free_args();
 	}
 }
 
@@ -61,9 +66,10 @@ int	main(int ac, char **av, char **envp)
 {
 	printf("pid = %d\n", getpid());
 	(void)av;
-	if (ac != 1)
+	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
 	g_vars.envp = envp;
+	signal(SIGINT, foo);
 	prompt_loop();
 	return (0);
 }
