@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:43:13 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/10 11:31:29 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/12 02:00:19 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,28 @@ int	is_par(char *str)
 
 int	isvalid_par(void)
 {
-	t_list (*tmp) = g_vars.args;
-	while (tmp && tmp->content)
+	g_vars.tmp = g_vars.args;
+	char (c);
+	while (g_vars.tmp)
 	{
-		if (*(char *)tmp->content == '(')
-			g_vars.check.fpar++;
-		if (*(char *)tmp->content == ')')
-			g_vars.check.lpar--;
-		tmp = tmp->next;
+		c = *(char *)g_vars.tmp->content;
+		if (c == '(')
+		{
+			g_vars.check.par++;
+			g_vars.check.lpar = '(';
+			if (g_vars.check.fpar == 0)
+				g_vars.check.fpar = '(';
+		}
+		if (c == ')')
+		{
+			g_vars.check.par--;
+			g_vars.check.lpar = ')';
+			if (g_vars.check.fpar == 0)
+				return (throw_error(SYNTAX), FALSE);
+		}
+		g_vars.tmp = g_vars.tmp->next;
 	}
-	if (g_vars.check.fpar + g_vars.check.lpar == 0)
+	if (!g_vars.check.par)
 		return (TRUE);
 	return (throw_error(SYNTAX), FALSE);
 }

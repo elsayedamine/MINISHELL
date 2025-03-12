@@ -1,6 +1,6 @@
 NAME := minishell
 CC := cc
-CFLAGS := -g #-Wall -Wextra -Werror
+CFLAGS := -g -Wall -Wextra -Werror
 LIB_DIR := ./libft
 lib = $(LIB_DIR)/libft.a
 

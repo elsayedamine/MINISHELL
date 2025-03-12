@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/10 10:23:52 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/12 04:56:50 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_shell	g_vars;
 
 char	*read_cmd(char *cmd)
 {
-	cmd = readline("\033[1;32mminishell$ \033[0m");
+	cmd = readline("\033[1;31mminishell$ \033[0m");
 	if (!cmd || !ft_strcmp("exit", cmd))
 		return (NULL);
 	if (*cmd)
