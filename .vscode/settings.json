@@ -4,6 +4,7 @@
         "minishell.h": "c",
         "fcntl.h": "c",
         "history.h": "c",
-        "pipex.h": "c"
+        "pipex.h": "c",
+        "stdbool.h": "c"
     }
 }

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/11 23:37:41 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/13 03:03:36 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
-# include "pipex/pipex.h"
+# include <sys/wait.h>
+// # include "pipex/pipex.h"
 
 typedef enum error
 {
@@ -60,7 +61,7 @@ int		is_par(char *str);
 int		isvalid_quotes(void);
 void	throw_error(int error);
 char	*removequotes(char *str);
-void	pop_spaces(t_list *lst);
+void	pop_spaces(t_list **lst);
 
 // execution Functions
 void	execution(void);
