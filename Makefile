@@ -10,7 +10,8 @@ sources = \
 		parsing/ft_isvalid.c \
 		parsing/removequotes.c \
 		parsing/ft_check.c \
-		execution/execution.c \
+		parsing/custom_split.c \
+		execution/execution.c
 
 object = $(sources:.c=.o)
 

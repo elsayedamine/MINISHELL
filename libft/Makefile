@@ -32,6 +32,7 @@ SOURCES = \
 		new/lst_size.c \
 		new/ft_count_char.c \
 		new/ft_insert_char.c \
+		new/ft_list2arr.c \
 		\
 		\
 		base/ft_isalnum.c \

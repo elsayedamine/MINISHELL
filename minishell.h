@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/13 03:03:36 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/03/13 03:29:08 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int		is_par(char *str);
 int		isvalid_quotes(void);
 void	throw_error(int error);
 char	*removequotes(char *str);
-void	pop_spaces(t_list **lst);
+// void	pop_spaces(t_list **lst);
+char	**_ft_split(char const *s, char b);
 
 // execution Functions
 void	execution(void);
