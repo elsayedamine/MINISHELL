@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/13 02:44:01 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:43:43 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	foo(int sig)
 	rl_redisplay();
 }
 
-void	free_args(void)
+void	free_args(int flag)
 {
 	free(g_vars.cmd);
 	g_vars.tmp = g_vars.args;
-	while (g_vars.tmp)
+	while (flag == 1 && g_vars.tmp)
 	{
 		if (g_vars.tmp->arr)
 			ft_free("2", g_vars.tmp->arr);
@@ -50,15 +50,19 @@ void	prompt_loop(void)
 {
 	while (1)
 	{
-		ft_init(6, &g_vars.check.dquot, &g_vars.check.squot, \
+		ft_init(7, &g_vars.check.dquot, &g_vars.check.squot, \
 			&g_vars.check.par, &g_vars.check.special, &g_vars.check.fpar, \
-				&g_vars.check.lpar);
+				&g_vars.check.lpar, &g_vars.exit);
 		g_vars.cmd = read_cmd(g_vars.cmd);
 		if (!g_vars.cmd)
 			return (rl_clear_history(), exit(EXIT_SUCCESS));
-		if (fill_args())
+		if (!fill_args())
+			free_args(0);
+		else
+		{
 			execution();
-		free_args();
+			free_args(1);
+		}
 	}
 }
 

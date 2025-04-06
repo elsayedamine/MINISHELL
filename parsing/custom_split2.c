@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_char.c                                    :+:      :+:    :+:   */
+/*   custom_split2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 07:48:29 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/03 11:57:40 by sayed            ###   ########.fr       */
+/*   Created: 2025/04/03 13:45:32 by sayed             #+#    #+#             */
+/*   Updated: 2025/04/03 14:37:57 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../minishell.h"
 
-int	ft_count_char(char *str, char c)
+char	**_split(char *str, char c)
 {
-	int	count;
+	t_list	*head;
+	int		i;
+	int		j;
+	int		q;
 
-	count = 0;
-	while (*str)
+	ft_inti(3, &i, &j, &q);
+	while (str[i] == c)
+		i++;
+	while (str[i])
 	{
-		if (*str == c)
-			count++;
-		str++;
+		ft_lstadd_back(&head, ft_lstnew(ft_strndup(&str[i], )));
+		if ((str[i] == '"' || str[i] == '\''))
+			q = str[i] * (!q);
+		while (str[i] != c)
+		{
+			
+		}
+		while (str[i] == c && !q)
+			i++;
 	}
-	if (c == 0 && !*str)
-		return (1);
-	return (count);
 }

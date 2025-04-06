@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   custom_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 03:26:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/13 03:48:39 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:59:16 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,18 @@ static int	_words(char const *s, char b)
 	ft_init(3, &cnt, &i, &q);
 	while (s[i])
 	{
-		while (s[i] == b && !q)
+		while (s[i] == b)
 			i++;
-		if (s[i] == '"' || s[i] == '\'')
-			q = s[i];
-		if (s[i] && s[i] != b)
+		if (!s[i])
+			break;
+		cnt++;
+		while (s[i] && (s[i] != b || q))
 		{
-			cnt++;
-			while (s[i] && (s[i] != b || q))
-			{
-				if (s[i] == q)
-					q = 0;
-				i++;
-			}
+			if (!q && (s[i] == '"' || s[i] == '\''))
+				q = s[i];
+			else if (q && s[i] == q)
+				q = 0;
+			i++;
 		}
 	}
 	return (cnt);
@@ -40,25 +39,28 @@ static int	_allocator(char const *s, int row, char b)
 {
 	int (len), (i), (q);
 	ft_init(3, &len, &i, &q);
-	while (s[i] == b && !q)
+	while (s[i] == b)
 		i++;
 	while (row--)
 	{
 		while (s[i] && (s[i] != b || q))
 		{
-			if (s[i] == '"' || s[i] == '\'')
+			if (!q && (s[i] == '"' || s[i] == '\''))
 				q = s[i];
+			else if (q && s[i] == q)
+				q = 0;
 			i++;
 		}
-		while (s[i] == b && !q)
+		while (s[i] == b)
 			i++;
 	}
 	while (s[i] && (s[i] != b || q))
 	{
-		if (s[i] == '"' || s[i] == '\'')
+		len++;
+		if (!q && (s[i] == '"' || s[i] == '\''))
+			q = s[i];
+		else if (q && s[i] == q)
 			q = 0;
-		else
-			len++;
 		i++;
 	}
 	return (len + 1);
@@ -68,25 +70,28 @@ static char	*_stricpy(char *dest, char const *src, char b, int index)
 {
 	int (j), (i), (q);
 	ft_init(3, &j, &i, &q);
-	while (src[j] == b && !q)
+	while (src[j] == b)
 		j++;
 	while (index--)
 	{
 		while (src[j] && (src[j] != b || q))
 		{
-			if (src[j] == '"' || src[j] == '\'')
+			if (!q && (src[j] == '"' || src[j] == '\''))
 				q = src[j];
+			else if (q && src[j] == q)
+				q = 0;
 			j++;
 		}
-		while (src[j] == b && !q)
+		while (src[j] == b)
 			j++;
 	}
 	while (src[j] && (src[j] != b || q))
 	{
-		if (src[j] == '"' || src[j] == '\'')
+		dest[i++] = src[j];
+		if (!q && (src[j] == '"' || src[j] == '\''))
+			q = src[j];
+		else if (q && src[j] == q)
 			q = 0;
-		else
-			dest[i++] = src[j];
 		j++;
 	}
 	dest[i] = '\0';

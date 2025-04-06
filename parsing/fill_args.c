@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/13 03:54:38 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:51:47 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ extern t_shell	g_vars;
 
 void	throw_error(int error)
 {
+	if (g_vars.exit != 0)
+		return ;
 	if (error == SYNTAX)
 		printfd(2, "Invalid Syntax : Something is missing \" or ' or ( or )\n");
 	if (error == OP)
@@ -72,14 +74,16 @@ void	split_cmds_args(void)
 	while (g_vars.tmp)
 	{
 		g_vars.tmp->arr = _ft_split(g_vars.tmp->content, ' ');
+		if (!g_vars.tmp->arr)
+			return ;
 		int (i) = 0;
-		print_array(g_vars.tmp->arr);
+		// print_array(g_vars.tmp->arr);
 		while (g_vars.tmp->arr[i])
 		{
 			g_vars.tmp->arr[i] = removequotes(g_vars.tmp->arr[i]);
 			i++;
 		}
-		print_array(g_vars.tmp->arr);
+		// print_array(g_vars.tmp->arr);
 		g_vars.tmp = g_vars.tmp->next;
 	}
 }
@@ -93,17 +97,17 @@ int	fill_args(void)
 	token = ft_strtok(g_vars.cmd, "'\"()|&><");
 	while (token)
 	{
-		if (!ft_iswhitespace(token))
-		{
+		// if (!ft_iswhitespace(token))
+		// {
 			ft_lstadd_back(&g_vars.args, ft_lstnew(token));
 			g_vars.args->arr = NULL;
-		}
+		// }
 		token = ft_strtok(NULL, "'\"()|&><");
 	}
 	if (!ft_check())
 		return (FALSE);
-	g_vars.tmp = g_vars.args;
-	ft_lstiter(g_vars.tmp, printf);
+	// g_vars.tmp = g_vars.args;
+	// ft_lstiter(g_vars.tmp, printf);
 	split_cmds_args();
 	return (TRUE);
 }
@@ -112,3 +116,4 @@ int	fill_args(void)
 // () )(  &(&)  ()|  ()a : nooooo
 // >> << ()
 //  (ls )(cat -e M)
+// (< Makefile cat | ls > p) should worrrrrk
