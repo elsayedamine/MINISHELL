@@ -6,13 +6,13 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 16:23:06 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:25:07 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_shell g_vars;
+t_shell	g_vars;
 
 char	*read_cmd(char *cmd)
 {

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 16:21:30 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:30:48 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,11 @@ void	split_cmds_args(t_shell *vars)
 		if (!vars->tmp->arr)
 			return ;
 		i = 0;
-		// print_array(vars->tmp->arr);
 		while (vars->tmp->arr[i])
 		{
 			vars->tmp->arr[i] = removequotes(vars->tmp->arr[i]);
 			i++;
 		}
-		// print_array(vars->tmp->arr);
 		vars->tmp = vars->tmp->next;
 	}
 }
@@ -89,8 +87,6 @@ int	fill_args(t_shell *vars)
 	{
 		ft_lstadd_back(&vars->args, ft_lstnew(token));
 		vars->args->arr = NULL;
-		// if (!ft_iswhitespace(token))
-		// 	ft_lstadd_back(&vars->_args, ft_lstnew(token));
 		token = ft_strtok(NULL, "'\"()|&><");
 	}
 	if (!ft_check(vars))

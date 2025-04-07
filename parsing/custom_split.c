@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   custom_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 03:26:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/15 01:19:20 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/07 16:27:36 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	_words(char const *s, char b)
 		while (s[i] == b)
 			i++;
 		if (!s[i])
-			break;
+			break ;
 		cnt++;
 		while (s[i] && (s[i] != b || q))
 		{

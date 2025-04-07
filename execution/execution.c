@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 16:16:28 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:27:06 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	execution(t_shell *vars)
 	vars->tmp = vars->args;
 	while (vars->tmp)
 	{
-		if (!is_op((char *)vars->tmp->content) && !is_par((char *)vars->tmp->content) && !ft_iswhitespace((char *)vars->tmp->content))
+		if (!is_op(vars->tmp->content) && !is_par(vars->tmp->content) \
+			&& !ft_iswhitespace(vars->tmp->content))
 		{
 			cmd_path = get_path(vars->envp, vars->tmp->arr[0]);
 			if (!cmd_path)
@@ -71,10 +72,8 @@ void	execution(t_shell *vars)
 			}
 			pid_t (pid) = fork();
 			if (pid == 0)
-			{
 				if (execve(cmd_path, vars->tmp->arr, vars->envp) == -1)
 					ft_free("1", cmd_path);
-			}
 			else
 				wait(NULL);
 			free(cmd_path);

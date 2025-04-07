@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 16:02:25 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/14 01:26:09 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/07 16:24:47 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	free2(char **arr)
 	int	i;
 
 	i = 0;
-
 	if (!arr)
 		return ;
 	while (arr[i])
