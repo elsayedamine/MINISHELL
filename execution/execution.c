@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 17:20:03 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:20:23 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	execution(t_shell *vars)
 	char	*cmd_path;
 
 	vars->tmp = vars->args;
-	while (vars->tmp)
+	while (vars->tmp && vars->tmp->content)
 	{
 		if (!is_op(vars->tmp->content) && !is_par(vars->tmp->content) \
 			&& !ft_iswhitespace(vars->tmp->content))

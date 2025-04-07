@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 17:52:21 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:21:43 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,13 @@ int	fill_args(t_shell *vars)
 	token = ft_strtok(vars->cmd, "'\"()|&><");
 	while (token)
 	{
-		printf("%s", "Asddasdsadadad\n");
+		vars->args = ft_lstnew(NULL);
 		ft_lstadd_back(&vars->args, ft_lstnew(token));
 		vars->args->arr = NULL;
 		token = ft_strtok(NULL, "'\"()|&><");
 	}
-	printf("%s", "Asddasasdasdsdsadsdasadsadadad\n");
 	if (!ft_check(vars))
-	return (FALSE);
+		return (FALSE);
 	split_cmds_args(vars);
 	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:43:13 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 16:15:11 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:31:20 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	isvalid_par(t_shell *vars)
 	char	c;
 
 	vars->tmp = vars->args;
-	while (vars->tmp)
+	while (vars->tmp && vars->tmp->content)
 	{
 		c = *(char *)vars->tmp->content;
 		if (c == '(')
@@ -112,9 +112,7 @@ int	isvalid_op(t_shell *vars)
 			if (is_op((char *)tmp->content) && tmp->next && \
 				is_op((char *)tmp->next->content))
 				return (throw_error(OP), FALSE);
-			if (is_op((char *)tmp->content) && tmp->next && \
-				ft_iswhitespace((char *)tmp->next->content) && \
-					tmp->next->next && is_op((char *)tmp->next->next->content))
+			if (is_op((char *)tmp->content) && tmp->next && ft_iswhitespace((char *)tmp->next->content) && ((tmp->next->next && is_op((char *)tmp->next->next->content)) || !(tmp->next->next)))
 				return (throw_error(OP), FALSE);
 			if (is_op((char *)tmp->content) && !tmp->next)
 				return (throw_error(OP), FALSE);
