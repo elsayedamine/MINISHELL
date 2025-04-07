@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 18:33:04 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/07 19:35:17 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	ft_check(t_shell *vars)
 
 	valid = 0;
 	valid += isvalid_quotes(vars);
-	ft_lstiter(vars->args, printf);
 	valid += isvalid_op(vars);
 	valid += isvalid_syntax(vars);
 	valid += isvalid_par(vars);

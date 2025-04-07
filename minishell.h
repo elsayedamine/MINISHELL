@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 16:22:00 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:28:38 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ char	**_ft_split(char const *s, char b);
 
 // execution Functions
 void	execution(t_shell *vars);
-
+void	print_array(char **arr);
 #endif
