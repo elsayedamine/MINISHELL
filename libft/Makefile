@@ -4,13 +4,13 @@ AR = ar rcs
 RM = rm -rf
 NAME = libft.a
 SOURCES = \
-		printfd/fd_numbers.c \
-		printfd/fd_pointers.c \
-		printfd/printfd.c \
-		printfd/ft_printf.c \
+		2.printfd/fd_numbers.c \
+		2.printfd/fd_pointers.c \
+		2.printfd/printfd.c \
+		2.printfd/ft_printf.c \
 		\
 		\
-		get_next_line/get_next_line.c \
+		3.get_next_line/get_next_line.c \
 		\
 		\
 		new/ft_iswhitespace.c \
@@ -33,51 +33,52 @@ SOURCES = \
 		new/ft_count_char.c \
 		new/ft_insert_char.c \
 		new/ft_list2arr.c \
+		new/ft_strinsert.c \
 		\
 		\
-		base/ft_isalnum.c \
-		base/ft_isalpha.c \
-		base/ft_isascii.c \
-		base/ft_isdigit.c \
-		base/ft_isprint.c \
-		base/ft_tolower.c \
-		base/ft_toupper.c \
-		base/ft_atoi.c \
-		base/ft_itoa.c \
-		base/ft_split.c \
-		base/ft_strchr.c \
-		base/ft_strdup.c \
-		base/ft_striteri.c \
-		base/ft_strjoin.c \
-		base/ft_strlcat.c \
-		base/ft_strlcpy.c \
-		base/ft_strlen.c \
-		base/ft_strmapi.c \
-		base/ft_strncmp.c \
-		base/ft_strnstr.c \
-		base/ft_strrchr.c \
-		base/ft_strtrim.c \
-		base/ft_substr.c \
-		base/ft_bzero.c \
-		base/ft_calloc.c \
-		base/ft_memchr.c \
-		base/ft_memcmp.c \
-		base/ft_memcpy.c \
-		base/ft_memmove.c \
-		base/ft_memset.c \
-		base/ft_putchar_fd.c \
-		base/ft_putendl_fd.c \
-		base/ft_putnbr_fd.c \
-		base/ft_putstr_fd.c \
-		base/ft_lstadd_back_bonus.c \
-		base/ft_lstadd_front_bonus.c \
-		base/ft_lstclear_bonus.c \
-		base/ft_lstdelone_bonus.c \
-		base/ft_lstiter_bonus.c \
-		base/ft_lstlast_bonus.c \
-		base/ft_lstmap_bonus.c \
-		base/ft_lstnew_bonus.c \
-		base/ft_lstsize_bonus.c \
+		1.base/ft_isalnum.c \
+		1.base/ft_isalpha.c \
+		1.base/ft_isascii.c \
+		1.base/ft_isdigit.c \
+		1.base/ft_isprint.c \
+		1.base/ft_tolower.c \
+		1.base/ft_toupper.c \
+		1.base/ft_atoi.c \
+		1.base/ft_itoa.c \
+		1.base/ft_split.c \
+		1.base/ft_strchr.c \
+		1.base/ft_strdup.c \
+		1.base/ft_striteri.c \
+		1.base/ft_strjoin.c \
+		1.base/ft_strlcat.c \
+		1.base/ft_strlcpy.c \
+		1.base/ft_strlen.c \
+		1.base/ft_strmapi.c \
+		1.base/ft_strncmp.c \
+		1.base/ft_strnstr.c \
+		1.base/ft_strrchr.c \
+		1.base/ft_strtrim.c \
+		1.base/ft_substr.c \
+		1.base/ft_bzero.c \
+		1.base/ft_calloc.c \
+		1.base/ft_memchr.c \
+		1.base/ft_memcmp.c \
+		1.base/ft_memcpy.c \
+		1.base/ft_memmove.c \
+		1.base/ft_memset.c \
+		1.base/ft_putchar_fd.c \
+		1.base/ft_putendl_fd.c \
+		1.base/ft_putnbr_fd.c \
+		1.base/ft_putstr_fd.c \
+		1.base/ft_lstadd_back_bonus.c \
+		1.base/ft_lstadd_front_bonus.c \
+		1.base/ft_lstclear_bonus.c \
+		1.base/ft_lstdelone_bonus.c \
+		1.base/ft_lstiter_bonus.c \
+		1.base/ft_lstlast_bonus.c \
+		1.base/ft_lstmap_bonus.c \
+		1.base/ft_lstnew_bonus.c \
+		1.base/ft_lstsize_bonus.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 

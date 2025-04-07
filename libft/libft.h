@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/13 03:34:19 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:52:05 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ char	**ft_split(char const *s, char b);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_insert_char(char *str, int index, char c);
+char	*ft_strinsert(char *base, char *insert, int index);
 
 // ft_is fuctions
 int		ft_isalpha(int c);

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 16:27:06 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:20:03 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ void	execution(t_shell *vars)
 			}
 			pid_t (pid) = fork();
 			if (pid == 0)
+			{
 				if (execve(cmd_path, vars->tmp->arr, vars->envp) == -1)
 					ft_free("1", cmd_path);
+			}
 			else
 				wait(NULL);
 			free(cmd_path);
