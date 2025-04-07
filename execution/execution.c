@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/14 01:23:57 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/07 16:16:28 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,27 +54,31 @@ char	*get_path(char **envp, char *cmd)
 	return (throw_error(CMD_NOT_FOUND), NULL);
 }
 
-void	execution(void)
+void	execution(t_shell *vars)
 {
-	char *(cmd_path);
-	g_vars.tmp = g_vars.args;
-	while (g_vars.tmp)
+	char	*cmd_path;
+
+	vars->tmp = vars->args;
+	while (vars->tmp)
 	{
-		cmd_path = get_path(g_vars.envp, g_vars.tmp->arr[0]);
-		if (!cmd_path)
+		if (!is_op((char *)vars->tmp->content) && !is_par((char *)vars->tmp->content) && !ft_iswhitespace((char *)vars->tmp->content))
 		{
-			g_vars.tmp = g_vars.tmp->next;
-			continue ;
+			cmd_path = get_path(vars->envp, vars->tmp->arr[0]);
+			if (!cmd_path)
+			{
+				vars->tmp = vars->tmp->next;
+				continue ;
+			}
+			pid_t (pid) = fork();
+			if (pid == 0)
+			{
+				if (execve(cmd_path, vars->tmp->arr, vars->envp) == -1)
+					ft_free("1", cmd_path);
+			}
+			else
+				wait(NULL);
+			free(cmd_path);
 		}
-		pid_t (pid) = fork();
-		if (pid == 0)
-		{
-			if (execve(cmd_path, g_vars.tmp->arr, g_vars.envp) == -1)
-				ft_free("1", cmd_path);
-		}
-		else
-			wait(NULL);
-		free(cmd_path);
-		g_vars.tmp = g_vars.tmp->next;
+		vars->tmp = vars->tmp->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/03 16:51:47 by sayed            ###   ########.fr       */
+/*   Updated: 2025/04/07 16:21:30 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	throw_error(int error)
 	g_vars.exit = 127;
 }
 
-int	ft_nodejoin(void)
+int	ft_nodejoin(t_shell *vars)
 {
 	char *(new_content), *(tmp_content);
-	t_list *(to_delete), *(tmp) = g_vars.args;
+	t_list *(to_delete), *(tmp) = vars->args;
 	if (tmp && is_op((char *)tmp->content))
 		return (throw_error(OP), FALSE);
 	while (tmp && tmp->next)
@@ -56,64 +56,45 @@ int	ft_nodejoin(void)
 	return (TRUE);
 }
 
-void	print_array(char **arr)
+void	split_cmds_args(t_shell *vars)
 {
-	int (i) = 0;
-	if (!arr)
-		return ;
-	while (arr[i])
-	{
-		printf("words %d : #%s#\n", i, arr[i]);
-		i++;
-	}
-}
+	int	i;
 
-void	split_cmds_args(void)
-{
-	g_vars.tmp = g_vars.args;
-	while (g_vars.tmp)
+	vars->tmp = vars->args;
+	while (vars->tmp)
 	{
-		g_vars.tmp->arr = _ft_split(g_vars.tmp->content, ' ');
-		if (!g_vars.tmp->arr)
+		vars->tmp->arr = _ft_split(vars->tmp->content, ' ');
+		if (!vars->tmp->arr)
 			return ;
-		int (i) = 0;
-		// print_array(g_vars.tmp->arr);
-		while (g_vars.tmp->arr[i])
+		i = 0;
+		// print_array(vars->tmp->arr);
+		while (vars->tmp->arr[i])
 		{
-			g_vars.tmp->arr[i] = removequotes(g_vars.tmp->arr[i]);
+			vars->tmp->arr[i] = removequotes(vars->tmp->arr[i]);
 			i++;
 		}
-		// print_array(g_vars.tmp->arr);
-		g_vars.tmp = g_vars.tmp->next;
+		// print_array(vars->tmp->arr);
+		vars->tmp = vars->tmp->next;
 	}
 }
 
-int	fill_args(void)
+int	fill_args(t_shell *vars)
 {
 	char	*token;
 
-	if (!g_vars.cmd || !*(g_vars.cmd) || ft_iswhitespace(g_vars.cmd))
+	if (!vars->cmd || !*(vars->cmd) || ft_iswhitespace(vars->cmd))
 		return (FALSE);
-	token = ft_strtok(g_vars.cmd, "'\"()|&><");
+	token = ft_strtok(vars->cmd, "'\"()|&><");
 	while (token)
 	{
+		ft_lstadd_back(&vars->args, ft_lstnew(token));
+		vars->args->arr = NULL;
 		// if (!ft_iswhitespace(token))
-		// {
-			ft_lstadd_back(&g_vars.args, ft_lstnew(token));
-			g_vars.args->arr = NULL;
-		// }
+		// 	ft_lstadd_back(&vars->_args, ft_lstnew(token));
 		token = ft_strtok(NULL, "'\"()|&><");
 	}
-	if (!ft_check())
+	if (!ft_check(vars))
 		return (FALSE);
-	// g_vars.tmp = g_vars.args;
-	// ft_lstiter(g_vars.tmp, printf);
-	split_cmds_args();
+	split_cmds_args(vars);
 	return (TRUE);
 }
-
-//we shoud implement the fct that parses the peripheric of the paranthesis
-// () )(  &(&)  ()|  ()a : nooooo
-// >> << ()
-//  (ls )(cat -e M)
-// (< Makefile cat | ls > p) should worrrrrk

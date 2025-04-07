@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:04:41 by ahakki            #+#    #+#             */
-/*   Updated: 2025/03/18 00:35:22 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/03/18 20:30:08 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ char *expand(char *str, char *var, int i)
         new[j] = str[j];
         j++;
     }
-    while (str[i] && str[i] != ' ')
-        i++;
     while (var && var[k])
     {
         new[j] = var[k];

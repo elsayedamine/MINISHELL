@@ -5,6 +5,19 @@
         "fcntl.h": "c",
         "history.h": "c",
         "pipex.h": "c",
-        "stdbool.h": "c"
-    }
+        "stdbool.h": "c",
+        "charconv": "c",
+        "chrono": "c",
+        "optional": "c",
+        "format": "c",
+        "ratio": "c",
+        "system_error": "c",
+        "array": "c",
+        "functional": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "wait.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

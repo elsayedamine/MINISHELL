@@ -6,13 +6,11 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:43:13 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/12 02:00:19 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:15:11 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-extern t_shell	g_vars;
 
 int	is_op(char *str)
 {
@@ -42,38 +40,41 @@ int	is_par(char *str)
 	return (FALSE);
 }
 
-int	isvalid_par(void)
+int	isvalid_par(t_shell *vars)
 {
-	g_vars.tmp = g_vars.args;
-	char (c);
-	while (g_vars.tmp)
+	char	c;
+
+	vars->tmp = vars->args;
+	while (vars->tmp)
 	{
-		c = *(char *)g_vars.tmp->content;
+		c = *(char *)vars->tmp->content;
 		if (c == '(')
 		{
-			g_vars.check.par++;
-			g_vars.check.lpar = '(';
-			if (g_vars.check.fpar == 0)
-				g_vars.check.fpar = '(';
+			vars->check.par++;
+			vars->check.lpar = '(';
+			if (vars->check.fpar == 0)
+				vars->check.fpar = '(';
 		}
 		if (c == ')')
 		{
-			g_vars.check.par--;
-			g_vars.check.lpar = ')';
-			if (g_vars.check.fpar == 0)
+			vars->check.par--;
+			vars->check.lpar = ')';
+			if (vars->check.fpar == 0)
 				return (throw_error(SYNTAX), FALSE);
 		}
-		g_vars.tmp = g_vars.tmp->next;
+		vars->tmp = vars->tmp->next;
 	}
-	if (!g_vars.check.par)
+	if (!vars->check.par)
 		return (TRUE);
 	return (throw_error(SYNTAX), FALSE);
 }
 
-int	isvalid_quotes(void)
+int	isvalid_quotes(t_shell *vars)
 {
-	t_list (*tmp) = g_vars.args;
-	int (len);
+	t_list	*tmp;
+	int		len;
+
+	tmp = vars->args;
 	while (tmp)
 	{
 		if (tmp->content)
@@ -95,10 +96,12 @@ int	isvalid_quotes(void)
 	return (TRUE);
 }
 
-int	isvalid_op(void)
+int	isvalid_op(t_shell *vars)
 {
-	t_list (*tmp) = g_vars.args;
-	int (len);
+	t_list	*tmp;
+	int		len;
+
+	tmp = vars->args;
 	while (tmp)
 	{
 		if (tmp->content)
@@ -112,6 +115,8 @@ int	isvalid_op(void)
 			if (is_op((char *)tmp->content) && tmp->next && \
 				ft_iswhitespace((char *)tmp->next->content) && \
 					tmp->next->next && is_op((char *)tmp->next->next->content))
+				return (throw_error(OP), FALSE);
+			if (is_op((char *)tmp->content) && !tmp->next)
 				return (throw_error(OP), FALSE);
 		}
 		tmp = tmp->next;

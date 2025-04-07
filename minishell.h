@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/03 14:59:26 by sayed            ###   ########.fr       */
+/*   Updated: 2025/04/07 16:22:00 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,27 @@ typedef struct s_shell
 	char		*cmd;
 	char		*cmd_not_found;
 	t_list		*args;
+	t_list		*_args;
 	t_list		*tmp;
 	t_check		check;
 	int			exit;
 }				t_shell;
 
 // Parsing Functions
-int		fill_args(void);
-int		ft_check(void);
-int		isvalid_par(void);
-int		ft_nodejoin(void);
-int		isvalid_op(void);
+int		fill_args(t_shell *vars);
+int		ft_check(t_shell *vars);
+int		isvalid_par(t_shell *vars);
+int		ft_nodejoin(t_shell *vars);
+int		isvalid_op(t_shell *vars);
 int		is_op(char *str);
 int		is_par(char *str);
-int		isvalid_quotes(void);
+int		isvalid_quotes(t_shell *vars);
 void	throw_error(int error);
 char	*removequotes(char *str);
 // void	pop_spaces(t_list **lst);
 char	**_ft_split(char const *s, char b);
 
 // execution Functions
-void	execution(void);
+void	execution(t_shell *vars);
 
 #endif

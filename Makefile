@@ -11,7 +11,8 @@ sources = \
 		parsing/removequotes.c \
 		parsing/ft_check.c \
 		parsing/custom_split.c \
-		execution/execution.c
+		execution/execution.c \
+		garbage_functions.c
 
 object = $(sources:.c=.o)
 
