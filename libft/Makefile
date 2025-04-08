@@ -34,6 +34,7 @@ SOURCES = \
 		new/ft_insert_char.c \
 		new/ft_list2arr.c \
 		new/ft_strinsert.c \
+		new/ft_strstr.c \
 		\
 		\
 		1.base/ft_isalnum.c \

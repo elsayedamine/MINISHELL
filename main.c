@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 18:23:05 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/08 10:06:50 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ void	prompt_loop(t_shell *vars)
 		vars->cmd = read_cmd(vars->cmd);
 		if (!vars->cmd)
 			return (rl_clear_history(), exit(EXIT_SUCCESS));
+		if (!*vars->cmd || *vars->cmd == '\n')
+		{
+			free (vars->cmd);
+			continue ;
+		}
 		if (!fill_args(vars))
 			free_args(0, vars);
 		else

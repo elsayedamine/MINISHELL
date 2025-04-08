@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 16:52:05 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/08 10:23:11 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t destsize);
 char	*ft_strchr(const char *s, int c);
 int		ft_strchr_index(const char *s, char c);
 char	*ft_strrchr(const char *s, int c);
+char	*ft_strstr(char const *str, char const *to_find);
 char	*ft_strnstr(const char *str, const char *to_find, size_t len);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strcmp(char const *s1, char const *s2);

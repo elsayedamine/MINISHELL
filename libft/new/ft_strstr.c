@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 01:13:22 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/08 09:51:50 by aelsayed         ###   ########.fr       */
+/*   Created: 2025/04/08 10:17:59 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/04/08 10:24:12 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-int	ft_iswhitespace(char *str)
+char	*ft_strstr(char const *str, char const *to_find)
 {
-	int	i;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	if (!str)
-		return (FALSE);
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+	j = 0;
+	if (!str || !to_find)
+		return (NULL);
+	if (to_find[i] == '\0')
+		return ((char *)str);
+	while (str[i])
+	{
+		while (str[i] == to_find[j])
+		{
+			i++;
+			j++;
+			if (to_find[j] == '\0')
+				return ((char *)&str[i - j]);
+		}
+		i = i - j;
 		i++;
-	if (str[i] == '\0')
-		return (TRUE);
-	return (FALSE);
+		j = 0;
+	}
+	return (NULL);
 }

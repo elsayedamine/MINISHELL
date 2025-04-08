@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 19:35:17 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/08 09:31:28 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ int	isvalid_syntax(t_shell *vars)
 
 int	ft_check(t_shell *vars)
 {
-	int	valid;
-
-	valid = 0;
-	valid += isvalid_quotes(vars);
-	valid += isvalid_op(vars);
-	valid += isvalid_syntax(vars);
-	valid += isvalid_par(vars);
-	valid += ft_nodejoin(vars);
-	if (valid != 5)
+	if (isvalid_quotes(vars) == FALSE)
+		return (FALSE);
+	if (isvalid_op(vars) == FALSE)
+		return (FALSE);
+	if (isvalid_syntax(vars) == FALSE)
+		return (FALSE);
+	if (isvalid_par(vars) == FALSE)
+		return (FALSE);
+	if (ft_nodejoin(vars) == FALSE)
 		return (FALSE);
 	return (TRUE);
 }

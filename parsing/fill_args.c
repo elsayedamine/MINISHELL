@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/07 20:36:10 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/08 10:09:40 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ extern t_shell	g_vars;
 
 void	throw_error(int error)
 {
-	if (g_vars.exit != 0)
-		return ;
 	if (error == SYNTAX)
 		printfd(2, "Invalid Syntax : Something is missing \" or ' or ( or )\n");
 	if (error == OP)
@@ -56,6 +54,29 @@ int	ft_nodejoin(t_shell *vars)
 	return (TRUE);
 }
 
+void	pop_spaces(t_shell *vars)
+{
+	t_list	*new;
+	t_list	*tmp;
+	t_list	*next;
+
+	tmp = vars->args;
+	new = NULL;
+	while (tmp)
+	{
+		next = tmp->next;
+		if (ft_iswhitespace(tmp->content) == FALSE)
+		{
+			ft_lstadd_back(&new, ft_lstnew(ft_strdup(tmp->content)));
+			new->arr = tmp->arr;
+		}
+		free(tmp->content);
+		free(tmp);
+		tmp = next;
+	}
+	vars->args = new;
+}
+
 void	split_cmds_args(t_shell *vars)
 {
 	int	i;
@@ -74,6 +95,7 @@ void	split_cmds_args(t_shell *vars)
 		}
 		vars->tmp = vars->tmp->next;
 	}
+	pop_spaces(vars);
 }
 
 int	fill_args(t_shell *vars)
