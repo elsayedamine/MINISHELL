@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   garbage_functions.c                                :+:      :+:    :+:   */
+/*   ft_putarr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:23:41 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/11 23:42:22 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:14:11 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-void	print_array(char **arr)
+void	ft_putarr(char **arr)
 {
-	int (i) = 0;
+	int	i;
+
+	i = 0;
 	if (!arr)
-		return ;
+		return ((void)printfd(1, "Null array\n"));
 	while (arr[i])
 	{
-		printf("words %d : %s\n", i, arr[i]);
+		printfd(1, "words %d : %s\n", i, arr[i]);
 		i++;
 	}
 }

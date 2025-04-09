@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_arrdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 10:25:23 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/08 17:05:42 by ahakki           ###   ########.fr       */
+/*   Created: 2025/04/08 16:35:00 by ahakki            #+#    #+#             */
+/*   Updated: 2025/04/08 16:43:16 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	ft_lstiter(t_list *lst, int (*f)(char const *, ...))
+char	**ft_arrdup(char **arr)
 {
-	if (lst && f)
+	char	**dup;
+	int		i;
+
+	i = 0;
+	if (!arr)
+		return (NULL);
+	dup = (char **)malloc(sizeof(char *) * (ft_arrlen(arr) + 1));
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (arr[i])
 	{
-		while (lst)
-		{
-			f("%s$\n", (char *)lst->content);
-			lst = lst->next;
-		}
+		dup[i] = ft_strdup(arr[i]);
+		if (!dup[i])
+			return (ft_free("2", dup), NULL);
+		i++;
 	}
+	dup[i] = NULL;
+	return (dup);
 }

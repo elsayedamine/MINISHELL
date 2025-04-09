@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/08 11:48:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/09 13:04:43 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 extern t_shell	g_vars;
 
-int	path_index(char **envp)
+int	path_index(char **envp, char *s)
 {
 	int	i;
 
 	i = 0;
 	while (envp[i])
 	{
-		if (!strncmp("PATH=", envp[i], 5))
+		if (!strncmp(s, envp[i], 5))
 			return (i);
 		i++;
 	}
@@ -36,7 +36,7 @@ char	*get_path(char **envp, char *cmd)
 	int (i);
 	if (access(cmd, X_OK) == 0)
 	return (ft_strdup(cmd));
-	paths = ft_split(envp[path_index(envp)] + 5, ':');
+	paths = ft_split(envp[path_index(envp, "PATH=")] + 5, ':');
 	if (!paths)
 	return (NULL);
 	i = 0;
@@ -60,7 +60,7 @@ void	execution(t_shell *vars)
 	char	*cmd_path;
 
 	vars->tmp = vars->args;
-	while (vars->tmp)
+	while (vars->tmp && vars->tmp->arr)
 	{
 		cmd_path = get_path(vars->envp, vars->tmp->arr[0]);
 		if (!cmd_path)

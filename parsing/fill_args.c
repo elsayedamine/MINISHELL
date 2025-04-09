@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/08 10:09:40 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:05:06 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	pop_spaces(t_shell *vars)
 	t_list	*new;
 	t_list	*tmp;
 	t_list	*next;
+	t_list	*node;
 
 	tmp = vars->args;
 	new = NULL;
@@ -67,10 +68,11 @@ void	pop_spaces(t_shell *vars)
 		next = tmp->next;
 		if (ft_iswhitespace(tmp->content) == FALSE)
 		{
-			ft_lstadd_back(&new, ft_lstnew(ft_strdup(tmp->content)));
-			new->arr = tmp->arr;
+			node = ft_lstnew(ft_strdup(tmp->content));
+			node->arr = ft_arrdup(tmp->arr);
+			ft_lstadd_back(&new, node);
 		}
-		free(tmp->content);
+		ft_free("12", tmp->content, tmp->arr);
 		free(tmp);
 		tmp = next;
 	}

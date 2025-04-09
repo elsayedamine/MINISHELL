@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/08 10:06:50 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:17:15 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@ t_shell	g_vars;
 
 char	*read_cmd(char *cmd)
 {
-	cmd = readline("\033[1;31mminishell$ \033[0m");
+	char	*trim;
+
+	trim = readline("\033[1;31mminishell$ \033[0m");
+	cmd = ft_strtrim(trim, " \t\n\v\r\f");
+	free(trim); 
 	if (!cmd || !ft_strcmp("exit", cmd))
 		return (NULL);
 	if (*cmd)
