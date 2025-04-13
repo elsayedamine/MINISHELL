@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:06:14 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/09 15:58:31 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/13 16:44:18 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@
 
 void	update_variable(char **variable, char *new_value, char *key)
 {
-	char *tmp;
 	char *joined;
 
 	free(*variable);
-	tmp = ft_strjoin(key, "=");
-	joined = ft_strjoin(tmp, new_value);
-	free(tmp);
+	joined = ft_strjoin(key, new_value);
 	*variable = joined;
 }
 
@@ -36,7 +33,7 @@ void	update_env(char **env, char *key, char* new_value)
 		return ;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0 && env[i][ft_strlen(key)] == '=')
+		if (ft_strncmp(env[i], key, ft_strlen(key)))
 			return (update_variable(&env[i], new_value, key));
 		i++;
 	}
@@ -63,34 +60,59 @@ char **dup_env(char **envp)
 	return (new_env);
 }
 
+int	cd2(char **av, char **env, char *oldpwd)
+{
+	if (av[1][0] == '-' && ft_strcmp(av[1], "--"))
+		printfd(2, "cd: %s: invalid option\n", av[1]);
+	else if(chdir(av[1]))
+	{
+		printfd(2, "cd: No such file or directory: %s\n", av[1]);
+		return (free(oldpwd), FALSE);
+	}
+	return (TRUE);
+}
+
+int	cd3(char **av, char **env, char *oldpwd)
+{
+	if (ft_strcmp(av[1], "--"))
+	{
+		printfd(2, "cd: string not in pwd: %s\n", av[1]);
+		return (free(oldpwd), FALSE);
+	}
+	if (chdir(av[2]))
+	{
+		printfd(2, "cd: No such file or directory: %s\n", av[2]);
+		return (free(oldpwd), FALSE);
+	}
+	return (TRUE);
+}
 
 int	cd(int ac, char **av, char **env)
 {
 	char	*oldpwd;
 	char	*pwd;
 	char	*home;
-	if (ac > 2)
-		return (dprintf(2, "cd: too many arguments\n"), FALSE);
+
+	if (ac > 3 || (ac == 3 && ft_strcmp(av[1], "--")))
+		return (printfd(2, "cd: too many arguments\n"), 0);
 	oldpwd = getcwd(NULL, 0);
-	if (av[1] == NULL)
+	if (ac == 1 ||(ac == 2 && !ft_strcmp(av[1], "--")))
 	{
-    	home = getenv("HOME");
+		home = getenv("HOME");
 		if (!home || chdir(home) == -1)
 		{
-			dprintf(2, "cd: HOME not set or invalid\n");
+			printfd(2, "cd: HOME not set or invalid\n");
 			return (free(oldpwd), FALSE);
 		}
 		pwd = getcwd(NULL, 0);
 	}
-	else if(chdir(av[1]))
-	{
-		dprintf(2, "cd: No such file or directory\n");
-		return (free(oldpwd), FALSE);
-	}
-	else
-		pwd = getcwd(NULL, 0);
-	update_env(env, "PWD", pwd);
-	update_env(env, "OLDPWD", oldpwd);
+	else if (ac == 3 && (!cd3(av, env, oldpwd)))
+		return (FALSE);
+	else if (ac == 2 && (!cd2(av, env, oldpwd)))
+		return (FALSE);
+	pwd = getcwd(NULL, 0);
+	update_env(env, "PWD=", pwd);
+	update_env(env, "OLDPWD=", oldpwd);
 	return (free(pwd), free(oldpwd), TRUE);
 }
 
