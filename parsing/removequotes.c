@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/03/14 00:13:25 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/12 12:05:51 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,3 +40,10 @@ char	*removequotes(char *str)
 	result[j] = '\0';
 	return (free(str), result);
 }
+// int main()
+// {
+// 	char *str = ft_strdup("hex\"llo\"");
+// 	char *s = removequotes(str);
+// 	printf("%s\n", s);
+// 	free(s);
+// }

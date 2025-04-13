@@ -17,7 +17,8 @@
         "tuple": "c",
         "type_traits": "c",
         "utility": "c",
-        "wait.h": "c"
+        "wait.h": "c",
+        "cstdlib": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:03:58 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/09 16:53:52 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/13 20:10:27 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int is_option(char *s)
+int	is_option(char *s)
 {
 	int	i;
 
@@ -28,8 +28,8 @@ int is_option(char *s)
 
 int	echo(int ac, char **av)
 {
-	int i;
-	int check;
+	int	i;
+	int	check;
 
 	check = 0;
 	i = 1;
@@ -50,8 +50,8 @@ int	echo(int ac, char **av)
 	return (TRUE);
 }
 
-int main(int ac, char **av)
-{
-	echo(ac, av);
-	return (0);
-}
+// int	main(int ac, char **av)
+// {
+// 	echo(ac, av);
+// 	return (0);
+// }
