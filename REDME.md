@@ -33,6 +33,3 @@ what i did
 	return (throw_error(CMD_NOT_FOUND), NULL);
 }```
 
-cd --asdd asdsad
-bash: cd: --: invalid option
-cd: usage: cd [-L|[-P [-e]] [-@]] [dir]

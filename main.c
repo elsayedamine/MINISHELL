@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/13 20:20:46 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:17:15 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	main(int ac, char **av, char **envp)
 	printf("pid = %d\n", getpid());
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
-	vars.envp = ft_arrdup(envp);
+	vars.envp = envp;
 	signal(SIGINT, foo);
 	prompt_loop(&vars);
 	return (0);

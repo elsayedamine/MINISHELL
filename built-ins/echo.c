@@ -3,33 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:03:58 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/13 20:10:27 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:32:41 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	is_option(char *s)
+int is_option(char *s)
 {
 	int	i;
 
 	i = 1;
+	if (!s)
+		return (FALSE);
 	if (s[0] != '-')
-		return (0);
+		return (FALSE);
 	while (s[i] == 'n')
 		i++;
 	if (s[i] == '\0')
-		return (1);
-	return (0);
+		return (TRUE);
+	return (FALSE);
 }
 
 int	echo(int ac, char **av)
 {
-	int	i;
-	int	check;
+	int i;
+	int check;
 
 	check = 0;
 	i = 1;
@@ -37,7 +39,7 @@ int	echo(int ac, char **av)
 		return (printf("\n"), TRUE);
 	while (av[i])
 	{
-		if (is_option(av[i]) == 0)
+		if (is_option(av[i]) == FALSE)
 			break ;
 		i++;
 	}
@@ -50,8 +52,8 @@ int	echo(int ac, char **av)
 	return (TRUE);
 }
 
-// int	main(int ac, char **av)
-// {
-// 	echo(ac, av);
-// 	return (0);
-// }
+int main(int ac, char **av)
+{
+	echo(ac, av);
+	return (0);
+}

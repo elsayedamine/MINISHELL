@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:06:14 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/13 20:12:37 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:31:29 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "../libft/libft.h"
 
-void	update_env(char **env, char *key, char *new_value)
+void	update_env(char **env, char *key, char* new_value)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!key || !new_value)
@@ -39,11 +39,12 @@ int	cd2(char **av, char **env, char *oldpwd)
 	dir = av[1];
 	if (!ft_strcmp(dir, "-"))
 	{
+		//-------------//
 	}
 	else if (dir[0] == '-')
 		return (free(oldpwd), \
 			printfd(2, "cd: %c%c: invalid option\n", dir[0], dir[1]), 0);
-	else if (chdir(dir) == -1)
+	else if(chdir(dir) == -1)
 	{
 		printfd(2, "cd: %s: No such file or directory\n", dir);
 		return (free(oldpwd), FALSE);
@@ -70,7 +71,7 @@ int	cd3(char **av, char **env, char *oldpwd)
 int	cd1(char **av, char **env, char *oldpwd)
 {
 	char	*home;
-
+	
 	home = getenv("HOME");
 	if (!home || chdir(home) == -1)
 	{
@@ -86,8 +87,7 @@ int	cd(int ac, char **av, char **env)
 	char	*pwd;
 
 	oldpwd = getcwd(NULL, 0);
-	if ((ac == 1 || (ac == 2 && !ft_strcmp(av[1], "--"))) \
-		&& !cd1(av, env, oldpwd))
+	if ((ac == 1 || (ac == 2 && !ft_strcmp(av[1], "--"))) && !cd1(av, env, oldpwd))
 		return (free(oldpwd), FALSE);
 	else if (ac == 2 && ft_strcmp(av[1], "--") && !cd2(av, env, oldpwd))
 		return (FALSE);
@@ -108,17 +108,17 @@ int	cd(int ac, char **av, char **env)
 	return (free(pwd), free(oldpwd), TRUE);
 }
 
-// int main(int ac, char **av, char **envp)
-// {
-// 	char **env;
-// 	char	*a, *b;
+int main(int ac, char **av, char **envp)
+{
+	char **env;
+	char	*a, *b;
 
-// 	env = ft_arrdup(envp);
-// 	a = getcwd(NULL, 0);
-// 	printf("%s\n", a);
-// 	cd(ac, av, env);
-// 	b = getcwd(NULL, 0);
-// 	printf("%s\n", b);
-// 	ft_free("112", a, b , env);
-// 	return (0);
-// }
+	env = ft_arrdup(envp);
+	a = getcwd(NULL, 0);
+	printf("%s\n", a);
+	cd(ac, av, env);
+	b = getcwd(NULL, 0);
+	printf("%s\n", b);
+	ft_free("112", a, b , env);
+	return (0);
+}
