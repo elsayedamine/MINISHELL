@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/17 19:58:12 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/17 20:04:23 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	**_ft_split(char const *s, char b);
 int	cd(int ac, char **av, t_shell *vars);
 int	echo(int ac, char **av, t_shell *vars);
 int	env(int ac, char **av, t_shell *vars);
-int	exit(int ac, char **av, t_shell *vars);
+int	ft_exit(int ac, char **av, t_shell *vars);
 int	export(int ac, char **av, t_shell *vars);
 int	pwd(int ac, char **av, t_shell *vars);
 int	unset(int ac, char **av, t_shell *vars);

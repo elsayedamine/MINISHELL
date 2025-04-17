@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:03:58 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/17 17:50:19 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/17 21:41:13 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	echo(int ac, char **av, t_shell *vars)
 
 	check = 0;
 	i = 1;
+	(void)vars;
 	if (ac == 1)
 		return (printf("\n"), TRUE);
 	while (av[i])
@@ -46,7 +47,11 @@ int	echo(int ac, char **av, t_shell *vars)
 	if (i > 1)
 		check = 1;
 	while (av[i])
+	{
 		printf("%s", av[i++]);
+		if (av[i])
+			printf(" ");
+	}
 	if (!check)
 		printf("\n");
 	return (TRUE);

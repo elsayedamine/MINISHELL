@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:06:14 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/17 19:57:22 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/17 21:58:22 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	change_dir(char *target, char **envp)
 int	cd(int ac, char **av, t_shell *vars)
 {
 	if (ac == 1)
-		return (printfd(2, "%s: cd: only relative or \
-			absolute path supported\n", M));
+		return (printfd(2, \
+			"%s: cd: only relative or absolute path supported\n", M));
 	if (ac > 2)
 		return (printfd(2, "cd: too many arguments\n"), 127);
 	return (change_dir(av[1], vars->envp));

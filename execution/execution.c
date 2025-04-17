@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/17 20:02:49 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:09:13 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ int	check_built_ins(char **arr, t_shell *vars)
 {
 	if (!arr)
 		return (FALSE);
-	if (ft_strcmp("pwd", *arr))
-		return (pwd(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
-	if (ft_strcmp("cd", *arr))
-		return (cd(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
-	if (ft_strcmp("echo", *arr))
-		return (echo(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
-	if (ft_strcmp("env", *arr))
-		return (env(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
-	if (ft_strcmp("exit", *arr))
-		return (exit(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
-	if (ft_strcmp("export", *arr))
-		return (export(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
-	if (ft_strcmp("unset", *arr))
-		return (unset(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
+	if (!ft_strcmp("pwd", *arr))
+		return (pwd(ft_arrlen(arr), arr, vars), TRUE);
+	if (!ft_strcmp("cd", *arr))
+		return (cd(ft_arrlen(arr), arr, vars), TRUE);
+	if (!ft_strcmp("echo", *arr))
+		return (echo(ft_arrlen(arr), arr, vars), TRUE);
+	if (!ft_strcmp("env", *arr))
+		return (env(ft_arrlen(arr), arr, vars), TRUE);
+	if (!ft_strcmp("exit", *arr))
+		return (ft_exit(ft_arrlen(arr), arr, vars), TRUE);
+	if (!ft_strcmp("export", *arr))
+		return (export(ft_arrlen(arr), arr, vars), TRUE);
+	if (!ft_strcmp("unset", *arr))
+		return (unset(ft_arrlen(arr), arr, vars), TRUE);
 	return (FALSE);
 }
 
@@ -56,7 +56,7 @@ char	*get_path(char **envp, char *cmd)
 	char	*path;
 	int		i;
 
-	if (access(cmd, X_OK) == 0)
+	if (access(cmd, X_OK) == 0 )
 		return (ft_strdup(cmd));
 	paths = ft_split(envp[path_index(envp, "PATH=")] + 5, ':');
 	if (!paths)
@@ -84,7 +84,7 @@ void	execution(t_shell *vars)
 	vars->tmp = vars->args;
 	while (vars->tmp && vars->tmp->arr)
 	{
-		if (check_built_ins(arr, vars) == TRUE)
+		if (check_built_ins(vars->tmp->arr, vars) == TRUE)
 		{
 			vars->tmp = vars->tmp->next;
 			continue ;
@@ -95,14 +95,12 @@ void	execution(t_shell *vars)
 			vars->tmp = vars->tmp->next;
 			continue ;
 		}
+		printf("%s\n", cmd_path);
 		pid_t (pid) = fork();
 		if (pid == 0)
 		{
 			if (execve(cmd_path, vars->tmp->arr, vars->envp) == -1)
-			{
 				perror("execve");
-				ft_free("1", cmd_path);
-			}
 		}
 		else
 			wait(NULL);

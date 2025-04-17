@@ -4,32 +4,14 @@
 
 what i did 
 
-```char	*get_path(char **envp, char *cmd)
-{
-	char	**paths;
-
-	char *(checker), *(path);
-	int (i);
-	if (access(cmd, X_OK) == 0)
-		return (ft_strdup(cmd));
-	if (!envp || !(*envp))
-		return (throw_error(CMD_NOT_FOUND), NULL);
-	paths = ft_split(envp[path_index(envp, "PATH=")] + 5, ':');
-	if (!paths)
-	return (NULL);
-	i = 0;
-	while (paths && paths[i])
-	{
-		path = ft_strjoin(paths[i++], "/");
-		checker = ft_strjoin(path, cmd);
-		if (access(checker, X_OK) == 0)
-		if (!ft_strnstr(checker, "//", ft_strlen(checker)))
-		return (ft_free("21", paths, path), checker);
-		ft_free("11", checker, path);
-	}
-	ft_free("2", paths);
-	g_vars.cmd_not_found = cmd;
-	g_vars.exit = 0;
-	return (throw_error(CMD_NOT_FOUND), NULL);
-}```
-
+try to execute this command : .<br>
+try to execute this command : ..<br>
+try to execute this command : ../..<br>
+hado des commands li kay executiw scripts
+khassna nhandliwhom <br>
+bach ??<br>
+bwa7d l functions dial stat();<br>
+yes gghriba walakin l9itha f subject so yes kayna hhhhhh<br>
+stat, lstat, fstat :: those funtions are allowed u should know how they work and use them for this purpose<br>
+O lblan dial had .. commmand rah kaykhser l code mnin kandiro Ctrl+C wla chi 7aja<br>
+so take this too in consideration <br>

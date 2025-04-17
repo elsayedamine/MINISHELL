@@ -12,6 +12,13 @@ sources = \
 		parsing/ft_check.c \
 		parsing/custom_split.c \
 		execution/execution.c \
+		built-ins/cd.c \
+		built-ins/echo.c \
+		built-ins/env.c \
+		built-ins/exit.c \
+		built-ins/export.c \
+		built-ins/pwd.c \
+		built-ins/unset.c
 
 object = $(sources:.c=.o)
 

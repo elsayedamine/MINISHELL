@@ -6,12 +6,16 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:19:39 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/17 18:33:27 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/17 20:10:04 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	exit(int ac, char **av, t_shell *vars)
+int	ft_exit(int ac, char **av, t_shell *vars)
 {
+    (void)ac;
+    (void)av;
+    (void)vars;
+    return (TRUE);
 }
