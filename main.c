@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/08 16:17:15 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/17 17:53:41 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	prompt_loop(t_shell *vars)
 			return (rl_clear_history(), exit(EXIT_SUCCESS));
 		if (!*vars->cmd || *vars->cmd == '\n')
 		{
-			free (vars->cmd);
+			free(vars->cmd);
 			continue ;
 		}
 		if (!fill_args(vars))
@@ -83,7 +83,7 @@ int	main(int ac, char **av, char **envp)
 	printf("pid = %d\n", getpid());
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
-	vars.envp = envp;
+	vars.envp = ft_arrdup(envp);
 	signal(SIGINT, foo);
 	prompt_loop(&vars);
 	return (0);

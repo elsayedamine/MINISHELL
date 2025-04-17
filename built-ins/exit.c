@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 16:59:45 by sayed             #+#    #+#             */
-/*   Updated: 2025/04/16 17:00:10 by sayed            ###   ########.fr       */
+/*   Created: 2025/04/17 15:19:39 by ahakki            #+#    #+#             */
+/*   Updated: 2025/04/17 18:33:27 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int exit(int ac, char **av)
+int	exit(int ac, char **av, t_shell *vars)
 {
 }
