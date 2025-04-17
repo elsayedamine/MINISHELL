@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/17 17:53:41 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:43:31 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*read_cmd(char *cmd)
 
 	trim = readline("\033[1;31mminishell$ \033[0m");
 	cmd = ft_strtrim(trim, " \t\n\v\r\f");
-	free(trim); 
+	free(trim);
 	if (!cmd || !ft_strcmp("exit", cmd))
 		return (NULL);
 	if (*cmd)
