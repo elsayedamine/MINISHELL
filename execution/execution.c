@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/17 18:47:56 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/17 20:02:49 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,27 @@ int	path_index(char **envp, char *s)
 	return (0);
 }
 
+int	check_built_ins(char **arr, t_shell *vars)
+{
+	if (!arr)
+		return (FALSE);
+	if (ft_strcmp("pwd", *arr))
+		return (pwd(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
+	if (ft_strcmp("cd", *arr))
+		return (cd(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
+	if (ft_strcmp("echo", *arr))
+		return (echo(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
+	if (ft_strcmp("env", *arr))
+		return (env(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
+	if (ft_strcmp("exit", *arr))
+		return (exit(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
+	if (ft_strcmp("export", *arr))
+		return (export(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
+	if (ft_strcmp("unset", *arr))
+		return (unset(ft_arrlen(arr), arr, vars), printf("asdasd\n"),TRUE);
+	return (FALSE);
+}
+
 char	*get_path(char **envp, char *cmd)
 {
 	char	**paths;
@@ -35,7 +56,6 @@ char	*get_path(char **envp, char *cmd)
 	char	*path;
 	int		i;
 
-	check_built_ins(cmd)
 	if (access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
 	paths = ft_split(envp[path_index(envp, "PATH=")] + 5, ':');
@@ -64,6 +84,11 @@ void	execution(t_shell *vars)
 	vars->tmp = vars->args;
 	while (vars->tmp && vars->tmp->arr)
 	{
+		if (check_built_ins(arr, vars) == TRUE)
+		{
+			vars->tmp = vars->tmp->next;
+			continue ;
+		}
 		cmd_path = get_path(vars->envp, vars->tmp->arr[0]);
 		if (!cmd_path)
 		{
