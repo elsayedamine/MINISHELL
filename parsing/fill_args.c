@@ -6,15 +6,13 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/18 15:17:03 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/18 21:52:57 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 extern t_shell	g_vars;
-void	reconfigure(t_shell *vars);
-void	split_with_operators(t_shell *vars);
 
 void	throw_error(int error)
 {
@@ -102,34 +100,10 @@ void	split_cmds_args(t_shell *vars)
 	pop_spaces(vars);
 }
 
-int	fill_args(t_shell *vars)
-{
-	char	*token;
-
-	if (!vars->cmd || !*(vars->cmd) || ft_iswhitespace(vars->cmd))
-		return (FALSE);
-	token = ft_strtok(vars->cmd, "'\"()|&");
-	vars->args = NULL;
-	while (token)
-	{
-		ft_lstadd_back(&vars->args, ft_lstnew(token));
-		vars->args->arr = NULL;
-		token = ft_strtok(NULL, "'\"()|&");
-	}
-	if (!ft_check(vars))
-		return (FALSE);
-	split_cmds_args(vars);
-	split_with_operators(vars);
-	// reconfigure(vars);
-	// ft_lstiter(vars->args, printf);
-	printf("----------------------------------\n\n\n");
-	return (TRUE);
-}
-
 int	is_delim(char *s)
 {
 	return ((s[0] == '&' && s[1] == '&') || \
-		(s[0] == '|' && s[1] == '|'));
+		(s[0] == '|' && s[1] == '|') || (s[0] == '|' && s[1] != '|'));
 }
 
 int	is_closed_here(char c, int *quote, int *depth)
@@ -151,23 +125,66 @@ int	is_closed_here(char c, int *quote, int *depth)
 	return (*quote == 0 && *depth == 0);
 }
 
-void	split_with_operators(t_shell *vars)
+// t_list	*split_with_operators(char *cmd)
+// {
+// 	t_list	*new;
+// 	int		i = 0;
+// 	int		start = 0;
+// 	int		depth = 0;
+// 	int		quote = 0;
+
+// 	new = NULL;
+// 	if (!cmd)
+// 		return (NULL);
+	
+// 	// ft_init(4, &i, &start, &depth, &quote);
+// 	while (cmd[i])
+// 	{
+// 		is_closed_here(cmd[i], &quote, &depth);
+// 		if (is_delim(&cmd[i]) && !quote && !depth)
+// 		{
+// 			if (i > start)
+// 				ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[start], i - start)));
+// 			ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[i], 2)));
+// 			i += 2;
+// 			start = i;
+// 		}
+// 		else
+// 			i++;
+// 	}
+// 	if (i > start && start)
+// 		ft_lstadd_back(&new, ft_lstnew(ft_strdup(&cmd[start])));
+// 	return (new);
+// }
+void	reconfigure(t_list *lst);
+
+t_list	*split_with_operators(char *cmd)
 {
 	t_list	*new;
-	int		i;
-	int		start;
-	int		depth;
-	int		quote;
+	int		i = 0;
+	int		start = 0;
+	int		depth = 0;
+	int		quote = 0;
+	int		split_occurred;
 
-	ft_init(4, &i, &start, &depth, &quote);
-	while (vars->cmd[i])
+	new = NULL;
+	if (!cmd)
+		return (NULL);
+	// ft_init(4, &i, &start, &depth, &quote);
+	split_occurred = 0;
+	if (!ft_strstr(cmd, "&&") && !ft_strstr(cmd, "||"))
+		return NULL;
+	while (cmd[i])
 	{
-		is_closed_here(vars->cmd[i], &quote, &depth);
-		if (is_delim(&vars->cmd[i]) && !quote && !depth)
+		is_closed_here(cmd[i], &quote, &depth);
+		if (is_delim(&cmd[i]) && !quote && !depth)
 		{
 			if (i > start)
-				ft_lstadd_back(&new, ft_lstnew(ft_strndup(&vars->cmd[start], i - start)));
-			ft_lstadd_back(&new, ft_lstnew(ft_strndup(&vars->cmd[i], 2)));
+			{
+				ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[start], i - start)));
+				split_occurred = 1;
+			}
+			ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[i], 2)));
 			i += 2;
 			start = i;
 		}
@@ -175,5 +192,57 @@ void	split_with_operators(t_shell *vars)
 			i++;
 	}
 	if (i > start)
-		ft_lstadd_back(&new, ft_lstnew(ft_strdup(&vars->cmd[start])));
+	{
+		ft_lstadd_back(&new, ft_lstnew(ft_strdup(&cmd[start])));
+		split_occurred = 1;
+	}
+	if (!split_occurred)
+	{
+		ft_lstclear(&new, free);
+		return (NULL);
+	}
+	return (new);
 }
+
+
+int	fill_args(t_shell *vars)
+{
+	char	*token;
+
+	if (!vars->cmd || !*(vars->cmd) || ft_iswhitespace(vars->cmd))
+		return (FALSE);
+	token = ft_strtok(vars->cmd, "'\"()|&");
+	vars->args = NULL;
+	while (token)
+	{
+		ft_lstadd_back(&vars->args, ft_lstnew(token));
+		vars->args->arr = NULL;
+		token = ft_strtok(NULL, "'\"()|&");
+	}
+	if (!ft_check(vars))
+		return (FALSE);
+	// split_cmds_args(vars);
+	ft_lstclear(&vars->args, free);
+	vars->args = split_with_operators(vars->cmd);
+	ft_lstiter(vars->args, printf);
+	reconfigure(vars->args);
+	ft_lstiter(vars->args, printf);
+	return (TRUE);
+}
+
+void	reconfigure(t_list *lst)
+{
+	t_list	*tmp;
+
+	tmp = lst;
+	if (!lst)
+		return ;
+	while (tmp)
+	{
+		tmp->child = split_with_operators(tmp->content);
+		if (tmp->child)
+			reconfigure(tmp->child);
+		tmp = tmp->next;
+	}
+}
+ 

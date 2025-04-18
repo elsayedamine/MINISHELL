@@ -17,4 +17,6 @@ O lblan dial had .. commmand rah kaykhser l code mnin kandiro Ctrl+C wla chi 7aj
 so take this too in consideration <br>
 
 
+# WE HAVE A BIG SEGV IN THE TREE PROCESS<br>
+
 ft_stristr.c ADDED !! <br>

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/18 12:00:56 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/18 18:11:31 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ void	lst_addfront(t_lst **lst, t_lst *new);
 void	lst_clear(t_lst **lst);
 t_lst	*lst_last(t_lst *lst);
 int		lst_size(t_lst *lst);
+t_list  *ft_lstndup(t_list *head, t_list *stop);
+t_list	*ft_lstdup(t_list *head);
 
 // printfd unctions
 int		fd_putnbr(int fd, int n);
