@@ -1,6 +1,6 @@
 
 # SEGV
-    ila mssahna l env
+    ila mssahna l env : MAZAL MAKHDMNAHACH
 
 what i did 
 
@@ -15,3 +15,6 @@ yes gghriba walakin l9itha f subject so yes kayna hhhhhh<br>
 stat, lstat, fstat :: those funtions are allowed u should know how they work and use them for this purpose<br>
 O lblan dial had .. commmand rah kaykhser l code mnin kandiro Ctrl+C wla chi 7aja<br>
 so take this too in consideration <br>
+
+
+ft_stristr.c ADDED !! <br>

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/17 22:09:13 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/18 10:42:10 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	execution(t_shell *vars)
 			vars->tmp = vars->tmp->next;
 			continue ;
 		}
-		printf("%s\n", cmd_path);
 		pid_t (pid) = fork();
 		if (pid == 0)
 		{
