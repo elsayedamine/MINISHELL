@@ -6,13 +6,14 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/18 21:52:57 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/19 20:27:21 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 extern t_shell	g_vars;
+void	reconfigure(t_list *lst);
 
 void	throw_error(int error)
 {
@@ -97,13 +98,12 @@ void	split_cmds_args(t_shell *vars)
 		}
 		vars->tmp = vars->tmp->next;
 	}
-	pop_spaces(vars);
 }
 
 int	is_delim(char *s)
 {
 	return ((s[0] == '&' && s[1] == '&') || \
-		(s[0] == '|' && s[1] == '|') || (s[0] == '|' && s[1] != '|'));
+		(s[0] == '|' && s[1] == '|') || (s[0] == '|'));
 }
 
 int	is_closed_here(char c, int *quote, int *depth)
@@ -132,19 +132,25 @@ int	is_closed_here(char c, int *quote, int *depth)
 // 	int		start = 0;
 // 	int		depth = 0;
 // 	int		quote = 0;
+// 	int		split_occurred;
 
 // 	new = NULL;
 // 	if (!cmd)
 // 		return (NULL);
-	
 // 	// ft_init(4, &i, &start, &depth, &quote);
+// 	split_occurred = 0;
+// 	if (!ft_strstr(cmd, "&&") && !ft_strstr(cmd, "||") && !ft_strstr(cmd, "|"))
+// 		return NULL;
 // 	while (cmd[i])
 // 	{
 // 		is_closed_here(cmd[i], &quote, &depth);
 // 		if (is_delim(&cmd[i]) && !quote && !depth)
 // 		{
 // 			if (i > start)
+// 			{
 // 				ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[start], i - start)));
+// 				split_occurred = 1;
+// 			}
 // 			ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[i], 2)));
 // 			i += 2;
 // 			start = i;
@@ -152,51 +158,49 @@ int	is_closed_here(char c, int *quote, int *depth)
 // 		else
 // 			i++;
 // 	}
-// 	if (i > start && start)
+// 	if (i > start)
+// 	{
 // 		ft_lstadd_back(&new, ft_lstnew(ft_strdup(&cmd[start])));
+// 		split_occurred = 1;
+// 	}
+// 	if (!split_occurred)
+// 	{
+// 		ft_lstclear(&new, free);
+// 		return (NULL);
+// 	}
 // 	return (new);
 // }
-void	reconfigure(t_list *lst);
-
 t_list	*split_with_operators(char *cmd)
 {
-	t_list	*new;
-	int		i = 0;
-	int		start = 0;
-	int		depth = 0;
-	int		quote = 0;
-	int		split_occurred;
+	t_list	*new = NULL;
+	int		i = 0, start = 0;
+	int		quote = 0, depth = 0;
+	int		has_split = 0;
 
-	new = NULL;
 	if (!cmd)
 		return (NULL);
-	// ft_init(4, &i, &start, &depth, &quote);
-	split_occurred = 0;
-	if (!ft_strstr(cmd, "&&") && !ft_strstr(cmd, "||"))
-		return NULL;
+
 	while (cmd[i])
 	{
 		is_closed_here(cmd[i], &quote, &depth);
-		if (is_delim(&cmd[i]) && !quote && !depth)
+		if (!quote && !depth && is_delim(&cmd[i]))
 		{
-			if (i > start)
-			{
+			if (i != start)
 				ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[start], i - start)));
-				split_occurred = 1;
-			}
-			ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[i], 2)));
-			i += 2;
+
+			ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[i], (cmd[i + 1] == cmd[i]) ? 2 : 1)));
+
+			i += (cmd[i + 1] == cmd[i]) ? 2 : 1;
 			start = i;
+			has_split = 1;
 		}
 		else
 			i++;
 	}
-	if (i > start)
-	{
-		ft_lstadd_back(&new, ft_lstnew(ft_strdup(&cmd[start])));
-		split_occurred = 1;
-	}
-	if (!split_occurred)
+	if (start != i) // fix: allow adding tail even if start == 0
+		ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[start], i - start)));
+
+	if (!has_split)
 	{
 		ft_lstclear(&new, free);
 		return (NULL);
@@ -219,14 +223,14 @@ int	fill_args(t_shell *vars)
 		vars->args->arr = NULL;
 		token = ft_strtok(NULL, "'\"()|&");
 	}
+	pop_spaces(vars);
 	if (!ft_check(vars))
 		return (FALSE);
-	// split_cmds_args(vars);
-	ft_lstclear(&vars->args, free);
-	vars->args = split_with_operators(vars->cmd);
+	split_cmds_args(vars);
+	// ft_lstclear(&vars->args, free);
+	// vars->args = split_with_operators(vars->cmd);
 	ft_lstiter(vars->args, printf);
-	reconfigure(vars->args);
-	ft_lstiter(vars->args, printf);
+	// reconfigure(vars->args);
 	return (TRUE);
 }
 
@@ -240,7 +244,9 @@ void	reconfigure(t_list *lst)
 	while (tmp)
 	{
 		tmp->child = split_with_operators(tmp->content);
-		if (tmp->child)
+		ft_lstiter(tmp->child, printf);
+		printf("----------\n\n");
+		if (tmp->child && ft_lstsize(tmp->child) > 1)
 			reconfigure(tmp->child);
 		tmp = tmp->next;
 	}

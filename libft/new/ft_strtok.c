@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:16:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/18 11:20:49 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/19 15:57:44 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*handle_quotes(char **next_token)
 	return (ft_strndup(start, *next_token - start));
 }
 
-static char	*handle_redirect(char **next_token)
+static char	*handle_op(char **next_token)
 {
 	char	*start;
 
@@ -57,7 +57,7 @@ char	*ft_strtok(char *str, char const *delim)
 	if ((*next_token == '\'' || *next_token == '"'))
 		return (handle_quotes(&next_token));
 	if (ft_strchr("&|", *next_token))
-		return (handle_redirect(&next_token));
+		return (handle_op(&next_token));
 	if (ft_strchr(delim, *next_token))
 		return (ft_strndup(next_token++, 1));
 	start = next_token;

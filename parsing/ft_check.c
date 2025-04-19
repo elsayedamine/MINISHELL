@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/08 09:31:28 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/19 20:30:41 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,14 @@ int	isvalid_syntax(t_shell *vars)
 			n = (char *)tmp->next->content;
 		if (is_par(c) && tmp->next && is_par(n) && *c != *n)
 			return (throw_error(OP), FALSE);
-		if (!is_par(c) && !is_op(c) && !ft_iswhitespace(c) \
-			&& tmp->next && is_par(n) && *n == '(')
+		if (!is_par(c) && !is_op(c) && tmp->next && is_par(n) && *n == '(')
 			return (throw_error(OP), FALSE);
 		if (!is_par(c) && is_op(c) && tmp->next && is_par(n) && *n == ')')
 			return (throw_error(OP), FALSE);
 		if (is_par(c) && *c == '(' && tmp->next && is_op(n) && *n != '<')
 			return (throw_error(OP), FALSE);
-		if (is_par(c) && *c == ')' && tmp->next && !is_op(n) \
-			&& !is_par(n) && !ft_iswhitespace(n))
-			return (printf("2\n"), throw_error(OP), FALSE);
+		if (is_par(c) && *c == ')' && tmp->next && !is_op(n) && !is_par(n))
+			return (throw_error(OP), FALSE);
 		tmp = tmp->next;
 	}
 	return (TRUE);
