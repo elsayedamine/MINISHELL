@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/19 20:27:21 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/20 18:37:18 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ int	fill_args(t_shell *vars)
 	// ft_lstclear(&vars->args, free);
 	// vars->args = split_with_operators(vars->cmd);
 	ft_lstiter(vars->args, printf);
+	// split_with_operators(vars->args->child.);
 	// reconfigure(vars->args);
 	return (TRUE);
 }
@@ -244,8 +245,6 @@ void	reconfigure(t_list *lst)
 	while (tmp)
 	{
 		tmp->child = split_with_operators(tmp->content);
-		ft_lstiter(tmp->child, printf);
-		printf("----------\n\n");
 		if (tmp->child && ft_lstsize(tmp->child) > 1)
 			reconfigure(tmp->child);
 		tmp = tmp->next;
