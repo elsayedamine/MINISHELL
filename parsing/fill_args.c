@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/21 11:52:17 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:18:26 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,6 @@ t_list	*split_with_operators(char *cmd)
 
 	if (!cmd)
 		return (NULL);
-
 	while (cmd[i])
 	{
 		is_closed_here(cmd[i], &quote, &depth);
@@ -187,9 +186,7 @@ t_list	*split_with_operators(char *cmd)
 		{
 			if (i != start)
 				ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[start], i - start)));
-
 			ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[i], (cmd[i + 1] == cmd[i]) ? 2 : 1)));
-
 			i += (cmd[i + 1] == cmd[i]) ? 2 : 1;
 			start = i;
 			has_split = 1;
@@ -197,14 +194,10 @@ t_list	*split_with_operators(char *cmd)
 		else
 			i++;
 	}
-	if (start != i) // fix: allow adding tail even if start == 0
+	if (start != i)
 		ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[start], i - start)));
-
 	if (!has_split)
-	{
-		ft_lstclear(&new, free);
-		return (NULL);
-	}
+		return (ft_lstclear(&new, free));
 	return (new);
 }
 
