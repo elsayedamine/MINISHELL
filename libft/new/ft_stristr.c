@@ -6,13 +6,13 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:57:45 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/18 12:02:21 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/21 10:59:06 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-int ft_stristr(char const *str, char const *to_find)
+int	ft_stristr(char const *str, char const *to_find)
 {
 	size_t	i;
 	size_t	j;

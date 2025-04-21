@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/20 17:43:23 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/21 10:58:27 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	**ft_list2arr(t_list *tmp_arr);
 t_list	*ft_arr2list(char **arr);
 t_list	*ft_lstdup(t_list *head);
-t_list  *ft_lstndup(t_list *head, t_list *stop);
+t_list	*ft_lstndup(t_list *head, t_list *stop);
 
 // linked lists for ints
 t_lst	*lst_new(int content);

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/18 10:42:10 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/21 10:57:43 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*get_path(char **envp, char *cmd)
 	char	*path;
 	int		i;
 
-	if (access(cmd, X_OK) == 0 )
+	if (access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
 	paths = ft_split(envp[path_index(envp, "PATH=")] + 5, ':');
 	if (!paths)

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/18 12:07:01 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/21 10:55:41 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ char	*removequotes(char *str);
 char	**_ft_split(char const *s, char b);
 
 // Built-ins Functions
-int	cd(int ac, char **av, t_shell *vars);
-int	echo(int ac, char **av, t_shell *vars);
-int	env(int ac, char **av, t_shell *vars);
-int	ft_exit(int ac, char **av, t_shell *vars);
-int	export(int ac, char **av, t_shell *vars);
-int	pwd(int ac, char **av, t_shell *vars);
-int	unset(int ac, char **av, t_shell *vars);
+int		cd(int ac, char **av, t_shell *vars);
+int		echo(int ac, char **av, t_shell *vars);
+int		env(int ac, char **av, t_shell *vars);
+int		ft_exit(int ac, char **av, t_shell *vars);
+int		export(int ac, char **av, t_shell *vars);
+int		pwd(int ac, char **av, t_shell *vars);
+int		unset(int ac, char **av, t_shell *vars);
 
 // execution Functions
 void	execution(t_shell *vars);

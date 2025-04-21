@@ -6,10 +6,9 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:32:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/18 20:19:57 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:02:38 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 int	is_delim(char *s)
 {
@@ -51,7 +50,8 @@ void	split_with_operators(t_shell *vars)
 		if (is_delim(&vars->cmd[i]) && !quote && !depth)
 		{
 			if (i > start)
-				ft_lstadd_back(&new, ft_lstnew(ft_strndup(&vars->cmd[start], i - start)));
+				ft_lstadd_back(&new, \
+						ft_lstnew(ft_strndup(&vars->cmd[start], i - start)));
 			ft_lstadd_back(&new, ft_lstnew(ft_strndup(&vars->cmd[i], 2)));
 			i += 2;
 			start = i;
@@ -62,6 +62,3 @@ void	split_with_operators(t_shell *vars)
 	if (i > start)
 		ft_lstadd_back(&new, ft_lstnew(ft_strdup(&vars->cmd[start])));
 }
-
-
-// t_list *config(char *str)

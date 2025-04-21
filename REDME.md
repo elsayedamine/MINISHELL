@@ -2,7 +2,7 @@
 # SEGV
     ila mssahna l env : MAZAL MAKHDMNAHACH
 
-what i did 
+what i did
 
 try to execute this command : .<br>
 try to execute this command : ..<br>
