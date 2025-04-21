@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:19:39 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/21 10:56:18 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:09:16 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ unsigned char	check_args(char *str, int *error)
 	char			*trim;
 
 	trim = ft_strtrim(str, WHITE);
-	printf("%s'\n", trim);
 	result = (unsigned char)_atoi(trim, error);
 	return (free(trim), result);
 }
