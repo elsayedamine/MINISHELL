@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/20 18:37:18 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:52:17 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ int	fill_args(t_shell *vars)
 	split_cmds_args(vars);
 	// ft_lstclear(&vars->args, free);
 	// vars->args = split_with_operators(vars->cmd);
-	ft_lstiter(vars->args, printf);
+	// ft_lstiter(vars->args, printf);
 	// split_with_operators(vars->args->child.);
 	// reconfigure(vars->args);
 	return (TRUE);
