@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/24 01:23:17 by sayed            ###   ########.fr       */
+/*   Updated: 2025/04/24 18:36:08 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*read_cmd(char *cmd)
 
 	trim = readline("\033[1;31mminishell$ \033[0m");
 	cmd = ft_strtrim(trim, " \t\n\v\r\f");
-	frzee(trim);
+	free(trim);
 	if (!cmd || !ft_strcmp("exit", cmd))
 		return (NULL);
 	if (*cmd)
@@ -81,6 +81,7 @@ int	main(int ac, char **av, char **envp)
 
 	(void)av;
 	printf("pid = %d\n", getpid());
+	// if the fd 1 or 0 are closed we should exit directly
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
 	vars.envp = ft_arrdup(envp);

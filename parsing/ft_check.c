@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/23 14:02:52 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/24 18:39:59 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,31 @@ int	isvalid_syntax(t_shell *vars)
 		tmp = tmp->next;
 	}
 	return (TRUE);
+}
+
+void	pop_spaces(t_shell *vars)
+{
+	t_list	*new;
+	t_list	*tmp;
+	t_list	*next;
+	t_list	*node;
+
+	tmp = vars->args;
+	new = NULL;
+	while (tmp)
+	{
+		next = tmp->next;
+		if (ft_iswhitespace(tmp->content) == FALSE)
+		{
+			node = ft_lstnew(ft_strdup(tmp->content));
+			node->arr = ft_arrdup(tmp->arr);
+			ft_lstadd_back(&new, node);
+		}
+		ft_free("12", tmp->content, tmp->arr);
+		free(tmp);
+		tmp = next;
+	}
+	vars->args = new;
 }
 
 int	ft_check(t_shell *vars)

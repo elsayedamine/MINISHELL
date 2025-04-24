@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/23 09:49:25 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/24 18:46:29 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,15 @@ typedef struct s_check
 
 typedef struct s_shell
 {
+	int			exit;
 	char		**envp;
-	t_list		*env;
 	char		*cmd;
 	char		*cmd_not_found;
+	t_list		*env;
 	t_list		*args;
 	t_list		*tmp;
 	t_check		check;
-	int			exit;
+	t_list		*ast;
 }				t_shell;
 
 // Parsing Functions
