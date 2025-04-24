@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/21 10:55:41 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:49:25 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_check
 typedef struct s_shell
 {
 	char		**envp;
+	t_list		*env;
 	char		*cmd;
 	char		*cmd_not_found;
 	t_list		*args;
@@ -78,6 +79,7 @@ int		isvalid_quotes(t_shell *vars);
 void	throw_error(int error);
 char	*removequotes(char *str);
 char	**_ft_split(char const *s, char b);
+void	pop_spaces(t_shell *vars);
 
 // Built-ins Functions
 int		cd(int ac, char **av, t_shell *vars);

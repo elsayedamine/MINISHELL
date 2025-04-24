@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/21 12:18:26 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/23 23:01:30 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,36 +170,37 @@ int	is_closed_here(char c, int *quote, int *depth)
 // 	}
 // 	return (new);
 // }
-t_list	*split_with_operators(char *cmd)
-{
-	t_list	*new = NULL;
-	int		i = 0, start = 0;
-	int		quote = 0, depth = 0;
-	int		has_split = 0;
 
-	if (!cmd)
-		return (NULL);
-	while (cmd[i])
-	{
-		is_closed_here(cmd[i], &quote, &depth);
-		if (!quote && !depth && is_delim(&cmd[i]))
-		{
-			if (i != start)
-				ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[start], i - start)));
-			ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[i], (cmd[i + 1] == cmd[i]) ? 2 : 1)));
-			i += (cmd[i + 1] == cmd[i]) ? 2 : 1;
-			start = i;
-			has_split = 1;
-		}
-		else
-			i++;
-	}
-	if (start != i)
-		ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[start], i - start)));
-	if (!has_split)
-		return (ft_lstclear(&new, free));
-	return (new);
-}
+// t_list	*split_with_operators(char *cmd)
+// {
+// 	t_list	*new = NULL;
+// 	int		i = 0, start = 0;
+// 	int		quote = 0, depth = 0;
+// 	int		has_split = 0;
+
+// 	if (!cmd)
+// 		return (NULL);
+// 	while (cmd[i])
+// 	{
+// 		is_closed_here(cmd[i], &quote, &depth);
+// 		if (!quote && !depth && is_delim(&cmd[i]))
+// 		{
+// 			if (i != start)
+// 				ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[start], i - start)));
+// 			ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[i], (cmd[i + 1] == cmd[i]) ? 2 : 1)));
+// 			i += (cmd[i + 1] == cmd[i]) ? 2 : 1;
+// 			start = i;
+// 			has_split = 1;
+// 		}
+// 		else
+// 			i++;
+// 	}
+// 	if (start != i)
+// 		ft_lstadd_back(&new, ft_lstnew(ft_strndup(&cmd[start], i - start)));
+// 	if (!has_split)
+// 		return (ft_lstclear(&new, free));
+// 	return (new);
+// }
 
 
 int	fill_args(t_shell *vars)
@@ -208,15 +209,14 @@ int	fill_args(t_shell *vars)
 
 	if (!vars->cmd || !*(vars->cmd) || ft_iswhitespace(vars->cmd))
 		return (FALSE);
-	token = ft_strtok(vars->cmd, "'\"()|&");
+	token = ft_strtok(vars->cmd, "'\"()|&<>");
 	vars->args = NULL;
 	while (token)
 	{
 		ft_lstadd_back(&vars->args, ft_lstnew(token));
 		vars->args->arr = NULL;
-		token = ft_strtok(NULL, "'\"()|&");
+		token = ft_strtok(NULL, "'\"()|&<>");
 	}
-	pop_spaces(vars);
 	if (!ft_check(vars))
 		return (FALSE);
 	split_cmds_args(vars);
@@ -228,19 +228,19 @@ int	fill_args(t_shell *vars)
 	return (TRUE);
 }
 
-void	reconfigure(t_list *lst)
-{
-	t_list	*tmp;
+// void	reconfigure(t_list *lst)
+// {
+// 	t_list	*tmp;
 
-	tmp = lst;
-	if (!lst)
-		return ;
-	while (tmp)
-	{
-		tmp->child = split_with_operators(tmp->content);
-		if (tmp->child && ft_lstsize(tmp->child) > 1)
-			reconfigure(tmp->child);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = lst;
+// 	if (!lst)
+// 		return ;
+// 	while (tmp)
+// 	{
+// 		tmp->child = split_with_operators(tmp->content);
+// 		if (tmp->child && ft_lstsize(tmp->child) > 1)
+// 			reconfigure(tmp->child);
+// 		tmp = tmp->next;
+// 	}
+// }
  

@@ -1,4 +1,19 @@
 
+
+# ----------------------------------------------------------#
+
+## read this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+- hawalt n9ad dak l error li sift lik f discord
+- bdalt tartib dyal checks dok l khamssa
+- nta hwal t3ad ta9ra dakchi mzn
+## -----
+- ah o export mn lminishell fiha segv hit 100% machi nafss data li 3ndhom 
+- export m ghada b l main dyalha
+
+
+
+
 # SEGV
     ila mssahna l env : MAZAL MAKHDMNAHACH
 

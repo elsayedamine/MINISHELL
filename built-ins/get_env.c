@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:47:01 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/21 10:56:54 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/21 14:36:03 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ char	*get_env(char *k, t_shell *vars)
 // int main(int ac, char **av, char **envp)
 // {
 // 	t_shell vars;
-// 	vars.envp = ft_arrdup(envp);
 
+// 	vars.env = ft_arr2list(envp);
 // 	printf("%s\n", get_env(av[1], &vars));
 // 	return (0);
 // }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtok.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:16:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/19 15:57:44 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/23 23:01:49 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static char	*handle_op(char **next_token)
 	char	*start;
 
 	start = *next_token;
-	// if (**next_token == '>' && *(*next_token + 1) == '>')
-	// 	return ((*next_token) += 2, ft_strdup(">>"));
-	// if (**next_token == '<' && *(*next_token + 1) == '<')
-	// 	return ((*next_token) += 2, ft_strdup("<<"));
+	if (**next_token == '>' && *(*next_token + 1) == '>')
+		return ((*next_token) += 2, ft_strdup(">>"));
+	if (**next_token == '<' && *(*next_token + 1) == '<')
+		return ((*next_token) += 2, ft_strdup("<<"));
 	if (**next_token == '&' && *(*next_token + 1) == '&')
 		return ((*next_token) += 2, ft_strdup("&&"));
 	if (**next_token == '|' && *(*next_token + 1) == '|')
