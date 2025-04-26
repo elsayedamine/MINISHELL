@@ -6,11 +6,40 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/24 18:39:59 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/26 21:32:51 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	ft_nodejoin(t_shell *vars)
+{
+	char *(new_content), *(tmp_content);
+	t_list *(to_delete), *(tmp) = vars->args;
+	if (tmp && is_op((char *)tmp->content))
+		return (throw_error(OP), FALSE);
+	while (tmp && tmp->next)
+	{
+		tmp_content = (char *)tmp->content;
+		if (!is_op(tmp_content) && !is_op((char *)tmp->next->content) && \
+			!is_par(tmp_content) && !is_par((char *)tmp->next->content))
+		{
+			new_content = ft_strjoin(tmp_content, (char *)tmp->next->content);
+			if (!new_content)
+				return (FALSE);
+			free(tmp->content);
+			tmp->content = new_content;
+			to_delete = tmp->next;
+			tmp->next = tmp->next->next;
+			ft_lstdelone(to_delete, free);
+		}
+		else
+			tmp = tmp->next;
+	}
+	if (tmp && is_op((char *)tmp->content))
+		return (throw_error(OP), FALSE);
+	return (TRUE);
+}
 
 int	isvalid_syntax(t_shell *vars)
 {

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/24 19:08:39 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/26 22:50:52 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,35 +24,6 @@ void	throw_error(int error)
 	if (error == CMD_NOT_FOUND)
 		printfd(2, "Command not found : %s\n", g_vars.cmd_not_found);
 	g_vars.exit = 127;
-}
-
-int	ft_nodejoin(t_shell *vars)
-{
-	char *(new_content), *(tmp_content);
-	t_list *(to_delete), *(tmp) = vars->args;
-	if (tmp && is_op((char *)tmp->content))
-		return (throw_error(OP), FALSE);
-	while (tmp && tmp->next)
-	{
-		tmp_content = (char *)tmp->content;
-		if (!is_op(tmp_content) && !is_op((char *)tmp->next->content) && \
-			!is_par(tmp_content) && !is_par((char *)tmp->next->content))
-		{
-			new_content = ft_strjoin(tmp_content, (char *)tmp->next->content);
-			if (!new_content)
-				return (FALSE);
-			free(tmp->content);
-			tmp->content = new_content;
-			to_delete = tmp->next;
-			tmp->next = tmp->next->next;
-			ft_lstdelone(to_delete, free);
-		}
-		else
-			tmp = tmp->next;
-	}
-	if (tmp && is_op((char *)tmp->content))
-		return (throw_error(OP), FALSE);
-	return (TRUE);
 }
 
 void	split_cmds_args(t_shell *vars)
@@ -75,6 +46,22 @@ void	split_cmds_args(t_shell *vars)
 	}
 }
 
+void	print_ast(t_list *node, int depth)
+{
+	while (node)
+	{
+		for (int i = 0; i < depth; i++)
+			printf("  ");
+		if (node->content)
+			printf("- %s\n", (char *)node->content);
+		else
+			printf("- (group)\n");
+		if (node->child)
+			print_ast(node->child, depth + 1);
+		node = node->next;
+	}
+}
+
 int	fill_args(t_shell *vars)
 {
 	char	*token;
@@ -93,21 +80,80 @@ int	fill_args(t_shell *vars)
 		return (FALSE);
 	split_cmds_args(vars);
 	// ft_lstiter(vars->args, printf);
-	vars->ast = build_ast(&vars->args);
+	vars->ast = ast_builder(&vars->args);
+	print_ast(vars->ast, 0);
 	return (TRUE);
 }
 
+
+// LET THE FUN BEGIN...!!
+// 
 t_list	*ast_builder(t_list **cursor)
 {
+	t_list	*node;
+	t_list	*sub;
+	char	*c;
+
+	node = NULL;
 	while (*cursor)
 	{
-		//let the fun begin hehehehehe (mor l3cha ofc)
-		if (!ft_strcmp((*cursor)->content, "("))
-			//
-		if (!ft_strcmp((*cursor)->content, "&&") || !ft_strcmp((*cursor)->content, "||"))
-			//
-		if (!ft_strcmp((*cursor)->content, "|"))
-			//
-		if (!ft_strcmp((*cursor)->content, ")"))
+		c = (char *)(*cursor)->content;
+		if (!ft_strcmp(c, "("))
+		{
+			(*cursor) = (*cursor)->next;
+			sub = ft_lstnew(NULL);
+			sub->child = ast_builder(cursor);
+			ft_lstadd_back(&node, sub);
+		}
+		else if (!ft_strcmp(c, ")"))
+		{
+			(*cursor) = (*cursor)->next;
+			return (node);
+		}
+		else
+		{
+			ft_lstadd_back(&node, ft_lstnew(c));
+			(*cursor) = (*cursor)->next;
+		}
 	}
+	return (node);
 }
+
+// 
+// t_list	*create_node(void	*content)
+// {
+	// t_list	*new;
+// 
+	// new = (t_list *)malloc(sizeof(t_list));
+	// if (!new)
+		// return (NULL);
+	// new->content = content;
+	// new->arr = _ft_split((char *)content, ' ');
+	// removequotes_arr(new->arr);
+	// new->type = 0;
+	// new->child = NULL;
+	// new->next = NULL;
+	// return (new);
+// }
+// 
+// 
+// int	fill_args(t_shell *vars)
+// {
+	// char	*token;
+// 
+	// if (!vars->cmd || !*(vars->cmd) || ft_iswhitespace(vars->cmd))
+		// return (FALSE);
+	// vars->args = NULL;
+	// token = ft_strtok(vars->cmd, "'\"()|&<>");
+	// while (token)
+	// {
+		// ft_lstadd_back(&vars->args, ft_lstnew(token));
+		// token = ft_strtok(NULL, "'\"()|&<>");
+	// }
+	// if (!ft_check(vars))
+		// return (FALSE);
+	// ft_lstiter(vars->args, printf);
+	// vars->ast = ast_builder(&vars->args);
+	// return (TRUE);
+// }
+// 
