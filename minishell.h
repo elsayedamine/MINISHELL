@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/26 22:31:49 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/27 00:59:53 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		is_par(char *str);
 int		isvalid_quotes(t_shell *vars);
 void	throw_error(int error);
 char	*removequotes(char *str);
-void	removequotes_arr(char **arr);
+char	**removequotes_arr(char **arr);
 char	**_ft_split(char const *s, char b);
 void	pop_spaces(t_shell *vars);
 //
