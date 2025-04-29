@@ -7,10 +7,6 @@
 # SEGV
     ila mssahna l env : MAZAL MAKHDMNAHACH
 
-bwa7d l functions dial stat();<br>
-try to execute this command : .<br>
-stat, lstat, fstat :
-O lblan dial had .. commmand rah kaykhser l code mnin kandiro Ctrl+C wla chi 7aja<br>
 
 # I need to add a fct that switches the places of strings in an array
 

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/29 17:15:32 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/29 20:34:36 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*get_path(char **envp, char *cmd)
 	char	*path;
 	int		i;
 
-	if (access(cmd, X_OK) == 0 || is_dir(cmd) != 1)
+	if (access(cmd, X_OK) == 0 && is_dir(cmd) != 1)
 		return (ft_strdup(cmd));
 	paths = ft_split(envp[path_index(envp, "PATH=")] + 5, ':');
 	i = 0;
@@ -75,9 +75,12 @@ char	*get_path(char **envp, char *cmd)
 	{
 		path = ft_strjoin(paths[i++], "/");
 		checker = ft_strjoin(path, cmd);
-		if (!access(checker, X_OK) || !is_dir(checker))
+		if (!access(checker, X_OK) && !is_dir(checker))
+		{
+			if 	
 			if (!ft_strnstr(checker, "//", ft_strlen(checker)))
 				return (ft_free("21", paths, path), checker);
+		}
 		ft_free("11", checker, path);
 	}
 	ft_free("2", paths);
