@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/23 10:09:07 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/29 17:15:32 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ int	path_index(char **envp, char *s)
 	i = 0;
 	while (envp[i])
 	{
-		if (!strncmp(s, envp[i], 5))
+		if (!ft_strncmp(s, envp[i], 5))
 			return (i);
 		i++;
 	}
+	// need to review and remove and use get_env...
 	return (0);
 }
 
@@ -49,6 +50,16 @@ int	check_built_ins(char **arr, t_shell *vars)
 	return (FALSE);
 }
 
+int is_dir(const char *path)
+{
+	struct stat	sb;
+
+	if (stat(path, &sb) == -1)
+		return (0);
+	return (S_ISDIR(sb.st_mode));
+	// handle directory exit status and error
+}
+
 char	*get_path(char **envp, char *cmd)
 {
 	char	**paths;
@@ -56,17 +67,15 @@ char	*get_path(char **envp, char *cmd)
 	char	*path;
 	int		i;
 
-	if (access(cmd, X_OK) == 0)
+	if (access(cmd, X_OK) == 0 || is_dir(cmd) != 1)
 		return (ft_strdup(cmd));
 	paths = ft_split(envp[path_index(envp, "PATH=")] + 5, ':');
-	if (!paths)
-		return (NULL);
 	i = 0;
 	while (paths && paths[i])
 	{
 		path = ft_strjoin(paths[i++], "/");
 		checker = ft_strjoin(path, cmd);
-		if (access(checker, X_OK) == 0)
+		if (!access(checker, X_OK) || !is_dir(checker))
 			if (!ft_strnstr(checker, "//", ft_strlen(checker)))
 				return (ft_free("21", paths, path), checker);
 		ft_free("11", checker, path);
@@ -82,14 +91,14 @@ void	execution(t_shell *vars)
 	char	*cmd_path;
 
 	vars->tmp = vars->args;
-	while (vars->tmp && vars->tmp->arr)
+	while (vars->tmp)
 	{
 		if (check_built_ins(vars->tmp->arr, vars) == TRUE)
 		{
 			vars->tmp = vars->tmp->next;
 			continue ;
 		}
-		cmd_path = get_path(vars->envp, vars->tmp->arr[0]);
+		cmd_path = get_path(vars->envp, *vars->tmp->arr);
 		if (!cmd_path)
 		{
 			vars->tmp = vars->tmp->next;

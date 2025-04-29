@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/21 10:58:27 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:11:29 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,6 @@ typedef struct s_data
 	char	*s;
 	char	**arr;
 }			t_alloc;
-
-typedef struct s_type
-{
-	int		*i;
-	float	*f;
-	char	*c;
-	double	*d;
-}			t_type;
 
 // memory functions
 void	ft_init(int count, ...);

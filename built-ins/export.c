@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/23 23:00:05 by sayed            ###   ########.fr       */
+/*   Updated: 2025/04/27 11:29:28 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,23 @@ char	*var_name(char *s, char flag)
 
 void	ft_add(char *v, char *av, t_shell *vars)
 {
-	vars->tmp = vars->env;
-	while (vars->tmp)
+	t_list	*tmp;
+
+	tmp = vars->env;
+	while (tmp)
 	{
-		if (ft_strncmp((char *)vars->tmp->content, v, ft_strlen(v)) == 0 \
-			&& ((char *)vars->tmp->content)[ft_strlen(v)] == '=' \
-				&& ft_strlen(v) <= ft_strlen(av))
+		if (!ft_strncmp((char *)tmp->content, v, ft_strlen(v))\
+			&& (((char *)tmp->content)[ft_strlen(v)] == '=' \
+				|| ((char *)tmp->content)[ft_strlen(v)] == '\0') \
+					&& ft_strlen(v) <= ft_strlen(av))
 		{
-			free(vars->tmp->content);
-			vars->tmp->content = ft_strdup(av);
+			free(tmp->content);
+			tmp->content = ft_strdup(av);
 			break;
 		}
-		vars->tmp = vars->tmp->next;
+		tmp = tmp->next;
 	}
-	if (!vars->tmp)
+	if (!tmp)
 		ft_lstadd_back(&vars->env, ft_lstnew(ft_strdup(av)));
 	free(v);
 }
@@ -72,27 +75,80 @@ void	ft_append(char *v, char *av, t_shell *vars)
 	char	*new_val;
 	char	*old_val;
 	char	*appended;
+	t_list	*tmp;
 
-	if (ft_strncmp(av + ft_strlen(v), "+=", 2) != 0)
-		return (free(v));
-	vars->tmp = vars->env;
-	while (vars->tmp)
+	tmp = vars->env;
+	while (tmp)
 	{
-		if (ft_strncmp((char *)vars->tmp->content, v, ft_strlen(v)) == 0 &&
-			((char *)vars->tmp->content)[ft_strlen(v)] == '=')
+		if (!ft_strncmp((char *)tmp->content, v, ft_strlen(v)) &&
+			((char *)tmp->content)[ft_strlen(v)] == '=')
 		{
-			old_val = ft_strdup((char *)vars->tmp->content + ft_strlen(v) + 1);
+			old_val = ft_strdup((char *)tmp->content + ft_strlen(v) + 1);
 			new_val = av + ft_strlen(v) + 2;
 			appended = ft_strjoin(old_val, new_val);
-			ft_free("11", old_val, vars->tmp->content);
-			vars->tmp->content = ft_strjoin(v, "=");
-			vars->tmp->content = ft_strjoin_f(vars->tmp->content, appended, 1);
+			ft_free("11", old_val, tmp->content);
+			tmp->content = ft_strjoin(v, "=");
+			tmp->content = ft_strjoin_f(tmp->content, appended, 1);
 			return ((void)ft_free("11", appended, v));
 		}
-		vars->tmp = vars->tmp->next;
+		tmp = tmp->next;
 	}
+	new_val = av + ft_strlen(v) + 2;
+	appended = ft_strjoin_f(ft_strjoin(v, "="), new_val, 1);
+	ft_lstadd_back(&vars->env, ft_lstnew(appended));
 	free(v);
 }
+void	ft_printexp(t_shell	*vars)
+{
+	t_list	*tmp;
+	char	*new_str;
+	char	*str;
+
+	tmp = vars->env;
+	while (tmp)
+	{
+		str = ft_strdup((char *)tmp->content);
+		if (ft_strchr_index(str, '=') != -1)
+		{
+			new_str = ft_strinsert(str, "\"", ft_strchr_index(str, '=') + 1);
+			ft_free("1", str);
+			str = ft_strjoin_f(new_str, "\"", 1);
+		}
+		printf("declare -x %s\n", str);
+		ft_free("1", str);
+		tmp = tmp->next;
+	}
+}
+int	ft_isvn(char *v, int flag, t_shell *vars)
+{
+	int		i;
+	t_list	*tmp;
+
+	i = 0;
+	tmp = vars->env;
+	if (!v || (!ft_isalpha(v[0]) && v[0] != '_'))
+		return (FALSE);
+	while (v && v[i])
+	{
+		if ((flag == 1 && ft_strchr("!@#$%^&*()-[]{}|\\:;\"'<>,.?/~` /", v[i])) ||
+			(flag == 0 && ft_strchr("!@#$%^&*()-+=[]{}|\\:;\"'<>,.?/~` /", v[i])))
+			return (FALSE);
+		i++;
+	}
+	if (flag == 0)
+	{
+		while (tmp)
+		{
+			if (!ft_strncmp((char *)tmp->content, v, ft_strlen(v)) &&
+				((char *)tmp->content)[ft_strlen(v)] == '\0')
+				return (TRUE);
+			tmp = tmp->next;
+		}
+		ft_lstadd_back(&vars->env, ft_lstnew(ft_strdup(v)));
+	}
+	return (TRUE);
+}
+
 
 int	export(int ac, char **av, t_shell *vars)
 {
@@ -100,25 +156,29 @@ int	export(int ac, char **av, t_shell *vars)
 	int		i;
 
 	i = 1;
+	if (ac == 1)
+		return (ft_printexp(vars), TRUE);
 	while (i < ac)
 	{
 		v = var_name(av[i], '+');
-		if (v && ft_strncmp(av[i] + ft_strlen(v), "+=", 2) == 0)
+		if (ft_isvn(v, 1, vars) && !ft_strncmp(av[i] + ft_strlen(v), "+=", 2))
 		{
-			ft_append(v, av[i], vars);
-			i++;
+			ft_append(v, av[i++], vars);
 			continue;
 		}
 		v = var_name(av[i], '=');
-		if (v && !ft_strchr(v, '+'))
+		if (ft_isvn(v, 1, vars) && !ft_strchr(v, '+'))
+		{			
+			ft_add(v, av[i++], vars);
+			continue;
+		}
+		if (ft_isvn(av[i], 0, vars))
 		{
-			ft_add(v, av[i], vars);
 			i++;
 			continue;
 		}
-		printfd(2, "export: `%s': not a valid identifier\n", av[i]);
+		printfd(2, "export: `%s': not a valid identifier\n", av[i++]);
 		ft_free("1", v);
-		i++;
 	}
 	return (TRUE);
 }

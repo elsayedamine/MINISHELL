@@ -6,11 +6,13 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/26 21:32:51 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/28 10:03:44 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+extern t_shell	g_vars;
 
 int	ft_nodejoin(t_shell *vars)
 {
@@ -107,4 +109,15 @@ int	ft_check(t_shell *vars)
 	if (isvalid_syntax(vars) == FALSE)
 		return (FALSE);
 	return (TRUE);
+}
+
+void	throw_error(int error)
+{
+	if (error == SYNTAX)
+		printfd(2, "Invalid Syntax : Something is missing \" or ' or ( or )\n");
+	if (error == OP)
+		printfd(2, "Invalid Syntax : Error in operators input\n");
+	if (error == CMD_NOT_FOUND)
+		printfd(2, "Command not found : %s\n", g_vars.cmd_not_found);
+	g_vars.exit = 127;
 }

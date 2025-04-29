@@ -6,24 +6,11 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/27 01:09:33 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:25:04 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-extern t_shell	g_vars;
-
-void	throw_error(int error)
-{
-	if (error == SYNTAX)
-		printfd(2, "Invalid Syntax : Something is missing \" or ' or ( or )\n");
-	if (error == OP)
-		printfd(2, "Invalid Syntax : Error in operators input\n");
-	if (error == CMD_NOT_FOUND)
-		printfd(2, "Command not found : %s\n", g_vars.cmd_not_found);
-	g_vars.exit = 127;
-}
 
 void	print_ast(t_list *node, int depth)
 {
@@ -51,6 +38,19 @@ void	print_ast(t_list *node, int depth)
 	}
 }
 
+t_type define_type(char *content)
+{
+	if (!content)
+		return (SUBSHELL);
+	if (!ft_strcmp(content, "||"))
+		return (OR);
+	if (!ft_strcmp(content, "&&"))
+		return (AND);
+	if (!ft_strcmp(content, "|"))
+		return (PIPE);
+	return (CMD);
+}
+
 t_list	*create_node(void *content)
 {
 	t_list	*new;
@@ -60,7 +60,7 @@ t_list	*create_node(void *content)
 		return (NULL);
 	new->content = content;
 	new->arr = removequotes_arr(_ft_split((char *)content, ' '));
-	new->type = 0;
+	new->type = define_type(content);
 	new->child = NULL;
 	new->next = NULL;
 	return (new);
@@ -70,51 +70,48 @@ int	fill_args(t_shell *vars)
 {
 	char	*token;
 
-	if (!vars->cmd || !*(vars->cmd) || ft_iswhitespace(vars->cmd))
+	if (!*vars->cmd)
 		return (FALSE);
-	token = ft_strtok(vars->cmd, "'\"()|&<>");
+	token = ft_strtok(vars->cmd, "'\"()|&");
 	vars->args = NULL;
 	while (token)
 	{
 		ft_lstadd_back(&vars->args, create_node(token));
-		token = ft_strtok(NULL, "'\"()|&<>");
+		token = ft_strtok(NULL, "'\"()|&");
 	}
 	if (!ft_check(vars))
 		return (FALSE);
 	vars->tmp = vars->args;
-	vars->ast = ast_builder(&vars->args);
+	vars->ast = ast_builder(&vars->tmp);
 	print_ast(vars->ast, 0);
 	return (TRUE);
 }
 
-
 // LET THE FUN BEGIN...!!
-// 
+
 t_list	*ast_builder(t_list **cursor)
 {
 	t_list	*node;
 	t_list	*sub;
-	char	*c;
 
 	node = NULL;
 	while (*cursor)
 	{
-		c = (char *)(*cursor)->content;
-		if (!ft_strcmp(c, "("))
+		if (!ft_strcmp((char *)(*cursor)->content, "("))
 		{
 			(*cursor) = (*cursor)->next;
 			sub = create_node(NULL);
 			sub->child = ast_builder(cursor);
 			ft_lstadd_back(&node, sub);
 		}
-		else if (!ft_strcmp(c, ")"))
+		else if (!ft_strcmp((char *)(*cursor)->content, ")"))
 		{
 			(*cursor) = (*cursor)->next;
 			return (node);
 		}
 		else
 		{
-			ft_lstadd_back(&node, create_node(c));
+			ft_lstadd_back(&node, create_node((char *)(*cursor)->content));
 			(*cursor) = (*cursor)->next;
 		}
 	}

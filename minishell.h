@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/27 00:59:53 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:38:07 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 // # include "pipex/pipex.h"
 
 # define M "Minishell"
@@ -31,19 +32,18 @@ typedef enum error
 	CMD_NOT_FOUND
 }			t_error;
 
-// typedef enum type
-// {
-	// NONE,
-	// SUBSHELL,
-	// OR,
-	// AND,
-	// PIPE,
-	// READ,
-	// WRITE,
-	// APPEND,
-	// HEREDOC,
-	// CMD
-// }			t_type;
+typedef enum type
+{
+	SUBSHELL,
+	OR,
+	AND,
+	PIPE,
+	READ,
+	WRITE,
+	APPEND,
+	HEREDOC,
+	CMD
+}			t_type;
 
 typedef struct s_check
 {

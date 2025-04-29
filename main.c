@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/24 18:36:08 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:23:59 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	free_args(int flag, t_shell *vars)
 {
 	free(vars->cmd);
 	vars->tmp = vars->args;
-	while (flag == 1 && vars->tmp)
+	while (flag && vars->tmp)
 	{
 		if (vars->tmp->arr)
 			ft_free("2", vars->tmp->arr);
@@ -60,7 +60,7 @@ void	prompt_loop(t_shell *vars)
 		vars->cmd = read_cmd(vars->cmd);
 		if (!vars->cmd)
 			return (rl_clear_history(), exit(EXIT_SUCCESS));
-		if (!*vars->cmd || *vars->cmd == '\n')
+		if (!*vars->cmd)
 		{
 			free(vars->cmd);
 			continue ;
@@ -80,11 +80,14 @@ int	main(int ac, char **av, char **envp)
 	t_shell	vars;
 
 	(void)av;
-	printf("pid = %d\n", getpid());
-	// if the fd 1 or 0 are closed we should exit directly
+	printfd(1, "pid = %d\n", getpid());
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
+	// if (write(1, 0, 0) == -1 || read(0, 0, 0) == -1)
+	// 	return (write(2, "amine\n", 6));
+	// we should handle 1 and 0 fd close
 	vars.envp = ft_arrdup(envp);
+	vars.env = ft_arr2list(vars.envp);
 	signal(SIGINT, foo);
 	prompt_loop(&vars);
 	return (0);

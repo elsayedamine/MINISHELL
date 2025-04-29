@@ -20,7 +20,9 @@
         "wait.h": "c",
         "cstdlib": "c",
         "stdio.h": "c",
-        "stdio2-decl.h": "c"
+        "stdio2-decl.h": "c",
+        "errno.h": "c",
+        "signal.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

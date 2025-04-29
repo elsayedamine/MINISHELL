@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:38:48 by sayed             #+#    #+#             */
-/*   Updated: 2025/04/17 20:09:48 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:57:50 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,20 @@
 
 int	env(int ac, char **av, t_shell *vars)
 {
-	int	i;
+	t_list	*tmp;
+	char *str;
 
-	i = 0;
 	(void)av;
-	(void)vars;
+	tmp = vars->env;
 	if (ac != 1)
 		return (printfd(2, "env: No options or \
 			arguments are allowed!\n"), TRUE);
-	while (vars->envp && vars->envp[i])
+	while (tmp)
 	{
-		if (ft_strchr(av[i], '='))
-			printf("%s\n", av[i]);
-		i++;
+		str = (char *)tmp->content;
+		if (ft_strchr(str, '='))
+			printf("%s\n", str);
+		tmp = tmp->next;
 	}
 	return (TRUE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/21 10:57:12 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/27 10:53:05 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int	unset_variable(char *key, t_shell *vars)
 	t_list	*new_env;
 
 	new_env = NULL;
-	curr = ft_arr2list(vars->envp);
-	ft_free("2", vars->envp);
+	curr = vars->env;
 	while (curr)
 	{
 		next = curr->next;
@@ -35,9 +34,7 @@ int	unset_variable(char *key, t_shell *vars)
 			ft_lstadd_back(&new_env, curr);
 		}
 		curr = next;
-		printf("-\n");
 	}
-	vars->envp = ft_list2arr(new_env);
 	return (TRUE);
 }
 
