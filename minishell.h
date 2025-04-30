@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/30 03:51:23 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:58:15 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,41 @@
 
 typedef enum error
 {
-	SYNTAX = 500,
+	IN,
+	OUT,
+	SYNTAX,
 	CHARS,
 	OP,
+	DUP,
+	EXEC,
+	PIP,
 	CMD_NOT_FOUND
 }			t_error;
 
 typedef enum type
 {
-	SUBSHELL,
 	OR,
 	AND,
+	SUBSHELL,
 	PIPE,
+	CMD,
 	READ,
 	WRITE,
 	APPEND,
-	HEREDOC,
-	CMD
+	HEREDOC
 }			t_type;
+
+typedef struct s_pipe
+{
+	int		*fdo;
+	int		*fdi;
+	pid_t	pid1;
+	pid_t	pid2;
+	char	*path1;
+	char	*path2;
+	char	**args;
+	int		pipefd[2];
+}			t_pip;
 
 typedef struct s_check
 {
@@ -82,6 +99,7 @@ char	*removequotes(char *str);
 char	**removequotes_arr(char **arr);
 char	**_ft_split(char const *s, char b);
 void	pop_spaces(t_shell *vars);
+t_list	*create_node(void *content);
 //
 t_list	*ast_builder(t_list **cursor);
 //
@@ -96,6 +114,8 @@ int		unset(int ac, char **av, t_shell *vars);
 char	*get_env(char *k, t_shell *vars);
 
 // execution Functions
-void	execution(t_shell *vars);
-int		path_index(char **envp, char *s);
+int		execution(t_shell *vars, t_list *ast);
+int		pipex(t_shell *vars, t_list **node);
+char	*get_path(char *cmd, t_shell *vars);
+
 #endif

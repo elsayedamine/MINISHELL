@@ -11,7 +11,13 @@ sources = \
 		parsing/removequotes.c \
 		parsing/ft_check.c \
 		parsing/custom_split.c \
+		\
+		\
 		execution/execution.c \
+		execution/get_path.c \
+		execution/pipeline.c \
+		\
+		\
 		built-ins/cd.c \
 		built-ins/echo.c \
 		built-ins/env.c \

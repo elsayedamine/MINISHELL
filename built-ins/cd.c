@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:06:14 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/17 21:58:22 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:22:37 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int	cd(int ac, char **av, t_shell *vars)
 			"%s: cd: only relative or absolute path supported\n", M));
 	if (ac > 2)
 		return (printfd(2, "cd: too many arguments\n"), 127);
-	return (change_dir(av[1], vars->envp));
+	change_dir(av[1], vars->envp);
+	ft_lstclear(&vars->env, free);
+	vars->env = ft_arr2list(vars->envp);
+	return (TRUE);
 }
 
 // int main(int ac, char **av, char **env)

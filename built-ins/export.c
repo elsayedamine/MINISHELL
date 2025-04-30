@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/30 04:50:36 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:30:47 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	ft_isvn(char *v, int flag, t_shell *vars)
 		while (tmp)
 		{
 			if (!ft_strncmp((char *)tmp->content, v, ft_strlen(v)) &&
-				((char *)tmp->content)[ft_strlen(v)] == '\0')
+				(((char *)tmp->content)[ft_strlen(v)] == '\0' || ((char *)tmp->content)[ft_strlen(v)] == '='))
 				return (TRUE);
 			tmp = tmp->next;
 		}
