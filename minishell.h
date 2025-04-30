@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/29 16:38:07 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/30 03:51:23 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 typedef enum error
 {
-	SYNTAX,
+	SYNTAX = 500,
 	CHARS,
 	OP,
 	CMD_NOT_FOUND
@@ -77,7 +77,7 @@ int		isvalid_op(t_shell *vars);
 int		is_op(char *str);
 int		is_par(char *str);
 int		isvalid_quotes(t_shell *vars);
-void	throw_error(int error);
+void	throw_error(int error, char *file);
 char	*removequotes(char *str);
 char	**removequotes_arr(char **arr);
 char	**_ft_split(char const *s, char b);
@@ -93,6 +93,7 @@ int		ft_exit(int ac, char **av, t_shell *vars);
 int		export(int ac, char **av, t_shell *vars);
 int		pwd(int ac, char **av, t_shell *vars);
 int		unset(int ac, char **av, t_shell *vars);
+char	*get_env(char *k, t_shell *vars);
 
 // execution Functions
 void	execution(t_shell *vars);

@@ -22,7 +22,11 @@
         "stdio.h": "c",
         "stdio2-decl.h": "c",
         "errno.h": "c",
-        "signal.h": "c"
+        "signal.h": "c",
+        "readline.h": "c",
+        "stat.h": "c",
+        "features.h": "c",
+        "errno-base.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

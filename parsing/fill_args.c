@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/29 16:25:04 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/30 04:12:38 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	fill_args(t_shell *vars)
 		return (FALSE);
 	vars->tmp = vars->args;
 	vars->ast = ast_builder(&vars->tmp);
-	print_ast(vars->ast, 0);
+	// print_ast(vars->ast, 0);
 	return (TRUE);
 }
 

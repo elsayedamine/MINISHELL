@@ -18,7 +18,8 @@ sources = \
 		built-ins/exit.c \
 		built-ins/export.c \
 		built-ins/pwd.c \
-		built-ins/unset.c
+		built-ins/unset.c \
+		built-ins/get_env.c
 
 object = $(sources:.c=.o)
 

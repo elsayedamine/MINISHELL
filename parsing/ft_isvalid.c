@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:43:13 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/21 11:51:28 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/30 03:42:58 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ int	isvalid_par(t_shell *vars)
 			vars->check.par--;
 			vars->check.lpar = ')';
 			if (vars->check.fpar == 0)
-				return (throw_error(SYNTAX), FALSE);
+				return (throw_error(SYNTAX, NULL), FALSE);
 		}
 		vars->tmp = vars->tmp->next;
 	}
 	if (!vars->check.par)
 		return (TRUE);
-	return (throw_error(SYNTAX), FALSE);
+	return (throw_error(SYNTAX, NULL), FALSE);
 }
 
 int	isvalid_quotes(t_shell *vars)
@@ -82,14 +82,14 @@ int	isvalid_quotes(t_shell *vars)
 			len = ft_strlen((char *)tmp->content);
 			if (((char *)tmp->content)[0] == '"' && \
 			(((char *)tmp->content)[len - 1] != '"' || len == 1))
-				return (throw_error(SYNTAX), FALSE);
+				return (throw_error(SYNTAX, NULL), FALSE);
 		}
 		if (tmp->content)
 		{
 			len = ft_strlen((char *)tmp->content);
 			if (((char *)tmp->content)[0] == '\'' && \
 			(((char *)tmp->content)[len - 1] != '\'' || len == 1))
-				return (throw_error(SYNTAX), FALSE);
+				return (throw_error(SYNTAX, NULL), FALSE);
 		}
 		tmp = tmp->next;
 	}
@@ -108,17 +108,17 @@ int	isvalid_op(t_shell *vars)
 		{
 			len = ft_strlen((char *)tmp->content);
 			if (len == 1 && ((char *)tmp->content)[0] == '&')
-				return (throw_error(OP), FALSE);
+				return (throw_error(OP, NULL), FALSE);
 			if (is_op((char *)tmp->content) && tmp->next && \
 				is_op((char *)tmp->next->content))
-				return (throw_error(OP), FALSE);
+				return (throw_error(OP, NULL), FALSE);
 			if (is_op((char *)tmp->content) && tmp->next && \
 				ft_iswhitespace((char *)tmp->next->content) && \
 					((tmp->next->next && is_op((char *)tmp->next->next->content
 						)) || !(tmp->next->next)))
-				return (throw_error(OP), FALSE);
+				return (throw_error(OP, NULL), FALSE);
 			if (is_op((char *)tmp->content) && !tmp->next)
-				return (throw_error(OP), FALSE);
+				return (throw_error(OP, NULL), FALSE);
 		}
 		tmp = tmp->next;
 	}

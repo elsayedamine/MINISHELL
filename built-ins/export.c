@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/27 11:29:28 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/04/30 04:50:36 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,8 @@ int	export(int ac, char **av, t_shell *vars)
 		printfd(2, "export: `%s': not a valid identifier\n", av[i++]);
 		ft_free("1", v);
 	}
+	ft_free("2", vars->envp);
+	vars->envp = ft_list2arr(vars->env);
 	return (TRUE);
 }
 

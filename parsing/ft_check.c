@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/28 10:03:44 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/30 04:47:25 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_nodejoin(t_shell *vars)
 	char *(new_content), *(tmp_content);
 	t_list *(to_delete), *(tmp) = vars->args;
 	if (tmp && is_op((char *)tmp->content))
-		return (throw_error(OP), FALSE);
+		return (throw_error(OP, NULL), FALSE);
 	while (tmp && tmp->next)
 	{
 		tmp_content = (char *)tmp->content;
@@ -39,7 +39,7 @@ int	ft_nodejoin(t_shell *vars)
 			tmp = tmp->next;
 	}
 	if (tmp && is_op((char *)tmp->content))
-		return (throw_error(OP), FALSE);
+		return (throw_error(OP, NULL), FALSE);
 	return (TRUE);
 }
 
@@ -56,15 +56,15 @@ int	isvalid_syntax(t_shell *vars)
 		if (tmp->next)
 			n = (char *)tmp->next->content;
 		if (is_par(c) && tmp->next && is_par(n) && *c != *n)
-			return (throw_error(OP), FALSE);
+			return (throw_error(OP, NULL), FALSE);
 		if (!is_par(c) && !is_op(c) && tmp->next && is_par(n) && *n == '(')
-			return (throw_error(OP), FALSE);
+			return (throw_error(OP, NULL), FALSE);
 		if (!is_par(c) && is_op(c) && tmp->next && is_par(n) && *n == ')')
-			return (throw_error(OP), FALSE);
+			return (throw_error(OP, NULL), FALSE);
 		if (is_par(c) && *c == '(' && tmp->next && is_op(n) && *n != '<')
-			return (throw_error(OP), FALSE);
+			return (throw_error(OP, NULL), FALSE);
 		if (is_par(c) && *c == ')' && tmp->next && !is_op(n) && !is_par(n))
-			return (throw_error(OP), FALSE);
+			return (throw_error(OP, NULL), FALSE);
 		tmp = tmp->next;
 	}
 	return (TRUE);
@@ -111,13 +111,15 @@ int	ft_check(t_shell *vars)
 	return (TRUE);
 }
 
-void	throw_error(int error)
+void	throw_error(int error, char *file)
 {
 	if (error == SYNTAX)
 		printfd(2, "Invalid Syntax : Something is missing \" or ' or ( or )\n");
 	if (error == OP)
 		printfd(2, "Invalid Syntax : Error in operators input\n");
 	if (error == CMD_NOT_FOUND)
-		printfd(2, "Command not found : %s\n", g_vars.cmd_not_found);
+		printfd(2, "Command not found : %s\n", file);
+	if (error == ENOENT)
+		printfd(2, "%s: %s\n", file, strerror(ENOENT));	
 	g_vars.exit = 127;
 }
