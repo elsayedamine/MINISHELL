@@ -25,8 +25,8 @@ wa naaaaaaari treatement dial redirections 3ndna khaaaaaaaaaaari m3a ro7o waaaaa
 
 
 # blan akhor
-# ila drt export a moraha env mzn mahaybanch o ila drt moraha export a= haywli yban f env dakchi li bghina walaaaaaaaaaaaaaaaakin
-# ila drt lih moraha export a 3awd makayt7ydch mn env (arr) dialna o fl bach kayt7yd o kaydouble 3ndna l "a" mn lfo9 f export 
+# ila drt 'export a moraha env mzn mahaybanch o ila drt moraha 'export a=' haywli yban f env dakchi li bghina walaaaaaaaaaaaaaaaakin
+# ila drt lih moraha 'export a 3awd makayt7ydch mn env (arr) dialna o fl bach kayt7yd o kaydouble 3ndna l "a" mn lfo9 f export 
 # kaywli kayn joj dial awat a="" and a hadchi in our export
 # wa unset makhdamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaach nsiti aham line flekher dial fct ank t updati the new list li sawbti li na9sa dak l var li updatiti
 # wa ya 3la 3ezi rah 4 o nes dial sba7 hadi o mzl kant9atel 
