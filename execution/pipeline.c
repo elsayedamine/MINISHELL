@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:48:32 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 15:53:19 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:59:57 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int execute_pipe(t_shell *vars, char **args, t_list *node, t_pip *pipes)
 			if (execve(cmd, ft_split(args[i], ' '), vars->envp) == -1)
 				exit_execve(cmd, vars, NULL);
 		}
-		else // PARENT
+		else
 		{
 			if (prev_fd != -1)
 				close(prev_fd);
