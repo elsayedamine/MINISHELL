@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 16:58:24 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:38:53 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,55 +35,24 @@ int	check_builts(char **arr, t_shell *vars)
 	return (FALSE);
 }
 
-void	skip(t_list **node, int op)
-{
-	while (*node && (*node)->next && (*node)->type != !op)
-		*node = (*node)->next;
-	if ((*node)->type == SUBSHELL || (*node)->type == CMD || (*node)->type == !op)
-		*node = (*node)->next;
-}
-// ls || (ls -l | wc -l)
-
-int	execute_cmd(t_shell *vars, t_list **ast)
-{
-	char	*cmd;
-	pid_t	pid;
-	int		status;
-
-	if (check_builts((*ast)->arr, vars) == TRUE)
-		return (skip(ast, OR), EXIT_SUCCESS);
-	cmd = get_path((*ast)->content, vars);
-	if (!cmd)
-		return (skip(ast, AND), vars->exit);
-	status = 0;
-	pid = fork();
-	if (pid == 0)
-	{
-		if (execve(cmd, (*ast)->arr, vars->envp) == -1)
-			exit_execve(cmd, vars, ast);
-	}
-	else
-		waitpid(pid, &status, 0);
-	free(cmd);
-	skip(ast, OR);
-	return (status);
-}
-
 int	execution(t_shell *vars, t_list *ast)
 {
 	t_list	*node;
+	int		status;
 	// char	*cmd_path;
 	node = ast;
+	status = 0;
 	while (node)
 	{
-		if (node && node->type == CMD && (!node->next || node->next->type <= AND))
-			vars->exit = execute_cmd(vars, &node);
-		if (node && node->type == CMD && node->next && node->next->type == PIPE)
-			vars->exit = pipex(vars, &node);
-		if (node && node->type == SUBSHELL)
-			vars->exit = execution(vars, node->child);
-
+		// if (node->type == CMD && node->next->type <= AND)
+			// status = execute_cmd(vars, node);
+		if (node->type == CMD && node->next && node->next->type == PIPE)
+			status = pipex(vars, &node);
+		// if (node->type == SUBSHELL)
+			// status = execution(vars, node);
+		// if (node->type == OR || node->type == AND)
+			
+		node = node->next;
 	}
-	return (vars->exit);
+	return (status);
 }
-// ls || (ls | ls | ls && ls) || ls && ls

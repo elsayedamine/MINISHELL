@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 15:55:45 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:58:15 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int		isvalid_op(t_shell *vars);
 int		is_op(char *str);
 int		is_par(char *str);
 int		isvalid_quotes(t_shell *vars);
-void	throw_error(int error, char *file, int *exitt);
+void	throw_error(int error, char *file);
 char	*removequotes(char *str);
 char	**removequotes_arr(char **arr);
 char	**_ft_split(char const *s, char b);
@@ -117,6 +117,5 @@ char	*get_env(char *k, t_shell *vars);
 int		execution(t_shell *vars, t_list *ast);
 int		pipex(t_shell *vars, t_list **node);
 char	*get_path(char *cmd, t_shell *vars);
-void	exit_execve(char *cmd, t_shell *vars, t_list **ast);
-void	skip(t_list **node, int op);
+
 #endif
