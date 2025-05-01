@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 16:58:24 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:20:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,56 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	return (status);
 }
 
-int	execution(t_shell *vars, t_list *ast)
+// int	traverse_sub(t_shell *vars, t_list **node)
+// {
+// 	if (vars->exit == 0 && (*node)->next && (*node)->next->type == OR)
+// 		skip(node, OR);
+// 	else if (vars->exit != 0 && (*node)->next && (*node)->next->type == AND)
+// 		skip(node, AND);
+// 	else if (vars->exit == 0 && (*node)->next && (*node)->next->type == AND)
+// 		(*node) = (*node)->next->next;
+// 	else if (vars->exit != 0 && (*node)->next && (*node)->next->type == OR)
+// 		(*node) = (*node)->next->next;
+// 	return (vars->exit);
+// }
+
+int	traverse_sub(t_shell *vars, t_list **node)
 {
-	t_list	*node;
+	if (vars->exit == 0 && (*node)->next && (*node)->next->type == OR)
+		skip(node, OR);
+	else if (vars->exit != 0 && (*node)->next && (*node)->next->type == AND)
+		skip(node, AND);
+	else if ((*node)->next)
+		(*node) = (*node)->next->next;
+	else
+		(*node) = (*node)->next;
+	return (vars->exit);
+}
+
+int	execution(t_shell *vars, t_list **ast)
+{
+	t_list	**node;
 	// char	*cmd_path;
 	node = ast;
-	while (node)
+	while (*node)
 	{
-		if (node && node->type == CMD && (!node->next || node->next->type <= AND))
-			vars->exit = execute_cmd(vars, &node);
-		if (node && node->type == CMD && node->next && node->next->type == PIPE)
-			vars->exit = pipex(vars, &node);
-		if (node && node->type == SUBSHELL)
-			vars->exit = execution(vars, node->child);
-
+		if ((*node) && (*node)->type == CMD && (!(*node)->next || (*node)->next->type <= AND))
+			vars->exit = execute_cmd(vars, node);
+		else if ((*node) && (*node)->type == CMD && (*node)->next && (*node)->next->type == PIPE)
+			vars->exit = pipex(vars, node);
+		else if ((*node) && (*node)->type == SUBSHELL)
+		{
+			vars->exit = execution(vars, &(*node)->child);
+			traverse_sub(vars, node);
+			continue ;
+		}
+		else
+			(*node) = (*node)->next;
 	}
 	return (vars->exit);
 }
 // ls || (ls | ls | ls && ls) || ls && ls
+// p (char *)node->content
+// ls && (ls -l && ls -a || asasd||ASDSA||ASD && touch a) && touch ls
+// (ls && (echo A || (echo B && echo C))) || ((echo D && echo E) && (echo F || echo G)) 
+ // && (echo H || (echo I && (echo J || echo K)))

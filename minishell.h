@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 15:55:45 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:16:53 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int		unset(int ac, char **av, t_shell *vars);
 char	*get_env(char *k, t_shell *vars);
 
 // execution Functions
-int		execution(t_shell *vars, t_list *ast);
+int		execution(t_shell *vars, t_list **ast);
 int		pipex(t_shell *vars, t_list **node);
 char	*get_path(char *cmd, t_shell *vars);
 void	exit_execve(char *cmd, t_shell *vars, t_list **ast);
