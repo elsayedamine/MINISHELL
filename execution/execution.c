@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 18:20:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:23:16 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	skip(t_list **node, int op)
 	if ((*node)->type == SUBSHELL || (*node)->type == CMD || (*node)->type == !op)
 		*node = (*node)->next;
 }
-// ls || (ls -l | wc -l)
 
 int	execute_cmd(t_shell *vars, t_list **ast)
 {
@@ -68,19 +67,6 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	skip(ast, OR);
 	return (status);
 }
-
-// int	traverse_sub(t_shell *vars, t_list **node)
-// {
-// 	if (vars->exit == 0 && (*node)->next && (*node)->next->type == OR)
-// 		skip(node, OR);
-// 	else if (vars->exit != 0 && (*node)->next && (*node)->next->type == AND)
-// 		skip(node, AND);
-// 	else if (vars->exit == 0 && (*node)->next && (*node)->next->type == AND)
-// 		(*node) = (*node)->next->next;
-// 	else if (vars->exit != 0 && (*node)->next && (*node)->next->type == OR)
-// 		(*node) = (*node)->next->next;
-// 	return (vars->exit);
-// }
 
 int	traverse_sub(t_shell *vars, t_list **node)
 {
