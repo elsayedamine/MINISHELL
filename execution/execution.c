@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 18:23:16 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:53:03 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,17 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 			exit_execve(cmd, vars, ast);
 	}
 	else
+	{
 		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			vars->exit = WEXITSTATUS(status);
+	}
 	free(cmd);
-	skip(ast, OR);
-	return (status);
+	if (vars->exit == 0)
+		skip(ast, OR);
+	else
+		traverse_sub(vars, ast);
+	return (vars->exit);
 }
 
 int	traverse_sub(t_shell *vars, t_list **node)
