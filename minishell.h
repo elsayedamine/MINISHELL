@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 18:53:20 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/02 10:42:47 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,7 @@ int		pipex(t_shell *vars, t_list **node);
 char	*get_path(char *cmd, t_shell *vars);
 void	exit_execve(char *cmd, t_shell *vars, t_list **ast);
 void	skip(t_list **node, int op);
-int	traverse_sub(t_shell *vars, t_list **node);
+int		traverse_sub(t_shell *vars, t_list **node);
+int		execute_cmd(t_shell *vars, t_list **ast);
+
 #endif
