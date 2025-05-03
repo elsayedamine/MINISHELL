@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 12:25:45 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/03 20:17:49 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ int	ft_check(t_shell *vars)
 
 void	throw_error(int error, char *file, int *exitt)
 {
+	if (error == ENOENT)
+		printfd(2, "%s: %s\n", file, strerror(ENOENT));	
 	if (error == SYNTAX)
 		printfd(2, "Invalid Syntax : Something is missing \" or ' or ( or )\n");
 	if (error == OP)
@@ -122,6 +124,4 @@ void	throw_error(int error, char *file, int *exitt)
 		printfd(2, "Command not found : %s\n", file);
 		*exitt = 127;
 	}
-	if (error == ENOENT)
-		printfd(2, "%s: %s\n", file, strerror(ENOENT));	
 }

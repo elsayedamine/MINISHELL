@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/03 20:05:33 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/03 20:18:00 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 typedef enum error
 {
-	IN,
+	IN = 512,
 	OUT,
 	SYNTAX,
 	CHARS,
