@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/02 10:42:47 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/03 20:05:33 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/stat.h>
 // # include "pipex/pipex.h"
 
+# define MAX_MATCHES 1024
 # define M "Minishell"
 
 typedef enum error

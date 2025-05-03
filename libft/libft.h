@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/28 11:11:29 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/03 20:08:46 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, int (*f)(char const *, ...));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-char	**ft_list2arr(t_list *tmp_arr);
+char	**ft_list2arr(t_list *lst);
 t_list	*ft_arr2list(char **arr);
 t_list	*ft_lstdup(t_list *head);
 t_list	*ft_lstndup(t_list *head, t_list *stop);
