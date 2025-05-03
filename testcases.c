@@ -14,3 +14,5 @@ ls && (ls&& ls -l  ) | cat -n
 
 (ls && (echo A || (echo B && echo C))) || ((echo D && echo E) && (echo F || echo G)) && (echo H || (echo I && (echo J || echo K)))
 
+ls |  sleep 2 && ls
+
