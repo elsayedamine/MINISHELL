@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/05 00:09:26 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/05 00:57:18 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,61 +90,87 @@ int	get_var_len(char *str)
 
 	i = 0;
 	if (!str || !(ft_isalpha(str[0]) || str[0] == '_'))
-		return (NULL);
+		return (0);
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
 	return (i);
 }
 
-int	expand(t_shell *vars, t_list *head, char *str, int i)
+int	adjust(t_shell *vars, t_list *head, char *str, int i)
 {
 	int		len;
 	char	*name;
-	char	*var_value;
+	t_list	*var_value;
 
-	len = get_var_len(str);
-	name = ft_strndup(str + 1, len)
-	ft_lstpop(head, get_node(head, i), len + 2);
+	len = get_var_len(str + 1);
+	if (len == 0)
+		return (1);
+	name = ft_strndup(str + 1, len);
+	ft_lstpop(head, get_node(head, i), len + 1);
 	var_value = ft_str2lst(get_env(name, vars), 1);
 	ft_lstinsert(var_value, get_node(head, i));
-	ft_free("1", name);
-	ft_lstclear(&var_value, free);
+	ft_free("11", name, str);
 	return (len + 1);
 }
 
-void	adjust_content(t_shell *vars, char *str)
+void	expand(t_shell *vars, char **str)
 {
 	t_list	*head;
-	t_list	*var_value;
-	int		len;
+	t_list *node;
 	int		i;
-	char	*name;
+	char	c;
 
-	if (!ft_strchr(str, '$'))
+	if (!ft_strchr(*str, '$'))
 		return ;
-	head = ft_str2lst(str, 0);
+	head = ft_str2lst(*str, 0);
+	node = head;
 	i = 0;
-	len = 0;
-	while (str[i])
+	while (node)
 	{
-		if (str[i++] == '\'')
-			while (str[i++] != '\'');
-		if (str[i] == '$')
+		c = *(char *)node->content;
+		if (c == '\'')
 		{
-			len = get_var_len(&str[i]);
-			name = ft_strndup(&str[i + 1], len)
-			ft_lstpop(head, get_node(head, i), len + 2);
-			var_value = ft_str2lst(get_env(name, vars), 1);
-			ft_lstinsert(var_value, get_node(head, i));
-			i += len + 1;
-			ft_free("1", name);
-			ft_lstclear(&var_value, free);
+			node = node->next;
+			i++;
+			while (node && *(char *)node->content != '\'')
+			{
+				node = node->next;
+				i++;
+			}
 		}
+		else if (c == '$')
+			i += adjust(vars, head, ft_lst2str(get_node(head, i)), i);
+		else
+			i++;
+		node = get_node(head, i);
 	}
-	free(str);
-	str = ft_lst2str(head);
+	free(*str);
+	*str = ft_lst2str(head);
 	ft_lstclear(&head, free);
+	// here we need to add the new remove quotes li katchecki l flags li kaynin f nodes
 }
+
+// void	expand(t_shell *vars, char **str)
+// {
+// 	t_list	*head;
+// 	int		i;
+
+// 	if (!ft_strchr(*str, '$'))
+// 		return ;
+// 	head = ft_str2lst(*str, 0);
+// 	i = 0;
+// 	while ((*str)[i])
+// 	{
+// 		if ((*str)[i++] == '\'')
+// 			while ((*str)[i] && (*str)[i++] != '\'');
+// 		if ((*str)[i] == '$')
+// 			i += adjust(vars, head, &(*str)[i], i);
+// 	}
+// 	free(*str);
+// 	*str = ft_lst2str(head);
+// 	ft_lstclear(&head, free);
+// 	// here we need to add the new remove quotes li katchecki l flags li kaynin f nodes
+// }
 
 
 // so my idea is u will take the content of each node and then give it to the ft_str2lst

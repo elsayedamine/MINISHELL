@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/04 23:39:20 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/05 00:32:44 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,9 @@ int		check_builts(char **arr, t_shell *vars);
 //
 t_list	*ft_str2lst(char *str, int flag);
 char	*ft_lst2str(t_list	*node);
-t_list	*ft_lstinsert(t_list *insert, t_list *pos);
-t_list	*get_node(t_list *lst, size_t pos)
+void	ft_lstinsert(t_list *insert, t_list *pos);
+t_list	*get_node(t_list *lst, size_t pos);
 void	ft_lstpop(t_list *head, t_list *pos, size_t n);
+void	expand(t_shell *vars, char **str);
 
 #endif

@@ -25,7 +25,9 @@ sources = \
 		built-ins/export.c \
 		built-ins/pwd.c \
 		built-ins/unset.c \
-		built-ins/get_env.c
+		built-ins/get_env.c \
+		\
+		ft_str2lst.c
 
 object = $(sources:.c=.o)
 
