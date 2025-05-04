@@ -16,3 +16,7 @@ ls && (ls&& ls -l  ) | cat -n
 
 ls |  sleep 2 && ls
 
+$123ammie
+
+$
+$: command not found

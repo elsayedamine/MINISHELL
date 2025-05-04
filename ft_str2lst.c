@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/04 22:23:46 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/05 00:09:26 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,32 +47,105 @@ char	*ft_lst2str(t_list	*node)
 	return (str);
 }
 
-t_list	*ft_lstinsert(t_list *base, t_list *insert, t_list *pos)
+void	ft_lstinsert(t_list *insert, t_list *pos)
 {
-	t_list	*new;
-	t_list	*curr;
+	t_list	*last;
+	t_list	*next;
 
-	new = NULL;
-	curr = base;
-	while (curr && curr != pos)
-	{
-		ft_lstadd_back(&new, ft_lstnew(ft_strdup(curr->content)));
-		curr = curr->next;
-	}
-	if (curr != pos)
-		return (ft_lstclear(&new, free), base);
-	while (insert)
-	{
-		ft_lstadd_back(&new, ft_lstnew(ft_strdup(insert->content)));		
-		insert = insert->next;
-	}
-	while (curr)
-	{
-		ft_lstadd_back(&new, ft_lstnew(ft_strdup(curr->content)));
-		curr = curr->next;
-	}
-	return (new);
+	if (!insert || !pos)
+		return ;
+	next = pos->next;
+	pos->next = insert;
+	last = ft_lstlast(insert);
+	last->next = next;
 }
+
+t_list	*get_node(t_list *lst, size_t pos)
+{
+	while (lst && pos--)
+		lst = lst->next;
+	return (lst);
+}
+
+void	ft_lstpop(t_list *head, t_list *pos, size_t n)
+{
+	t_list	*last;
+
+	if (!pos || !head)
+		return ;
+	while (head && head->next != pos)
+		head = head->next;
+	if (head && head->next == pos)
+	{
+		head->next = get_node(head, n);
+		last = ft_lstlast(pos);
+		last->next = NULL;
+		ft_lstclear(&pos, free);
+	}
+}
+
+int	get_var_len(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str || !(ft_isalpha(str[0]) || str[0] == '_'))
+		return (NULL);
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+		i++;
+	return (i);
+}
+
+int	expand(t_shell *vars, t_list *head, char *str, int i)
+{
+	int		len;
+	char	*name;
+	char	*var_value;
+
+	len = get_var_len(str);
+	name = ft_strndup(str + 1, len)
+	ft_lstpop(head, get_node(head, i), len + 2);
+	var_value = ft_str2lst(get_env(name, vars), 1);
+	ft_lstinsert(var_value, get_node(head, i));
+	ft_free("1", name);
+	ft_lstclear(&var_value, free);
+	return (len + 1);
+}
+
+void	adjust_content(t_shell *vars, char *str)
+{
+	t_list	*head;
+	t_list	*var_value;
+	int		len;
+	int		i;
+	char	*name;
+
+	if (!ft_strchr(str, '$'))
+		return ;
+	head = ft_str2lst(str, 0);
+	i = 0;
+	len = 0;
+	while (str[i])
+	{
+		if (str[i++] == '\'')
+			while (str[i++] != '\'');
+		if (str[i] == '$')
+		{
+			len = get_var_len(&str[i]);
+			name = ft_strndup(&str[i + 1], len)
+			ft_lstpop(head, get_node(head, i), len + 2);
+			var_value = ft_str2lst(get_env(name, vars), 1);
+			ft_lstinsert(var_value, get_node(head, i));
+			i += len + 1;
+			ft_free("1", name);
+			ft_lstclear(&var_value, free);
+		}
+	}
+	free(str);
+	str = ft_lst2str(head);
+	ft_lstclear(&head, free);
+}
+
 
 // so my idea is u will take the content of each node and then give it to the ft_str2lst
 // yak ... so hatwli 3ndk linked list kola node fiha char 

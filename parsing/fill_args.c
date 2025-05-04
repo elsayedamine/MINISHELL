@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 19:03:25 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/04 22:40:22 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ t_list	*create_node(void *content)
 	if (!new)
 		return (NULL);
 	new->content = content;
-	new->arr = removequotes_arr(_ft_split((char *)content, ' '));
+	// new->arr = removequotes_arr(_ft_split((char *)content, ' '));
 	new->type = define_type(content);
+	new->arr = NULL;
 	new->child = NULL;
 	new->next = NULL;
 	return (new);
@@ -84,11 +85,11 @@ int	fill_args(t_shell *vars)
 	vars->tmp = vars->args;
 	// ft_lstiter(vars->tmp, printf);
 	vars->ast = ast_builder(&vars->tmp);
-	// print_ast(vars->ast, 0);
+	print_ast(vars->ast, 0);
 	return (TRUE);
 }
 
-// LET THE FUN BEGIN...!!
+// LET THE FUN BEGINS...!!
 
 t_list	*ast_builder(t_list **cursor)
 {

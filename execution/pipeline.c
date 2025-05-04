@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:48:32 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/03 19:58:11 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/04 22:47:56 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 	throw_error(CMD_NOT_FOUND, cmd, &vars->exit);
 	skip(ast, AND);
 }
-int	check_builts(char **arr, t_shell *vars);
 int	execute_single_cmd(t_shell *vars, t_list *cmd_node)
 {
 	char	*cmd;
@@ -59,7 +58,6 @@ int pipex(t_shell *vars, t_list **node)
 		t_list *next = (current->next && current->next->type == PIPE) ? current->next->next : NULL;
 		if (next && pipe(fd) == -1)
 			return (perror("pipe"), 1);
-
 		pid = fork();
 		if (pid == 0)
 		{
@@ -96,5 +94,5 @@ int pipex(t_shell *vars, t_list **node)
 		current = next;
 	}
 	*node = current; // Let parent continue traversal
-	return vars->exit;
+	return (vars->exit);
 }

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:07:20 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 12:25:09 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/04 22:39:33 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int is_dir(const char *path)
 	if (stat(path, &sb) == -1)
 		return (0);
 	return (S_ISDIR(sb.st_mode));
-	// handle directory exit status and error
 }
 
 char	*handle_dir(char *path, t_shell *vars)
@@ -37,32 +36,28 @@ char	*handle_dir(char *path, t_shell *vars)
 	return (throw_error(ENOENT, path, NULL), NULL);
 }
 
-char	*get_path(char *full, t_shell *vars)
+char	*get_path(char *cmd, t_shell *vars)
 {
 	char	**paths;
 	char	*checker;
 	char	*path;
-	char    **cmd;
 	int		i;
 
-	cmd = ft_split(full, ' ');
-	if (!cmd)
-		return (NULL);
-	if (ft_strchr(cmd[0], '/'))
-		return (handle_dir(cmd[0], vars));
+	if (ft_strchr(cmd, '/'))
+		return (handle_dir(cmd, vars));
 	paths = ft_split(get_env("PATH", vars), ':');
 	if (!paths || !*paths)
-		return (throw_error(ENOENT, cmd[0], NULL), NULL);
+		return (throw_error(ENOENT, cmd, NULL), NULL);
 	i = 0;
 	while (paths && paths[i])
 	{
 		path = ft_strjoin(paths[i++], "/");
-		checker = ft_strjoin(path, cmd[0]);
+		checker = ft_strjoin(path, cmd);
 		if (!access(checker, X_OK) && !is_dir(checker))
 			if (!ft_strnstr(checker, "//", ft_strlen(checker)))
 				return (ft_free("21", paths, path), checker);
 		ft_free("11", checker, path);
 	}
 	vars->exit = 127;
-	return (ft_free("2", paths), throw_error(CMD_NOT_FOUND, cmd[0], &vars->exit), NULL);
+	return (ft_free("2", paths), throw_error(CMD_NOT_FOUND, cmd, &vars->exit), NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 03:48:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/02 10:44:09 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/04 22:46:50 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 
 int execute_pipeline(t_shell *vars, t_list *pipeline);
 
-int pipex(t_shell *vars, t_list **node)
+int pipexX(t_shell *vars, t_list **node)
 {
 	t_list *pipeline = NULL;
 	// t_list *start = *node;
