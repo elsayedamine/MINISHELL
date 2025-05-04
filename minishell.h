@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/03 20:18:00 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/04 21:41:20 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_check
 	int		fpar;
 	int		par;
 	int		special;
-}				t_check;
+}			t_check;
 
 typedef struct s_shell
 {
