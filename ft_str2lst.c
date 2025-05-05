@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/05 01:07:27 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:31:46 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ void	ft_lstinsert(t_list *insert, t_list *pos)
 	t_list	*last;
 	t_list	*next;
 
+	if (pos && !pos->next)
+	{
+		pos->next = insert;
+		return ;
+	}
 	if (!insert || !pos)
 		return ;
 	next = pos->next;
@@ -67,23 +72,6 @@ t_list	*get_node(t_list *lst, size_t pos)
 	return (lst);
 }
 
-void	ft_lstpop(t_list *head, t_list *pos, size_t n)
-{
-	t_list	*last;
-
-	if (!pos || !head)
-		return ;
-	while (head && head->next != pos)
-		head = head->next;
-	if (head && head->next == pos)
-	{
-		head->next = get_node(head, n);
-		last = ft_lstlast(pos);
-		last->next = NULL;
-		ft_lstclear(&pos, free);
-	}
-}
-
 int	get_var_len(char *str)
 {
 	int	i;
@@ -96,94 +84,65 @@ int	get_var_len(char *str)
 	return (i);
 }
 
-int	adjust(t_shell *vars, t_list *head, char *str, int i)
-{
-	int		len;
-	char	*name;
-	t_list	*var_value;
-
-	len = get_var_len(str + 1);
-	if (len == 0)
-		return (1);
-	name = ft_strndup(str + 1, len);
-	ft_lstpop(head, get_node(head, i), len + 1);
-	var_value = ft_str2lst(get_env(name, vars), 1);
-	ft_lstinsert(var_value, get_node(head, i));
-	ft_free("11", name, str);
-	return (len + 1);
-}
-
-void	expand(t_shell *vars, char **str)
-{
-	t_list	*head;
-	t_list *node;
-	int		i;
-	char	c;
-
-	if (!ft_strchr(*str, '$'))
-		return ;
-	head = ft_str2lst(*str, 0);
-	node = head;
-	i = 0;
-	while (node)
-	{
-		c = *(char *)node->content;
-		if (c == '\'')
-		{
-			node = node->next;
-			i++;
-			while (node && *(char *)node->content != '\'')
-			{
-				node = node->next;
-				i++;
-			}
-		}
-		else if (c == '$')
-			i += adjust(vars, head, ft_lst2str(get_node(head, i)), i);
-		else
-			i++;
-		node = get_node(head, i);
-	}
-	free(*str);
-	*str = ft_lst2str(head);
-	ft_lstclear(&head, free);
-	// here we need to add the new remove quotes li katchecki l flags li kaynin f nodes
-}
-
-// void	expand(t_shell *vars, char **str)
+// char	*expand(t_shell *vars, t_list *head)
 // {
-// 	t_list	*head;
+// 	t_list	*node;
 // 	int		i;
+// 	char	c;
+// 	char	q;
 
-// 	if (!ft_strchr(*str, '$'))
-// 		return ;
-// 	head = ft_str2lst(*str, 0);
-// 	i = 0;
-// 	while ((*str)[i])
+// 	ft_init(3, &i, &c, &q);
+// 	while (node)
 // 	{
-// 		if ((*str)[i++] == '\'')
-// 			while ((*str)[i] && (*str)[i++] != '\'');
-// 		if ((*str)[i] == '$')
-// 			i += adjust(vars, head, &(*str)[i], i);
+// 		c = *(char *)node->content;
+// 		if (c == '"')
+// 			q = !q;
+// 		if (c == '\'' && !q)
+// 		{
+// 			node = node->next;
+// 			while (node && *(char *)node->content != '\'' && i++)
+// 				node = node->next;
+// 		}
+// 		if (c == '$')
+// 		{
+// 			// my idea is to insert all the expansions till end then pop the var names
+// 		}
+// 		else
+// 			node = node->next;
 // 	}
-// 	free(*str);
-// 	*str = ft_lst2str(head);
-// 	ft_lstclear(&head, free);
-// 	// here we need to add the new remove quotes li katchecki l flags li kaynin f nodes
+// 	return (ft_lst2str(node));
 // }
 
+void	ft_lstpop(t_list *node, size_t n)
+{
+	t_list	*next;
+	t_list	*head;
+	t_list	*tmp;
 
-// so my idea is u will take the content of each node and then give it to the ft_str2lst
-// yak ... so hatwli 3ndk linked list kola node fiha char 
-// bach mnin tbghi t expandi hatmchi lwst linked list o tbda t appendi the true value of the $var fach tl9a dollar
-// db dak $var li kayn f env hatakhdo brasso o t3tih nit l ft_str2lst yak 
-// o bach hatlse9 dik list lkbira b list dial $var hia bl function talta
-// sf mnin twli 3ndk linked list jdida 
-// 3tiha l ft_lst2str bach trj3a string kima kan o redo l blasto fl content ....
-// i hope tkon fhmti rah 7awlt nshel lik l work bach tched tkhdem b had l funtions easily
+	if (!node || !node->next)
+		return ;
+	head = node;
+	node = node->next;
+	tmp = NULL;
+	while (node && n--)
+	{
+		tmp = node->next;
+		free(node->content);
+		free(node);
+		node = tmp;
+	}
+	head->next = node;
+}
 
-// hadchi kamel may7tajch 7it deja sawbt dik l fct f libft smitha ft_strinsert
-// kat inserti lik string west string
-
-// sa3a 3awdt tfkrt 3lach drna had lblan kamel hi 3la wed lflag dial kolla node bach n3rfo wach dak char wach asli wla ban mor l expantion 
-// so yeah we need these linked list
+int main(int ac, char **av)
+{
+	if (ac > 1)
+	{
+		t_list *node = ft_str2lst(av[1], 0);
+		t_list *node2 = ft_str2lst(av[2], 1);
+		ft_lstpop(get_node(node, 100), 5);
+		ft_lstiter(get_node(node, 100), printf);
+		ft_lstinsert(node2, get_node(node, 100));
+		printf("%s\n", ft_lst2str(node));
+	}
+}

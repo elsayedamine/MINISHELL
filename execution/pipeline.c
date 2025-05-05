@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:48:32 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/05 00:38:17 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:14:06 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int	execute_single_cmd(t_shell *vars, t_list *cmd_node)
 	pid_t	pid;
 	int		status;
 
-	char **str = (char **)&(cmd_node->content);
-	expand(vars, str);
+	expand(vars, (char **)&(cmd_node->content));
 	puts(cmd_node->content);
 	if (check_builts(cmd_node->arr, vars) == TRUE)
 		return (EXIT_SUCCESS);

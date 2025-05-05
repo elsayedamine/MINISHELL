@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 03:48:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/04 22:46:50 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:42:58 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,3 +248,86 @@ int execute_pipeline(t_shell *vars, t_list *pipeline)
 	vars->exit = WIFEXITED(last_status) ? WEXITSTATUS(last_status) : 1;
 	return (vars->exit);
 }
+
+// int	adjust(t_shell *vars, t_list **head, t_list *node, int i)
+// {
+// 	int		len;
+// 	char	*str;
+// 	char	*name;
+// 	t_list	*var_value;
+
+// 	str = ft_lst2str(node);
+// 	len = get_var_len(str + 1);
+// 	if (len == 0)
+// 		return (1);
+// 	name = ft_strndup(str + 1, len);
+// 	t_list	*nodes = get_node(*head, i);
+// 	ft_lstpop(&nodes, len + 1);
+// 	ft_lstiter(*head, printf);
+// 	printf("-----------------------------\n");
+// 	var_value = ft_str2lst(get_env(name, vars), 1);
+// 	ft_lstinsert(var_value, get_node(*head, i));
+// 	ft_free("11", name, str);
+// 	return (len + 1);
+// }
+
+// void	expand(t_shell *vars, char **str)
+// {
+// 	t_list	*head;
+// 	t_list *node;
+// 	char	q;
+// 	int		i;
+// 	char	c;
+
+// 	if (!ft_strchr(*str, '$'))
+// 		return ;
+// 	head = ft_str2lst(*str, 0);
+// 	node = head;
+// 	i = 0;
+// 	q = 0;
+// 	while (node)
+// 	{
+// 		c = *(char *)node->content;
+// 		if (c == '"')
+// 			q = !q;
+// 		else if (c == '\'' && !q)
+// 		{
+// 			node = node->next;
+// 			i++;
+// 			while (node && *(char *)node->content != '\'' && i++)
+// 				node = node->next;
+// 		}
+// 		else if (c == '$')
+// 			i += adjust(vars, &head, node, i);
+// 		else
+// 			i++;
+// 		node = get_node(head, i);
+// 	}
+// 	free(*str);
+// 	*str = ft_lst2str(head);
+// 	ft_lstclear(&head, free);
+// 	// here we need to add the new remove quotes li katchecki l flags li kaynin f nodes
+// }
+
+// void	expand(t_shell *vars, char **str)
+// {
+// 	t_list	*head;
+// 	int		i;
+
+// 	if (!ft_strchr(*str, '$'))
+// 		return ;
+// 	head = ft_str2lst(*str, 0);
+// 	i = 0;
+// 	while ((*str)[i])
+// 	{
+// 		if ((*str)[i++] == '\'')
+// 			while ((*str)[i] && (*str)[i++] != '\'');
+// 		if ((*str)[i] == '$')
+// 			i += adjust(vars, head, &(*str)[i], i);
+// 	}
+// 	free(*str);
+// 	*str = ft_lst2str(head);
+// 	ft_lstclear(&head, free);
+// 	// here we need to add the new remove quotes li katchecki l flags li kaynin f nodes
+// }
+
