@@ -26,3 +26,32 @@ o hankon salina partie dial expantion mzn
 ```bash
 7abada law saliti dakchi tmchi dir chwia chi 7aja f redirections parsing or something
 ```
+
+```bash
+some test cases:
+
+minishell$ echo "$""HOME"
+echo $HOME
+$HOME
+minishell$ bash
+bash
+aelsayed@c3r9p8:~/Desktop/minishell$ echo "$""HOME"
+$HOME
+aelsayed@c3r9p8:~/Desktop/minishell$ echo $""HOME
+HOME
+minishell$ echo $""HOME
+echo $HOME
+$HOME
+
+```
+
+```bash
+minishell$ export a="a  z        x"
+export a=a  z        x
+export
+a=a
+z
+x
+export a=a  z        x
+minishell$ 
+```

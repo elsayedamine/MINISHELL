@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/06 23:30:53 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/07 00:17:20 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,45 +71,7 @@ void	handle_single_quotes(t_list **s, int *i, char *str)
 		*i += add_char(s, '\'');
 }
 
-t_list	*remove_quotes_from_lst(t_list *lst)
-{
-	t_list	*new = NULL;
-	t_list	*node;
-	int		quote = 0;
-	char	c;
-	char	*ch;
-
-	while (lst)
-	{
-		c = *(char *)lst->content;
-		if (lst->type == 0 && (c == '\'' || c == '"'))
-		{
-			if (quote == 0)
-				quote = c;
-			else if (quote == c)
-				quote = 0;
-			// skip quote
-			lst = lst->next;
-			continue;
-		}
-		// keep character
-		ch = malloc(2);
-		if (!ch)
-			return (ft_lstclear(&new, free), NULL);
-		ch[0] = c;
-		ch[1] = '\0';
-		node = ft_lstnew(ch);
-		if (!node)
-			return (free(ch), ft_lstclear(&new, free), NULL);
-		node->type = lst->type;
-		ft_lstadd_back(&new, node);
-		lst = lst->next;
-	}
-	return (new);
-}
-
-
-void	expand(t_shell *vars, char **str)
+void	expand(t_shell *vars, char **str, char ***arr)
 {
 	int 	i;
 	int		q;
@@ -131,8 +93,9 @@ void	expand(t_shell *vars, char **str)
 		else
 			i += add_char(&s, (*str)[i]);
 	}
-	free(*str);
-	// *str = ft_lst2str(s);
-	*str = ft_lst2str(remove_quotes_from_lst(s));
+	ft_free("12", *str, *arr);
+	s = remove_quotes_from_list(s);
+	*str = ft_lst2str(s);
 	ft_lstclear(&s, free);
+	// *arr = _ft_split(*str, ' '); // we should not forget the redirection
 }

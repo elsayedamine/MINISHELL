@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/06 22:40:47 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/06 23:55:14 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 char	*removequotes(char *str)
 {
 	char	*result;
+	int		i;
+	int		j;
+	int		c;
 
-	int (i), (j), (c);
 	if (!str || !(*str))
 		return (NULL);
 	if (ft_count_char(str, '\'') == 0 && ft_count_char(str, '"') == 0)
@@ -39,19 +41,28 @@ char	*removequotes(char *str)
 	return (free(str), result);
 }
 
-char	**removequotes_arr(char **arr)
+t_list *remove_quotes_from_list(t_list *lst)
 {
-	int		i;
+	t_list	*curr;
+	t_list	*new_lst;
+	char	quote;
+	char	*c;
 
-	if (!arr)
-		return (NULL);
-	i = 0;
-	while (arr[i])
+	curr = lst;
+	new_lst = NULL;
+	quote = 0;
+	while (curr)
 	{
-		arr[i] = removequotes(arr[i]);
-		i++;
+		c = (char *)curr->content;
+		if (!curr->type && (*c == '"' || *c == '\'') && !quote)
+			quote = *c;
+		else if (!curr->type && *c == quote)
+			quote = 0;
+		else
+			ft_lstadd_back(&new_lst, ft_lstnew(ft_strdup(c)));
+		curr = curr->next;
 	}
-	return (arr);
+	return (ft_lstclear(&lst, free), new_lst);
 }
 
 t_list	*ft_str_to_lst(char *str, int flag)
@@ -70,8 +81,3 @@ t_list	*ft_str_to_lst(char *str, int flag)
 	}
 	return (node);
 }
-
-// void	remove_quotes(char **str, t_shell *vars)
-// {
-// 	//
-// }

@@ -25,3 +25,18 @@ $: command not found
 ==1881473==    by 0x401696: ft_shlvl (main.c:97)
 ==1881473==    by 0x401791: main (main.c:120)
 ==1881473== 
+
+some test cases:
+
+minishell$ echo "$""HOME"
+echo $HOME
+$HOME
+minishell$ bash
+bash
+aelsayed@c3r9p8:~/Desktop/minishell$ echo "$""HOME"
+$HOME
+aelsayed@c3r9p8:~/Desktop/minishell$ echo $""HOME
+HOME
+minishell$ echo $""HOME
+echo $HOME
+$HOME

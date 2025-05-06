@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/06 21:14:24 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/06 23:58:19 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	pid_t	pid;
 	int		status;
 
-	expand(vars, (char **)&((*ast)->content));
+	expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
 	puts((*ast)->content);
 	if (check_builts((*ast)->arr, vars) == TRUE)
 		return (skip(ast, OR), EXIT_SUCCESS);

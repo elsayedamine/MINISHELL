@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/06 22:16:52 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/06 23:57:27 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,14 +123,14 @@ int		isvalid_quotes(t_shell *vars);
 /* Processing */
 int		ft_nodejoin(t_shell *vars);
 char	*removequotes(char *str);
-char	**removequotes_arr(char **arr);
+t_list	*remove_quotes_from_list(t_list *lst);
 char	**_ft_split(char const *s, char b);
 void	pop_spaces(t_shell *vars);
 
 void	throw_error(int error, char *file, int *status);
 
 /* Expansion */
-void	expand(t_shell *vars, char **str);
+void	expand(t_shell *vars, char **str, char ***arr);
 t_list	*ft_str_to_lst(char *str, int flag);
 
 /*-------------------------------------- BUILTINS --------------------------------------*/
