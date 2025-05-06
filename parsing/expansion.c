@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/06 23:30:37 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/06 23:30:53 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	expand(t_shell *vars, char **str)
 			i += add_char(&s, (*str)[i]);
 	}
 	free(*str);
-	*str = ft_lst2str(s);
-	// *str = ft_lst2str(remove_quotes_from_lst(s));
+	// *str = ft_lst2str(s);
+	*str = ft_lst2str(remove_quotes_from_lst(s));
 	ft_lstclear(&s, free);
 }
