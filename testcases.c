@@ -20,3 +20,8 @@ $123ammie
 
 $
 $: command not found
+
+==1881473==    at 0x407C21: ft_atoi (in /home/aelsayed/Desktop/minishell/minishell)
+==1881473==    by 0x401696: ft_shlvl (main.c:97)
+==1881473==    by 0x401791: main (main.c:120)
+==1881473== 

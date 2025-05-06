@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 22:44:22 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/06 20:59:55 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	prompt_loop(t_shell *vars)
 				&vars->check.lpar, &vars->exit);
 		vars->cmd = read_cmd(vars->cmd);
 		if (!vars->cmd)
-			return (rl_clear_history(), printf("exit\n"),exit(EXIT_SUCCESS));
+			return (rl_clear_history(), exit(EXIT_SUCCESS));
 		if (!*vars->cmd)
 		{
 			free(vars->cmd);
