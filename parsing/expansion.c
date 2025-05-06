@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/06 23:17:02 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/06 23:30:37 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,44 @@ void	handle_single_quotes(t_list **s, int *i, char *str)
 		*i += add_char(s, '\'');
 }
 
+t_list	*remove_quotes_from_lst(t_list *lst)
+{
+	t_list	*new = NULL;
+	t_list	*node;
+	int		quote = 0;
+	char	c;
+	char	*ch;
+
+	while (lst)
+	{
+		c = *(char *)lst->content;
+		if (lst->type == 0 && (c == '\'' || c == '"'))
+		{
+			if (quote == 0)
+				quote = c;
+			else if (quote == c)
+				quote = 0;
+			// skip quote
+			lst = lst->next;
+			continue;
+		}
+		// keep character
+		ch = malloc(2);
+		if (!ch)
+			return (ft_lstclear(&new, free), NULL);
+		ch[0] = c;
+		ch[1] = '\0';
+		node = ft_lstnew(ch);
+		if (!node)
+			return (free(ch), ft_lstclear(&new, free), NULL);
+		node->type = lst->type;
+		ft_lstadd_back(&new, node);
+		lst = lst->next;
+	}
+	return (new);
+}
+
+
 void	expand(t_shell *vars, char **str)
 {
 	int 	i;
@@ -84,17 +122,17 @@ void	expand(t_shell *vars, char **str)
 		if ((*str)[i] == '"')
 		{
 			q = !q;
-			i++;
+			i += add_char(&s, (*str)[i]);
 		}
-		if ((*str)[i] == '\'' && !q)
+		else if ((*str)[i] == '\'' && !q)
 			handle_single_quotes(&s, &i, *str);
-		if ((*str)[i] == '$')
+		else if ((*str)[i] == '$')
 			i += add_value(vars, &s, &(*str)[i]);
 		else
 			i += add_char(&s, (*str)[i]);
 	}
 	free(*str);
 	*str = ft_lst2str(s);
-	// *str = remove_quotes(s, vars);
+	// *str = ft_lst2str(remove_quotes_from_lst(s));
 	ft_lstclear(&s, free);
 }
