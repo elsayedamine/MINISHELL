@@ -12,5 +12,5 @@
 we have a big problem  in redirection parsing unfortunately 
 wa naaaaaaari treatement dial redirections 3ndna khaaaaaaaaaaari m3a ro7o waaaaaaaaa3 
 we still have a big prob in the pipeline 
-some many errors in the logic
+so many errors in the logic
 ```

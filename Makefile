@@ -11,6 +11,7 @@ sources = \
 		parsing/removequotes.c \
 		parsing/ft_check.c \
 		parsing/custom_split.c \
+		parsing/expansion.c \
 		\
 		\
 		execution/execution.c \
@@ -26,8 +27,6 @@ sources = \
 		built-ins/pwd.c \
 		built-ins/unset.c \
 		built-ins/get_env.c \
-		\
-		ft_str2lst.c
 
 object = $(sources:.c=.o)
 

@@ -6,24 +6,34 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/06 21:12:59 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/06 22:16:52 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+/* **************************************** */
+/*                INCLUDES                  */
+/* **************************************** */
+
 # include "libft/libft.h"
 # include <errno.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <signal.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
-// # include "pipex/pipex.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
-# define MAX_MATCHES 1024
+/* **************************************** */
+/*              DEFINITIONS                 */
+/* **************************************** */
+
 # define M "Minishell"
+
+/* **************************************** */
+/*                 ENUMS                    */
+/* **************************************** */
 
 typedef enum error
 {
@@ -48,8 +58,12 @@ typedef enum type
 	READ,
 	WRITE,
 	APPEND,
-	HEREDOC
+	HEREDOC 
 }			t_type;
+
+/* **************************************** */
+/*             STRUCTURES                   */
+/* **************************************** */
 
 typedef struct s_pipe
 {
@@ -58,7 +72,7 @@ typedef struct s_pipe
 	pid_t	pid1;
 	pid_t	pid2;
 	char	*path1;
-	char	*path2;
+	char	*path2;   
 	char	**args;
 	int		pipefd[2];
 }			t_pip;
@@ -66,13 +80,14 @@ typedef struct s_pipe
 typedef struct s_check
 {
 	int		dquot;
-	int		squot;
+	int		squot; 
 	int		lpar;
-	int		fpar;
+	int		fpar; 
 	int		par;
 	int		special;
 }			t_check;
 
+// Main shell structure
 typedef struct s_shell
 {
 	int			exit;
@@ -86,25 +101,40 @@ typedef struct s_shell
 	t_list		*ast;
 }				t_shell;
 
-// Parsing Functions
+/* **************************************** */
+/*           FUNCTION PROTOTYPES            */
+/* **************************************** */
+
+/*-------------------------------------- PARSING --------------------------------------*/
+
+/* Building */
+t_list	*ast_builder(t_list **cursor);
 int		fill_args(t_shell *vars);
+t_list	*create_node(void *content);
+
+/* Validation */
 int		ft_check(t_shell *vars);
 int		isvalid_par(t_shell *vars);
-int		ft_nodejoin(t_shell *vars);
 int		isvalid_op(t_shell *vars);
 int		is_op(char *str);
 int		is_par(char *str);
 int		isvalid_quotes(t_shell *vars);
-void	throw_error(int error, char *file, int *exitt);
+
+/* Processing */
+int		ft_nodejoin(t_shell *vars);
 char	*removequotes(char *str);
 char	**removequotes_arr(char **arr);
 char	**_ft_split(char const *s, char b);
 void	pop_spaces(t_shell *vars);
-t_list	*create_node(void *content);
-//
-t_list	*ast_builder(t_list **cursor);
-//
-// Built-ins Functions
+
+void	throw_error(int error, char *file, int *status);
+
+/* Expansion */
+void	expand(t_shell *vars, char **str);
+t_list	*ft_str_to_lst(char *str, int flag);
+
+/*-------------------------------------- BUILTINS --------------------------------------*/
+
 int		cd(int ac, char **av, t_shell *vars);
 int		echo(int ac, char **av, t_shell *vars);
 int		env(int ac, char **av, t_shell *vars);
@@ -114,20 +144,14 @@ int		pwd(int ac, char **av, t_shell *vars);
 int		unset(int ac, char **av, t_shell *vars);
 char	*get_env(char *k, t_shell *vars);
 
-// execution Functions
-int		execution(t_shell *vars, t_list **ast);
+/*-------------------------------------- execution --------------------------------------*/
+
 int		pipex(t_shell *vars, t_list **node);
+int		execution(t_shell *vars, t_list **ast);
 char	*get_path(char *cmd, t_shell *vars);
 void	exit_execve(char *cmd, t_shell *vars, t_list **ast);
 void	skip(t_list **node, int op);
 int		traverse_sub(t_shell *vars, t_list **node);
 int		execute_cmd(t_shell *vars, t_list **ast);
 int		check_builts(char **arr, t_shell *vars);
-//
-t_list	*ft_str2lst(char *str, int flag);
-char	*ft_lst2str(t_list	*node);
-void	ft_lstinsert(t_list *insert, t_list *pos);
-t_list	*get_node(t_list *lst, size_t pos);
-void	expand(t_shell *vars, char **str);
-
 #endif

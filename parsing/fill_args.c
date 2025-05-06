@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/06 21:00:46 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/06 22:27:53 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ int	fill_args(t_shell *vars)
 	// print_ast(vars->ast, 0);
 	return (TRUE);
 }
-
-// LET THE FUN BEGINS...!!
 
 t_list	*ast_builder(t_list **cursor)
 {

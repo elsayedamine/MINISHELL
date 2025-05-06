@@ -41,6 +41,11 @@ SOURCES = \
 		new/ft_putarr.c \
 		new/ft_lstndup.c \
 		new/ft_lstdup.c \
+		new/ft_lstgetnode.c \
+		new/ft_str2lst.c \
+		new/ft_lst2str.c \
+		new/ft_lstpop.c \
+		new/ft_lstinsert.c \
 		\
 		\
 		1.base/ft_isalnum.c \

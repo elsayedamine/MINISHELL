@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/28 09:49:13 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/06 22:40:47 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,3 +53,25 @@ char	**removequotes_arr(char **arr)
 	}
 	return (arr);
 }
+
+t_list	*ft_str_to_lst(char *str, int flag)
+{
+	int		i;
+	t_list	*node;
+	t_list	*new;
+
+	i = 0;
+	node = NULL;
+	while (str && str[i])
+	{
+		new = ft_lstnew(ft_strndup(&str[i++], 1));
+		new->type = flag;
+		ft_lstadd_back(&node, new);
+	}
+	return (node);
+}
+
+// void	remove_quotes(char **str, t_shell *vars)
+// {
+// 	//
+// }
