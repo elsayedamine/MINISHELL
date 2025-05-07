@@ -18,6 +18,8 @@ ls |  sleep 2 && ls
 
 $123ammie
 
+$a"bin"$a"ls"
+
 $
 $: command not found
 
@@ -40,3 +42,4 @@ HOME
 minishell$ echo $""HOME
 echo $HOME
 $HOME
+

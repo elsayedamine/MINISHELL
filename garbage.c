@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 03:48:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/06 21:59:16 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:17:41 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 // 	int		pipefd[2];
 // 	char	*cmd;
 // 	int		i = 0;
-
 // 	while (args[i])
 // 	{
 // 		if (args[i + 1])
@@ -149,7 +148,6 @@ void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 // 		}
 // 		i++;
 // 	}
-	
 // 	return (EXIT_SUCCESS);
 // }
 
@@ -158,7 +156,6 @@ void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 // {
 // 	t_list	*pipeline;
 // 	t_pip	pipe;
-
 // 	pipeline = NULL;
 // 	while ((*node))
 // 	{

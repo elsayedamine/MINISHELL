@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/06 20:59:55 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:22:47 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	prompt_loop(t_shell *vars)
 		}
 	}
 }
+
 void	ft_nullenv(t_shell *vars)
 {
 	char	*cwd;
