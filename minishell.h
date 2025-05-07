@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/07 18:58:41 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:47:24 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ void	throw_error(int error, char *file, int *status);
 /* Expansion */
 char	**split_list(t_list *lst, char sep);
 void	expand(t_shell *vars, char **str, char ***arr);
+void	wildcard(const char *pattern, t_list **x)
 t_list	*ft_str_to_lst(char *str, int flag);
 
 /*-------------------------------------- BUILTINS --------------------------------------*/

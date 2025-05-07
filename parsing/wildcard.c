@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/03 20:05:01 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:47:16 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	match_pattern(const char *pattern, const char *str)
 	return (*str == '\0');
 }
 
-char	**wildcard_match(const char *pattern)
+void	wildcard(const char *pattern, t_list **x)
 {
 	DIR				*dir;
 	struct dirent	*entry;
@@ -64,7 +64,8 @@ char	**wildcard_match(const char *pattern)
 		entry = readdir(dir);
 	}
 	matches[count] = NULL;
-	return (closedir(dir), matches);
+	*x = ft_arr2list(matches);
+	return (closedir(dir), (void)ft_free("2", matches));
 }
 
 // int	main(int ac, char **av)
