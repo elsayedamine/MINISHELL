@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/07 00:17:20 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:06:03 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void	expand(t_shell *vars, char **str, char ***arr)
 	int		q;
 	t_list	*s;
 
-	ft_init(2, &i, &q);
 	s = NULL;
+	ft_init(2, &i, &q);
 	while ((*str)[i])
 	{
 		if ((*str)[i] == '"')
@@ -94,8 +94,7 @@ void	expand(t_shell *vars, char **str, char ***arr)
 			i += add_char(&s, (*str)[i]);
 	}
 	ft_free("12", *str, *arr);
-	s = remove_quotes_from_list(s);
 	*str = ft_lst2str(s);
+	*arr = split_list(s, ' ');
 	ft_lstclear(&s, free);
-	// *arr = _ft_split(*str, ' '); // we should not forget the redirection
 }

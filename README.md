@@ -14,14 +14,6 @@ wa naaaaaaari treatement dial redirections 3ndna khaaaaaaaaaaari m3a ro7o waaaaa
 we still have a big prob in the pipeline 
 so many errors in the logic
 ```
-# start reading from here 7 may
-```bash
-ok now u need to do the remove quotes
-rah 3atik list 3amra b 1 o 0 o nta hat alloqui l array jdid o returnih sf
-this is it for the quotes
-moraha 7awl tmchi l dak ast->arr o 3tiha split l 3adia l9dima o chof wach khdam
-o hankon salina partie dial expantion mzn
-```
 
 
 ```bash
@@ -51,4 +43,11 @@ z
 x
 export a=a  z        x
 minishell$ 
+```
+
+```bash
+minishell$ echo $a
+a        b       c
+minishell$ echo "$a"
+a        b       c
 ```
