@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/07 20:47:24 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/07 21:06:31 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <sys/dir.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -30,6 +31,7 @@
 /* **************************************** */
 
 # define M "Minishell"
+# define MAX_MATCHES 1024
 
 /* **************************************** */
 /*                 ENUMS                    */
