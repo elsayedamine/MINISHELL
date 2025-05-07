@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/07 20:47:16 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/07 21:09:11 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	wildcard(const char *pattern, t_list **x)
 	matches = malloc(sizeof(char *) * (MAX_MATCHES + 1));
 	dir = opendir(".");
 	if (!matches || !dir)
-		return (ft_free("1", matches), NULL);
+		return ((void)ft_free("1", matches));
 	entry = readdir(dir);
 	while (entry != NULL)
 	{

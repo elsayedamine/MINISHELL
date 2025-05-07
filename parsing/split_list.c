@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:58:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/07 20:44:14 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/07 21:09:37 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	**split_list(t_list *lst, char sep)
 {
 	char	**arr;
 	t_list	*new;
-	t_list	*wildcard;
+	// t_list	*wildcard;
 
 	new = create_list(lst, sep);
 	
