@@ -15,7 +15,7 @@
 int	fd_putchar(int fd, char c)
 {
 	write (fd, &c, 1);
-	return (TRUE);
+	return (1);
 }
 
 int	fd_putstr(int fd, char const *s)

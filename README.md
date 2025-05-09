@@ -31,18 +31,6 @@ HOME
 minishell$ echo $""HOME
 echo $HOME
 $HOME
-
-```
-
-```bash
-minishell$ export a="a  z        x"
-export a=a  z        x
-export
-a=a
-z
-x
-export a=a  z        x
-minishell$ 
 ```
 
 ```bash

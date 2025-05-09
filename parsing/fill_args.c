@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/07 19:09:42 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:51:36 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,25 +90,24 @@ t_list	*ast_builder(t_list **cursor)
 {
 	t_list	*node;
 	t_list	*sub;
+	char	*content;
 
 	node = NULL;
 	while (*cursor)
 	{
-		if (!ft_strcmp((char *)(*cursor)->content, "("))
+		content = (char *)(*cursor)->content;
+		if (!ft_strcmp(content, "("))
 		{
 			(*cursor) = (*cursor)->next;
 			sub = create_node(NULL);
 			sub->child = ast_builder(cursor);
 			ft_lstadd_back(&node, sub);
 		}
-		else if (!ft_strcmp((char *)(*cursor)->content, ")"))
-		{
-			(*cursor) = (*cursor)->next;
-			return (node);
-		}
+		else if (!ft_strcmp(content, ")"))
+			return ((*cursor) = (*cursor)->next, node);
 		else
 		{
-			ft_lstadd_back(&node, create_node(ft_strdup((char *)(*cursor)->content)));
+			ft_lstadd_back(&node, create_node(ft_strdup(content)));
 			(*cursor) = (*cursor)->next;
 		}
 	}

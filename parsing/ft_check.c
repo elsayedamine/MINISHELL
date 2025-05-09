@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/03 20:17:49 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:38:48 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ void	throw_error(int error, char *file, int *exitt)
 	if (error == CMD_NOT_FOUND)
 	{
 		printfd(2, "Command not found : %s\n", file);
-		*exitt = 127;
+		return (*exitt = 127, (void)file);
 	}
+	if (error == DIRECT)
+		printfd(2, "Cannot open current working directory\n");
 }

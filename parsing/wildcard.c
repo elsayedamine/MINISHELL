@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/07 21:09:11 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:31:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 int	match_pattern(const char *pattern, const char *str)
 {
 	if (!pattern || !str)
-		return (0);
+		return (FALSE);
 	while (*pattern)
 	{
 		if (*pattern == '*')
 		{
 			pattern++;
 			if (!*pattern)
-				return (1);
+				return (TRUE);
 			while (*str)
 			{
 				if (match_pattern(pattern, str))
-					return (1);
+					return (TRUE);
 				str++;
 			}
-			return (0);
+			return (FALSE);
 		}
 		if (*pattern != *str)
-			return (0);
+			return (FALSE);
 		pattern++;
 		str++;
 	}
@@ -47,12 +47,12 @@ void	wildcard(const char *pattern, t_list **x)
 	int				count;
 
 	count = 0;
-	matches = malloc(sizeof(char *) * (MAX_MATCHES + 1));
+	matches = (char **)malloc(sizeof(char *) * (MAX_MATCHES + 1));
 	dir = opendir(".");
 	if (!matches || !dir)
-		return ((void)ft_free("1", matches));
+		return (ft_free("1", matches), throw_error(DIRECT, NULL, NULL));
 	entry = readdir(dir);
-	while (entry != NULL)
+	while (entry)
 	{
 		if (entry->d_name[0] != '.' && match_pattern(pattern, entry->d_name))
 		{

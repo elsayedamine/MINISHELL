@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/07 21:08:09 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:31:52 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef enum error
 	DUP,
 	EXEC,
 	PIP,
+	DIRECT,
 	CMD_NOT_FOUND
 }			t_error;
 
