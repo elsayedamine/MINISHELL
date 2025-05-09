@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/09 16:46:47 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/10 00:40:25 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ void	expand(t_shell *vars, char **str, char ***arr)
 			handle_single_quotes(&s, &i, *str);
 		else if ((*str)[i] == '$')
 			i += add_value(vars, &s, &(*str)[i], q);
-		// else if ((*str)[i] == '*')
-			//
 		else
 			i += add_char(&s, (*str)[i]);
 	}

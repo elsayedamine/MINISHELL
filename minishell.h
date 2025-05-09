@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/09 16:31:52 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/10 00:14:46 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ typedef enum type
 	OR,
 	AND,
 	SUBSHELL,
-	PIPE,
 	CMD,
+	PIPE,
 	READ,
 	WRITE,
 	APPEND,

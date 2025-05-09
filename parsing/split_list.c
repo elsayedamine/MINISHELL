@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:58:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/07 21:09:37 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/10 00:39:37 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ void	handle_quote(char *quote, t_list **chunk, char *c)
 		ft_lstadd_back(chunk, ft_lstnew(ft_strdup(c)));
 }
 
+void	split_space(t_list **chunk, t_list **new, t_list **lst, char sep)
+{
+	if (*chunk)
+	{
+		ft_lstadd_back(new, ft_lstnew(ft_lst2str(*chunk)));
+		ft_lstclear(chunk, free);
+	}
+	while ((*lst)->next && *(char *)(*lst)->next->content == sep)
+		(*lst) = (*lst)->next;
+}
+
 t_list	*create_list(t_list *lst, char sep)
 {
 	char	quote;
@@ -35,13 +46,8 @@ t_list	*create_list(t_list *lst, char sep)
 	{
 		if (!lst->type && ft_strchr("'\"", *(char *)lst->content))
 			handle_quote(&quote, &chunk, lst->content);
-		else if (!quote && *(char *)lst->content == sep && chunk)
-		{
-			ft_lstadd_back(&new, ft_lstnew(ft_lst2str(chunk)));
-			ft_lstclear(&chunk, free);
-			while (lst->next && *(char *)lst->next->content == sep)
-				lst = lst->next;
-		}
+		else if (!quote && *(char *)lst->content == sep) // i deleted && chunk at the end of the condition in case we want to know the changes
+			split_space(&chunk, &new, &lst, sep);
 		else
 			ft_lstadd_back(&chunk, ft_lstnew(ft_strdup((char *)lst->content)));
 		lst = lst->next;
