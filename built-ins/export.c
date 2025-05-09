@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/30 14:30:47 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/09 18:06:09 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*var_name(char *s, char flag)
 {
-	int	i;
-	char *var;
+	int		i;
+	char	*var;
 
 	i = 0;
 	while (s[i] && s[i] != flag)

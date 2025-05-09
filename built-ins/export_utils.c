@@ -1,33 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 12:38:48 by sayed             #+#    #+#             */
-/*   Updated: 2025/05/09 16:57:31 by aelsayed         ###   ########.fr       */
+/*   Created: 2025/05/09 17:02:58 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/05/09 17:03:07 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	env(int ac, char **av, t_shell *vars)
-{
-	t_list	*tmp;
-	char	*str;
-
-	(void)av;
-	tmp = vars->env;
-	if (ac != 1)
-		return (printfd(2, "env: No options or "), \
-			printfd(2, "arguments are allowed!\n"), TRUE);
-	while (tmp)
-	{
-		str = (char *)tmp->content;
-		if (ft_strchr(str, '='))
-			printf("%s\n", str);
-		tmp = tmp->next;
-	}
-	return (TRUE);
-}

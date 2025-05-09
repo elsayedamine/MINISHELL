@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/07 19:22:47 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/10 00:08:21 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int	main(int ac, char **av, char **envp)
 	vars.env = ft_arr2list(vars.envp);
 	ft_shlvl(&vars);
 	signal(SIGINT, foo);
+	signal(SIGQUIT, SIG_IGN);
 	prompt_loop(&vars);
 	return (0);
 }
