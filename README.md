@@ -58,3 +58,9 @@ mkdir c
 cd c
 rm -rf ../../b
 cd .. or cd ../../ or cd ../../../ should work instead of giving u an error
+
+env -i ./minishell 
+ls : no such file or directoy (mine)
+ls : command not found (bash)
+
+export error : export a=asdasd && export a=c+=
