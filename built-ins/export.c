@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/09 18:06:09 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/10 12:27:50 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*var_name(char *s, char flag)
+char	*var_name(char *s)
 {
-	int		i;
-	char	*var;
+	int	i;
+	char *var;
 
 	i = 0;
-	while (s[i] && s[i] != flag)
+	while (s[i] && s[i] != '+' &&  s[i] != '=')
 		i++;
-	if (s[i] != flag)
+	if (s[i] != '+' && s[i] != '=')
 		return (NULL);
 	var = (char *)malloc(sizeof(char) * (i + 1));
 	i = 0;
-	while (s[i] != flag)
+	while (s[i] && s[i] != '+' &&  s[i] != '=')
 	{
 		var[i] = s[i];
 		i++;
@@ -130,8 +130,7 @@ int	ft_isvn(char *v, int flag, t_shell *vars)
 		return (FALSE);
 	while (v && v[i])
 	{
-		if ((flag == 1 && ft_strchr("!@#$%^&*()-[]{}|\\:;\"'<>,.?/~` /", v[i])) ||
-			(flag == 0 && ft_strchr("!@#$%^&*()-+=[]{}|\\:;\"'<>,.?/~` /", v[i])))
+		if (!ft_isalnum(v[i]) && v[i] != '_')
 			return (FALSE);
 		i++;
 	}
@@ -160,25 +159,19 @@ int	export(int ac, char **av, t_shell *vars)
 		return (ft_printexp(vars), TRUE);
 	while (i < ac)
 	{
-		v = var_name(av[i], '+');
+		v = var_name(av[i]);
 		if (ft_isvn(v, 1, vars) && !ft_strncmp(av[i] + ft_strlen(v), "+=", 2))
+			ft_append(v, av[i], vars);
+		else if (ft_isvn(v, 1, vars) && !ft_strchr(v, '+'))		
+			ft_add(v, av[i], vars);
+		else if (ft_isvn(av[i], 0, vars) && i++)
+			continue;
+		else
 		{
-			ft_append(v, av[i++], vars);
-			continue;
+			printf("export: `%s': not a valid identifier\n", av[i]);
+			ft_free("1", v);
 		}
-		v = var_name(av[i], '=');
-		if (ft_isvn(v, 1, vars) && !ft_strchr(v, '+'))
-		{			
-			ft_add(v, av[i++], vars);
-			continue;
-		}
-		if (ft_isvn(av[i], 0, vars))
-		{
-			i++;
-			continue;
-		}
-		printfd(2, "export: `%s': not a valid identifier\n", av[i++]);
-		ft_free("1", v);
+		i++;
 	}
 	ft_free("2", vars->envp);
 	vars->envp = ft_list2arr(vars->env);

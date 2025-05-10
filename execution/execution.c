@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/10 00:43:51 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:21:56 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	traverse_sub(t_shell *vars, t_list **node)
 int	execution(t_shell *vars, t_list **ast)
 {
 	t_list	**node;
-
+	// char	*cmd_path;
 	node = ast;
 	while (*node)
 	{

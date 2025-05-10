@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:19:39 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/29 17:18:38 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:33:40 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_exit(int ac, char **av, t_shell *vars)
 	round = check_args(av[1], &error);
 	if (error == FALSE)
 	{
-		printfd(2, M": exit: numeric argument required\n");
+		printfd(2, M": exit: %s: numeric argument required\n", av[1]);
 		// clear();
 		exit(2);
 	}

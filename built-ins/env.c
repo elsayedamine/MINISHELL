@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:38:48 by sayed             #+#    #+#             */
-/*   Updated: 2025/05/09 16:57:31 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/03 20:19:11 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	env(int ac, char **av, t_shell *vars)
 {
 	t_list	*tmp;
-	char	*str;
+	char *str;
 
 	(void)av;
 	tmp = vars->env;

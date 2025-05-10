@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/10 00:42:24 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/10 13:52:15 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*read_cmd(char *cmd)
 {
 	char	*trim;
 
-	trim = readline("minishell$ ");
+	trim = readline("\033[1;32mminishell$ \033[0m");
 	cmd = ft_strtrim(trim, " \t\n\v\r\f");
 	free(trim);
 	if (!cmd || !ft_strcmp("exit", cmd))
@@ -89,18 +89,51 @@ void	ft_nullenv(t_shell *vars)
 	(vars->envp)[3] = NULL;
 }
 
+int	ft_atoishell(char *str)
+{
+	int		i;
+	int		sign;
+	long	n;
+
+	ft_init(3, &i, &sign, &n);
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (sign++ && (str[i] == '-' || str[i] == '+'))
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
+	{
+		if (n > LONG_MAX / 10 || (n == LONG_MAX / 10 && str[i] - '0' > LONG_MAX % 10))
+			return (1);
+		n = n * 10 + (str[i++] - '0');
+	}
+	n *= sign;
+	if (n < 0)
+		return (0);
+	if (n > 1000)
+		return (1);
+	return ((int)n + 1);
+}
+
+
 void	ft_shlvl(t_shell *vars)
 {
 	int		shlvl;
-	char	*arr[2];
+	char	*arr[3];
 	char	*sh;
 
-	shlvl = ft_atoi(get_env("SHLVL", vars)) + 1;
+	shlvl = ft_atoishell(get_env("SHLVL", vars));
 	sh = ft_itoa(shlvl);
-	arr[0] = "export";
+	arr[0] = ft_strdup("export");
 	arr[1] = ft_strjoin("SHLVL=", sh);
+	arr[2] = NULL;
 	export(2, arr, vars);
-	ft_free("11", arr[1], sh);
+	free(arr[0]);
+	free(arr[1]);
+	free(sh);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -111,9 +144,6 @@ int	main(int ac, char **av, char **envp)
 	printfd(1, "pid = %d\n", getpid());
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
-	// if (write(1, 0, 0) == -1 || read(0, 0, 0) == -1)
-	// 	return (write(2, "amine\n", 6));
-	// we should handle 1 and 0 fd close
 	vars.envp = ft_arrdup(envp);
 	if (!*vars.envp)
 		ft_nullenv(&vars);

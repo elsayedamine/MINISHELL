@@ -16,51 +16,26 @@ so many errors in the logic
 ```
 
 
-```bash
-some test cases:
+## 📌 Wildcard Expansion Rules (`*`)
 
-minishell$ echo "$""HOME"
-echo $HOME
-$HOME
-minishell$ bash
-bash
-aelsayed@c3r9p8:~/Desktop/minishell$ echo "$""HOME"
-$HOME
-aelsayed@c3r9p8:~/Desktop/minishell$ echo $""HOME
-HOME
-minishell$ echo $""HOME
-echo $HOME
-$HOME
-```
+### ✅ You Should Expand Wildcards (`*`) **only if all are true**:
 
-```bash
-minishell$ echo $a
-a        b       c
-minishell$ echo "$a"
-a        b       c
-```
+1. 🔓 The wildcard is **not inside quotes**  
+   - `'*.txt'` or `"*.txt"` → ❌ Do not expand (treated as literal string)
 
-env -i bash
-aelsayed@c3r9p2:/home/aelsayed$ export
-declare -x OLDPWD
-declare -x PWD="/home/aelsayed"
-declare -x SHLVL="1"
+2. - ❌ No expansion for:  
+     - `export`
+     - `unset`
 
-if u unset the OLDPWD and then change the directory u need to add it
-if i set SHLVL to 9999999999999999 and then enter to an new minishell i become 0 instead of 1
+- I try to insert the wildcard function to our code + function to check if we have to expand it or not
 
-```bash
-mkdir a 
-cd a
-mkdir b
-cd b
-mkdir c
-cd c
-rm -rf ../../b
-cd .. or cd ../../ or cd ../../../ should work instead of giving u an error
+## ------------------ 1 - read expand file ------------
 
-env -i ./minishell 
-ls : no such file or directoy (mine)
-ls : command not found (bash)
+## ------------------ 2 - here !!!!!! !!!! ------------
 
-export error : export a=asdasd && export a=c+=
+   - rah list kat3amarha omni tal9a * khassak ta3lamha
+   - hit mni ghadi tabghi thandliha khassa start dyal string li kayna fiha 
+      - examlpe `hello*` or `*sdiuh` or `ef*ege*eg`
+   - so n9ado lhaydo dik lpart kamla mn list o insertiw new list li fiha ga3 argument splited by ` `
+   - and we'll need arr 2 a flat list (each character in its node) so we can use instert funct or something like
+   - o l9adiya dyal $a o a=* khassak tahadi dir liha mark hit ghadi tskippiha otchiki wash inside
