@@ -43,3 +43,4 @@ minishell$ echo $""HOME
 echo $HOME
 $HOME
 
+export A="hello" B='world' C='"quoted $A"' D="'literal \$B'" && echo "$A $B" && echo $C && echo $D && unset A && echo "${A:-unset}" || echo fallback && export E=test && (echo "$E" && export F="$E 42" && echo "$F" && unset E F) && echo done || echo failed
