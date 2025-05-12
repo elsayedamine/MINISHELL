@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:58:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/10 22:44:58 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/12 03:01:01 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ t_list	*create_list(t_list *lst, char sep)
 	chunk = NULL;
 	while (lst)
 	{
-		if (!lst->type && ft_strchr("'\"", *(char *)lst->content))
+		if (lst->type != 1 && ft_strchr("'\"", *(char *)lst->content))
 			handle_quote(&quote, &chunk, lst->content);
-		else if (!quote && *(char *)lst->content == sep) // i deleted && chunk at the end of the condition in case we want to know the changes
+		else if (!quote && *(char *)lst->content == sep)
 			split_space(&chunk, &new, &lst, sep);
 		else
 			ft_lstadd_back(&chunk, ft_lstnew(ft_strdup((char *)lst->content)));
@@ -61,7 +61,6 @@ char	**split_list(t_list *lst, char sep)
 {
 	char	**arr;
 	t_list	*new;
-	// t_list	*wildcard;
 
 	new = create_list(lst, sep);
 	

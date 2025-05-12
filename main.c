@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/10 22:56:30 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/11 12:54:58 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,18 @@ void	prompt_loop(t_shell *vars)
 void	ft_nullenv(t_shell *vars)
 {
 	char	*cwd;
+	char	*j;
 
 	cwd = getcwd(NULL, 0);
+	j = ft_strjoin("_=", cwd);
 	ft_free("2", vars->envp);
-	vars->envp = (char **)malloc(sizeof(char *) * 4);
-	(vars->envp)[0] = ft_strjoin("PWD=", cwd);
-	free(cwd);
-	(vars->envp)[1] = ft_strdup("SHLVL=0");
-	(vars->envp)[2] = ft_strdup("_=/home/ahakki/Desktop/intra/MINISHELL/./minishell");
-	(vars->envp)[3] = NULL;
+	vars->envp = (char **)malloc(sizeof(char *) * 5);
+	(vars->envp)[0] = ft_strdup("OLDPWD");
+	(vars->envp)[1] = ft_strjoin("PWD=", cwd);
+	(vars->envp)[2] = ft_strdup("SHLVL=0");
+	(vars->envp)[3] = ft_strjoin(j, "/./minishell");
+	(vars->envp)[4] = NULL;
+	ft_free("11", j, cwd);
 }
 
 int	ft_atoishell(char *str)
@@ -125,14 +128,12 @@ void	ft_shlvl(t_shell *vars)
 	arr[1] = ft_strjoin("SHLVL=", sh);
 	arr[2] = NULL;
 	export(2, arr, vars);
-	free(arr[0]);
-	free(arr[1]);
-	free(sh);
+	ft_free("111", arr[0], arr[1], sh);
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	t_shell	vars;
+	t_shell		vars;
 
 	(void)av;
 	printfd(1, "pid = %d\n", getpid());
@@ -142,6 +143,7 @@ int	main(int ac, char **av, char **envp)
 	if (!*vars.envp)
 		ft_nullenv(&vars);
 	vars.env = ft_arr2list(vars.envp);
+	vars.pwd = getcwd(NULL, 0);
 	ft_shlvl(&vars);
 	signal(SIGINT, foo);
 	signal(SIGQUIT, SIG_IGN);

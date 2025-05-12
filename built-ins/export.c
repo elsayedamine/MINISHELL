@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/10 12:27:50 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/11 13:07:31 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,12 @@ void	ft_printexp(t_shell	*vars)
 	tmp = vars->env;
 	while (tmp)
 	{
-		str = ft_strdup((char *)tmp->content);
+		if (!ft_strncmp(tmp->content, "_=", 2))
+		{
+			tmp = tmp->next;
+			continue ;
+		}
+		str = ft_strdup(tmp->content);
 		if (ft_strchr_index(str, '=') != -1)
 		{
 			new_str = ft_strinsert(str, "\"", ft_strchr_index(str, '=') + 1);

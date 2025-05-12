@@ -6,13 +6,13 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/07 17:11:16 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/12 01:31:14 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*removequotes(char *str)
+char	*removequotes(char *str, t_list	*s)
 {
 	char	*result;
 	int		i;
@@ -29,9 +29,9 @@ char	*removequotes(char *str)
 	ft_init(3, &i, &j, &c);
 	while (str[i])
 	{
-		if ((str[i] == '\'' || str[i] == '"') && !c)
+		if (!ft_lstgetnode(s, i)->type && (str[i] == '\'' || str[i] == '"') && !c)
 			c = str[i];
-		else if (str[i] == c)
+		else if (!ft_lstgetnode(s, i)->type && str[i] == c)
 			c = 0;
 		else
 			result[j++] = str[i];
@@ -65,20 +65,20 @@ t_list *remove_quotes_from_list(t_list *lst)
 	return (ft_lstclear(&lst, free), new_lst);
 }
 
-char	**removequotes_arr(char **arr)
-{
-	int		i;
+// char	**removequotes_arr(char **arr)
+// {
+// 	int		i;
 
-	if (!arr)
-		return (NULL);
-	i = 0;
-	while (arr[i])
-	{
-		arr[i] = removequotes(arr[i]);
-		i++;
-	}
-	return (arr);
-}
+// 	if (!arr)
+// 		return (NULL);
+// 	i = 0;
+// 	while (arr[i])
+// 	{
+// 		arr[i] = removequotes(arr[i]);
+// 		i++;
+// 	}
+// 	return (arr);
+// }
 
 t_list	*ft_str_to_lst(char *str, int flag)
 {

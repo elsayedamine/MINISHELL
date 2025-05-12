@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/09 16:31:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/12 01:02:43 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	match_pattern(const char *pattern, const char *str)
 	return (*str == '\0');
 }
 
-void	wildcard(const char *pattern, t_list **x)
+char	**wildcard(char *pattern)
 {
 	DIR				*dir;
 	struct dirent	*entry;
@@ -50,7 +50,7 @@ void	wildcard(const char *pattern, t_list **x)
 	matches = (char **)malloc(sizeof(char *) * (MAX_MATCHES + 1));
 	dir = opendir(".");
 	if (!matches || !dir)
-		return (ft_free("1", matches), throw_error(DIRECT, NULL, NULL));
+		return (ft_free("1", matches), throw_error(DIRECT, NULL, NULL), NULL);
 	entry = readdir(dir);
 	while (entry)
 	{
@@ -63,9 +63,9 @@ void	wildcard(const char *pattern, t_list **x)
 		}
 		entry = readdir(dir);
 	}
-	matches[count] = NULL;
-	*x = ft_arr2list(matches);
-	return (closedir(dir), (void)ft_free("2", matches));
+	if (!count)
+		return (free(matches), NULL);
+	return (closedir(dir), matches[count] = NULL, matches);
 }
 
 // int	main(int ac, char **av)

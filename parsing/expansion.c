@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/10 18:22:26 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/12 02:44:14 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	add_value(t_shell *vars, t_list **s, char *str, int q)
 {
 	char	*var_name;
 	char	*var_value;
-	t_list	*last;
 
 	var_value = NULL;
 	var_name = NULL;
@@ -43,11 +42,7 @@ int	add_value(t_shell *vars, t_list **s, char *str, int q)
 		var_name = ft_strndup(str + 1, get_var_len(str + 1));
 		var_value = ft_strdup(get_env(var_name, vars));
 	}
-	last = ft_lstlast(*s);
-	if (last)
-		last->next = ft_str_to_lst(var_value, 1);
-	else
-		*s = ft_str_to_lst(var_value, 1);
+	ft_lstadd_back(s, ft_str_to_lst(var_value, 1));
 	return (ft_free("11", var_name, var_value), \
 		get_var_len(str + 1) + 1 + (*str == '$' && str[1] == '?'));
 }
@@ -70,22 +65,6 @@ void	handle_single_quotes(t_list **s, int *i, char *str)
 	if (str[*i] == '\'')
 		*i += add_char(s, '\'');
 }
-int	canbexpanded(char *str)
-{
-	char	cmd[256];
-	int		i = 0;
-
-	while (str[i] && str[i] != ' ')
-	{
-		cmd[i] = str[i];
-		i++;
-	}
-	cmd[i] = '\0';
-	if (!ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset"))
-		return (printf("should not be expanded\n"), 0);
-	return (1);
-}
-
 
 void	expand(t_shell *vars, char **str, char ***arr)
 {
@@ -106,13 +85,12 @@ void	expand(t_shell *vars, char **str, char ***arr)
 			handle_single_quotes(&s, &i, *str);
 		else if ((*str)[i] == '$')
 			i += add_value(vars, &s, &(*str)[i], q);
-		// else if ((*str)[i] == '*' && canbexpanded(*str) && !q && i++)
-		// 	we should mark the poiter so we can work on it read the line 39 in readline life
 		else
 			i += add_char(&s, (*str)[i]);
 	}
 	ft_free("12", *str, *arr);
 	*str = ft_lst2str(s);
+	*str = expand_wildcard(vars, str, &s);
 	*arr = split_list(s, ' ');
 	ft_lstclear(&s, free);
 }

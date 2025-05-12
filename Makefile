@@ -13,6 +13,7 @@ sources = \
 		parsing/custom_split.c \
 		parsing/expansion.c \
 		parsing/wildcard.c \
+		parsing/expand_wildcard.c \
 		parsing/split_list.c \
 		\
 		\

@@ -1,40 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst2str.c                                       :+:      :+:    :+:   */
+/*   ft_strextract.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 21:44:46 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/11 23:25:35 by aelsayed         ###   ########.fr       */
+/*   Created: 2025/05/11 22:59:31 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/05/11 22:59:39 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-char	*ft_lst2str(t_list *node)
+char	*ft_strextract(char *str, int index, char sep)
 {
-	int		total_len;
-	char	*str;
-	t_list	*curr;
+	int	start;
+	int	end;
 
-	total_len = 0;
-	curr = node;
-	while (curr)
-	{
-		if (curr->content)
-			total_len += ft_strlen((char *)curr->content);
-		curr = curr->next;
-	}
-	str = (char *)malloc(total_len + 1);
-	if (!str)
+	if (!str || index < 0 || index >= (int)ft_strlen(str))
 		return (NULL);
-	*str = '\0';
-	while (node)
-	{
-		if (node->content)
-			ft_strlcat(str, (char *)node->content, total_len + 1);
-		node = node->next;
-	}
-	return (str);
+	start = index;
+	end = index;
+	while (start > 0 && str[start - 1] != sep)
+		start--;
+	while (str[end] && str[end] != sep)
+		end++;
+	return (ft_substr(str, start, end - start));
 }
