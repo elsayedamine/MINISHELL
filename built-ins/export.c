@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/11 13:07:31 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/12 15:33:39 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ int	export(int ac, char **av, t_shell *vars)
 			continue;
 		else
 		{
-			printf("export: `%s': not a valid identifier\n", av[i]);
+			printfd(2, "export: `%s': not a valid identifier\n", av[i]);
 			ft_free("1", v);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:18:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/12 02:56:01 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:03:59 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,29 @@ int	*extract_pattern(char *str, int index, char sep, t_list *s)
 
 int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 {
-	int     *borders;
+	int     *bords;
 	char	**arr;
 	char	*pattern;
 	int		diff;
 	t_list	*node;
 
-	borders = extract_pattern(str, index, ' ', s);
-	char *sub = ft_substr(str, borders[0], borders[1] - borders[0]);
-	pattern = removequotes(sub, s);
+	bords = extract_pattern(str, index, ' ', s);
+	pattern = removequotes(ft_substr(str, bords[0], bords[1] - bords[0]), s);
 	arr = wildcard(pattern);
 	ft_free("1", pattern);
 	if (arr)
 	{
-		node = ft_lstgetnode(*new, borders[0] - 1);
-		ft_lstclear(&node->next, free);
+		node = ft_lstgetnode(*new, bords[0] - 1);
+		if (node && node->next)
+			ft_lstclear(&node->next, free);
 		pattern = ft_arr2str(arr, ' ');
 		ft_free("2", arr);
 	}
 	else
-		pattern = ft_substr(str, borders[0], borders[1] - borders[0]);
+		pattern = ft_substr(str, bords[0], bords[1] - bords[0]);
 	ft_lstadd_back(new, ft_str_to_lst(pattern, 1));
-	diff = borders[1] - index;
-	return (free(borders), diff);
+	diff = bords[1] - index;
+	return (free(bords), diff);
 }
 
 int	append(t_list **s, char c, int type)
@@ -86,6 +86,18 @@ int	append(t_list **s, char c, int type)
 	new->type = type;
 	ft_lstadd_back(s, new);
 	return (1);
+}
+
+int	canbexpanded(char *str, int i)
+{
+	if (!ft_strncmp(str, "export ", 7))
+	{
+		while (i > 0 && str[i] != ' ' && str[i] != '=')
+			i--;
+		if (str[i] == '=')
+			return (FALSE);
+	}
+	return (TRUE);
 }
 
 char	*expand_wildcard(t_shell *vars, char **str, t_list **old)
@@ -105,7 +117,7 @@ char	*expand_wildcard(t_shell *vars, char **str, t_list **old)
 			handle_quotes(&q, (*str)[i], 0, 0);
 			i += append(&new, (*str)[i], 0);
 		}
-		else if (!q && (*str)[i] == '*')
+		else if (!q && (*str)[i] == '*' && canbexpanded(*str, i))
 			i += extract_wildcard(*str, &new, i, *old);
 		else
 			i += append(&new, (*str)[i], ft_lstgetnode(*old, i)->type);

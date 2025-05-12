@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:58:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/12 03:01:01 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:07:51 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	handle_quote(char *quote, t_list **chunk, char *c)
 
 void	split_space(t_list **chunk, t_list **new, t_list **lst, char sep)
 {
-	if (*chunk)
+	if (chunk && *chunk)
 	{
 		ft_lstadd_back(new, ft_lstnew(ft_lst2str(*chunk)));
 		ft_lstclear(chunk, free);
