@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 19:22:38 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:30:40 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,23 @@ int	check_builts(char **arr, t_shell *vars, int i)
 	return (FALSE);
 }
 
-void	skip(t_list **node, int op)
+int	process_cmd(t_shell *vars, t_list **ast, int flag)
 {
-	while (*node && (*node)->next && (*node)->type != !op)
-		*node = (*node)->next;
-	if ((*node)->type == SUBSHELL || \
-		(*node)->type == CMD || (*node)->type == !op)
-		*node = (*node)->next;
+	if (flag == 0)
+	{
+		expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
+		if (check_builts((*ast)->arr, vars, 0) == TRUE)
+			return (skip(ast, OR), EXIT_SUCCESS);
+	}
+	else if (flag == 1)
+	{
+		if (vars->exit == 0)
+			skip(ast, OR);
+		else
+			traverse_sub(vars, ast);
+		return (vars->exit);
+	}
+	return (1);
 }
 
 int	execute_cmd(t_shell *vars, t_list **ast)
@@ -56,11 +66,8 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	pid_t	pid;
 	int		status;
 
-	expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
-	if (check_builts((*ast)->arr, vars, 0) == TRUE)
-		return (skip(ast, OR), EXIT_SUCCESS);
-	if (!(*ast)->arr)
-		return (traverse_sub(vars, ast), 0);
+	if (process_cmd(vars, ast, 0) == EXIT_SUCCESS)
+		return (EXIT_SUCCESS);
 	cmd = get_path((*ast)->arr[0], vars);
 	if (!cmd)
 		return (skip(ast, AND), vars->exit);
@@ -78,26 +85,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 			vars->exit = WEXITSTATUS(status);
 	}
 	free(cmd);
-	if (vars->exit == 0)
-		skip(ast, OR);
-	else
-		traverse_sub(vars, ast);
-	return (vars->exit);
-}
-
-int	traverse_sub(t_shell *vars, t_list **node)
-{
-	if (vars->exit == 0 && (*node) && \
-		(*node)->next && (*node)->next->type == OR)
-		skip(node, OR);
-	else if (vars->exit != 0 && (*node) && \
-		(*node)->next && (*node)->next->type == AND)
-		skip(node, AND);
-	else if ((*node) && (*node)->next)
-		(*node) = (*node)->next->next;
-	else
-		(*node) = (*node)->next;
-	return (vars->exit);
+	return (process_cmd(vars, ast, 1));
 }
 
 int	execution(t_shell *vars, t_list **ast)
@@ -128,6 +116,7 @@ int	execution(t_shell *vars, t_list **ast)
 	}
 	return (vars->exit);
 }
+
 // ls || (ls | ls | ls && ls) || ls && ls
 // p (char *)node->content
 // ls && (ls -l && ls -a || asasd||ASDSA||ASD && touch a) && touch ls
