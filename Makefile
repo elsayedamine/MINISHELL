@@ -10,7 +10,6 @@ sources = \
 		parsing/ft_isvalid.c \
 		parsing/removequotes.c \
 		parsing/ft_check.c \
-		parsing/custom_split.c \
 		parsing/expansion.c \
 		parsing/wildcard.c \
 		parsing/expand_wildcard.c \
@@ -20,6 +19,7 @@ sources = \
 		execution/execution.c \
 		execution/get_path.c \
 		execution/pipeline.c \
+		execution/ast_traversal.c \
 		\
 		\
 		built-ins/cd.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 16:50:50 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:30:31 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ typedef struct s_shell
 	t_list		*ast;
 }				t_shell;
 
+typedef int (*t_fct)(int ac, char **av, t_shell *vars);
+
 /* **************************************** */
 /*           FUNCTION PROTOTYPES            */
 /* **************************************** */
@@ -138,8 +140,8 @@ void	throw_error(int error, char *file, int *status);
 char	**split_list(t_list *lst, char sep);
 void	expand(t_shell *vars, char **str, char ***arr);
 char	**wildcard(char *pattern);
-int		add_char(t_list **s, char c);
-char	*expand_wildcard(t_shell *vars, char **str, t_list **s);
+int		append(t_list **s, char c, int type);
+char	*expand_wildcard(char **str, t_list **s);
 t_list	*ft_str_to_lst(char *str, int flag);
 
 /*-------------------------------------- BUILTINS --------------------------------------*/
@@ -162,5 +164,6 @@ void	exit_execve(char *cmd, t_shell *vars, t_list **ast);
 void	skip(t_list **node, int op);
 int		traverse_sub(t_shell *vars, t_list **node);
 int		execute_cmd(t_shell *vars, t_list **ast);
-int		check_builts(char **arr, t_shell *vars);
+// int		check_builts(char **arr, t_shell *vars);
+int		check_builtins(char **arr, t_shell *vars, int i);
 #endif

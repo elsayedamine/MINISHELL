@@ -50,7 +50,3 @@ ls Makefile README.md built-ins execution garbage.c libft main.c minishell.h par
 ls: cannot access '**': No such file or directory
 
 we should test if anyfile has "quotes" how it would work with us even mahndlia like touch '"' and ls *'"' shoould show us the file
-
-(ls | ls) && ls
-built-ins  execution  garbage.c  libft	main.c	Makefile  minishell  minishell.h  parsing  README.md  testcases.c
-[1]    667240 segmentation fault (core dumped)  ./minishell
