@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 19:09:16 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:23:43 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ typedef struct s_shell
 	t_list		*ast;
 }				t_shell;
 
+typedef int (t_fct)(int ac, char **av, t_shell *vars);
+
 /* **************************************** */
 /*           FUNCTION PROTOTYPES            */
 /* **************************************** */
@@ -162,5 +164,5 @@ void	exit_execve(char *cmd, t_shell *vars, t_list **ast);
 void	skip(t_list **node, int op);
 int		traverse_sub(t_shell *vars, t_list **node);
 int		execute_cmd(t_shell *vars, t_list **ast);
-int		check_builts(char **arr, t_shell *vars);
+int		check_builts(char **arr, t_shell *vars, int i);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:48:32 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 08:39:37 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/13 19:19:01 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	execute_single_cmd(t_shell *vars, t_list *cmd_node)
 	int		status;
 
 	expand(vars, (char **)&(cmd_node->content), &(cmd_node->arr));
-	if (check_builts(cmd_node->arr, vars) == TRUE)
+	if (check_builts(cmd_node->arr, vars, 0) == TRUE)
 		return (EXIT_SUCCESS);
 	cmd = get_path(cmd_node->content, vars);
 	if (!cmd)

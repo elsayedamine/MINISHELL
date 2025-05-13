@@ -3,35 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 16:51:09 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/13 19:22:38 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-extern t_shell	g_vars;
-
-int	check_builts(char **arr, t_shell *vars)
+int	check_builts(char **arr, t_shell *vars, int i)
 {
-	if (!arr)
-		return (FALSE);
-	if (!ft_strcmp("pwd", *arr))
-		return (pwd(ft_arrlen(arr), arr, vars), TRUE);
-	if (!ft_strcmp("cd", *arr))
-		return (cd(ft_arrlen(arr), arr, vars), TRUE);
-	if (!ft_strcmp("echo", *arr))
-		return (echo(ft_arrlen(arr), arr, vars), TRUE);
-	if (!ft_strcmp("env", *arr))
-		return (env(ft_arrlen(arr), arr, vars), TRUE);
-	if (!ft_strcmp("exit", *arr))
-		return (ft_exit(ft_arrlen(arr), arr, vars), TRUE);
-	if (!ft_strcmp("export", *arr))
-		return (export(ft_arrlen(arr), arr, vars), TRUE);
-	if (!ft_strcmp("unset", *arr))
-		return (unset(ft_arrlen(arr), arr, vars), TRUE);
+	static char		*strs[] = {
+		"export",
+		"exit",
+		"unset",
+		"pwd",
+		"echo",
+		"env",
+		"cd",
+		NULL
+	};
+	static t_fct	*fcts[] = {
+		export,
+		ft_exit,
+		unset,
+		pwd,
+		echo,
+		env,
+		cd,
+	};
+
+	while (ft_strcmp(strs[i], *arr))
+		i++;
+	if (i != 7)
+		return (fcts[i](ft_arrlen(arr), arr, vars), TRUE);
 	return (FALSE);
 }
 
@@ -39,7 +45,8 @@ void	skip(t_list **node, int op)
 {
 	while (*node && (*node)->next && (*node)->type != !op)
 		*node = (*node)->next;
-	if ((*node)->type == SUBSHELL || (*node)->type == CMD || (*node)->type == !op)
+	if ((*node)->type == SUBSHELL || \
+		(*node)->type == CMD || (*node)->type == !op)
 		*node = (*node)->next;
 }
 
@@ -50,7 +57,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	int		status;
 
 	expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
-	if (check_builts((*ast)->arr, vars) == TRUE)
+	if (check_builts((*ast)->arr, vars, 0) == TRUE)
 		return (skip(ast, OR), EXIT_SUCCESS);
 	if (!(*ast)->arr)
 		return (traverse_sub(vars, ast), 0);
@@ -80,9 +87,11 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 
 int	traverse_sub(t_shell *vars, t_list **node)
 {
-	if (vars->exit == 0 && (*node) && (*node)->next && (*node)->next->type == OR)
+	if (vars->exit == 0 && (*node) && \
+		(*node)->next && (*node)->next->type == OR)
 		skip(node, OR);
-	else if (vars->exit != 0 && (*node) && (*node)->next && (*node)->next->type == AND)
+	else if (vars->exit != 0 && (*node) && \
+		(*node)->next && (*node)->next->type == AND)
 		skip(node, AND);
 	else if ((*node) && (*node)->next)
 		(*node) = (*node)->next->next;
@@ -94,13 +103,15 @@ int	traverse_sub(t_shell *vars, t_list **node)
 int	execution(t_shell *vars, t_list **ast)
 {
 	t_list	**node;
-	// char	*cmd_path;
+
 	node = ast;
 	while (*node)
 	{
-		if ((*node) && (*node)->type == CMD && (!(*node)->next || (*node)->next->type <= AND))
+		if ((*node) && (*node)->type == CMD && \
+			(!(*node)->next || (*node)->next->type <= AND))
 			vars->exit = execute_cmd(vars, node);
-		else if ((*node) && ((*node)->type == CMD || (*node)->type == SUBSHELL) && (*node)->next && (*node)->next->type == PIPE)
+		else if ((*node) && ((*node)->type == CMD || (*node)->type == SUBSHELL)
+			&& (*node)->next && (*node)->next->type == PIPE)
 		{
 			vars->exit = pipex(vars, node);
 			traverse_sub(vars, node);
@@ -120,4 +131,5 @@ int	execution(t_shell *vars, t_list **ast)
 // ls || (ls | ls | ls && ls) || ls && ls
 // p (char *)node->content
 // ls && (ls -l && ls -a || asasd||ASDSA||ASD && touch a) && touch ls
-//(ls && (echo A || (echo B && echo C))) || ((echo D && echo 	E) && (echo F || echo G)) && (echo H || (echo I && (echo J || echo K)))
+//(ls && (echo A || (echo B && echo C))) || ((echo D && echo 	E)
+//&& (echo F || echo G)) && (echo H || (echo I && (echo J || echo K)))

@@ -6,15 +6,13 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:07:20 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/04 22:39:33 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:13:03 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-extern t_shell	g_vars;
-
-int is_dir(const char *path)
+int	is_dir(const char *path)
 {
 	struct stat	sb;
 
@@ -59,5 +57,6 @@ char	*get_path(char *cmd, t_shell *vars)
 		ft_free("11", checker, path);
 	}
 	vars->exit = 127;
-	return (ft_free("2", paths), throw_error(CMD_NOT_FOUND, cmd, &vars->exit), NULL);
+	return (throw_error(CMD_NOT_FOUND, cmd, &vars->exit), \
+		ft_free("2", paths), NULL);
 }

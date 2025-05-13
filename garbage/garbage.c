@@ -6,11 +6,32 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 03:48:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/07 19:17:41 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:19:45 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// int	check_builts(char **arr, t_shell *vars)
+// {
+// 	if (!arr)
+// 		return (FALSE);
+// 	if (!ft_strcmp("pwd", *arr))
+// 		return (pwd(ft_arrlen(arr), arr, vars), TRUE);
+// 	if (!ft_strcmp("cd", *arr))
+// 		return (cd(ft_arrlen(arr), arr, vars), TRUE);
+// 	if (!ft_strcmp("echo", *arr))
+// 		return (echo(ft_arrlen(arr), arr, vars), TRUE);
+// 	if (!ft_strcmp("env", *arr))
+// 		return (env(ft_arrlen(arr), arr, vars), TRUE);
+// 	if (!ft_strcmp("exit", *arr))
+// 		return (ft_exit(ft_arrlen(arr), arr, vars), TRUE);
+// 	if (!ft_strcmp("export", *arr))
+// 		return (export(ft_arrlen(arr), arr, vars), TRUE);
+// 	if (!ft_strcmp("unset", *arr))
+// 		return (unset(ft_arrlen(arr), arr, vars), TRUE);
+// 	return (FALSE);
+// }
 
 int	is_in_cwd(char *path)
 {
