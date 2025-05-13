@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/07 19:21:56 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:51:09 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
 	if (check_builts((*ast)->arr, vars) == TRUE)
 		return (skip(ast, OR), EXIT_SUCCESS);
+	if (!(*ast)->arr)
+		return (traverse_sub(vars, ast), 0);
 	cmd = get_path((*ast)->arr[0], vars);
 	if (!cmd)
 		return (skip(ast, AND), vars->exit);
@@ -78,11 +80,11 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 
 int	traverse_sub(t_shell *vars, t_list **node)
 {
-	if (vars->exit == 0 && (*node)->next && (*node)->next->type == OR)
+	if (vars->exit == 0 && (*node) && (*node)->next && (*node)->next->type == OR)
 		skip(node, OR);
-	else if (vars->exit != 0 && (*node)->next && (*node)->next->type == AND)
+	else if (vars->exit != 0 && (*node) && (*node)->next && (*node)->next->type == AND)
 		skip(node, AND);
-	else if ((*node)->next)
+	else if ((*node) && (*node)->next)
 		(*node) = (*node)->next->next;
 	else
 		(*node) = (*node)->next;
@@ -101,8 +103,8 @@ int	execution(t_shell *vars, t_list **ast)
 		else if ((*node) && ((*node)->type == CMD || (*node)->type == SUBSHELL) && (*node)->next && (*node)->next->type == PIPE)
 		{
 			vars->exit = pipex(vars, node);
-			// traverse_sub(vars, node);
-			// continue ;
+			traverse_sub(vars, node);
+			continue ;
 		}
 		else if ((*node) && (*node)->type == SUBSHELL)
 		{
@@ -118,5 +120,4 @@ int	execution(t_shell *vars, t_list **ast)
 // ls || (ls | ls | ls && ls) || ls && ls
 // p (char *)node->content
 // ls && (ls -l && ls -a || asasd||ASDSA||ASD && touch a) && touch ls
-// (ls && (echo A || (echo B && echo C))) || ((echo D && echo E) && (echo F || echo G)) 
- // && (echo H || (echo I && (echo J || echo K)))
+//(ls && (echo A || (echo B && echo C))) || ((echo D && echo 	E) && (echo F || echo G)) && (echo H || (echo I && (echo J || echo K)))

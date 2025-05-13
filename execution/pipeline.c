@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:48:32 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/06 23:58:02 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/13 08:39:37 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,13 @@ int pipex(t_shell *vars, t_list **node)
 			}
 			if (next)
 			{
+				
 				close(fd[0]);
 				dup2(fd[1], STDOUT_FILENO);
 				close(fd[1]);
 			}
 			if (current->type == CMD)
-				exit(execute_single_cmd(vars, current));
+				exit(execute_cmd(vars, &current));
 			else if (current->type == SUBSHELL)
 				exit(execution(vars, &current->child));
 			exit(EXIT_FAILURE);
