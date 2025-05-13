@@ -12,33 +12,35 @@
 
 #include "../minishell.h"
 
-int	check_builtins(char **arr, t_shell *vars, int i)
-{
-	static char		*strs[] = {
-		"export",
-		"exit",
-		"unset",
-		"pwd",
-		"echo",
-		"env",
-		"cd",
-		NULL
-	};
-	static t_fct	fcts[] = {
-		export,
-		ft_exit,
-		unset,
-		pwd,
-		echo,
-		env,
-		cd
-	};
+extern t_shell	g_vars;
 
-	while (ft_strcmp(strs[i], *arr))
-		i++;
-	if (i != 7)
-		return (fcts[i](ft_arrlen(arr), arr, vars), TRUE);
+int	check_builts(char **arr, t_shell *vars)
+{
+	if (!arr)
+		return (FALSE);
+	if (!ft_strcmp("pwd", *arr))
+		return (pwd(ft_arrlen(arr), arr, vars), TRUE);
+	if (!ft_strcmp("cd", *arr))
+		return (cd(ft_arrlen(arr), arr, vars), TRUE);
+	if (!ft_strcmp("echo", *arr))
+		return (echo(ft_arrlen(arr), arr, vars), TRUE);
+	if (!ft_strcmp("env", *arr))
+		return (env(ft_arrlen(arr), arr, vars), TRUE);
+	if (!ft_strcmp("exit", *arr))
+		return (ft_exit(ft_arrlen(arr), arr, vars), TRUE);
+	if (!ft_strcmp("export", *arr))
+		return (export(ft_arrlen(arr), arr, vars), TRUE);
+	if (!ft_strcmp("unset", *arr))
+		return (unset(ft_arrlen(arr), arr, vars), TRUE);
 	return (FALSE);
+}
+
+void	skip(t_list **node, int op)
+{
+	while (*node && (*node)->next && (*node)->type != !op)
+		*node = (*node)->next;
+	if ((*node)->type == SUBSHELL || (*node)->type == CMD || (*node)->type == !op)
+		*node = (*node)->next;
 }
 
 int	execute_cmd(t_shell *vars, t_list **ast)
@@ -48,7 +50,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	int		status;
 
 	expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
-	if (check_builtins((*ast)->arr, vars, 0) == TRUE)
+	if (check_builts((*ast)->arr, vars) == TRUE)
 		return (skip(ast, OR), EXIT_SUCCESS);
 	if (!(*ast)->arr)
 		return (traverse_sub(vars, ast), 0);
@@ -76,18 +78,29 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	return (vars->exit);
 }
 
+int	traverse_sub(t_shell *vars, t_list **node)
+{
+	if (vars->exit == 0 && (*node) && (*node)->next && (*node)->next->type == OR)
+		skip(node, OR);
+	else if (vars->exit != 0 && (*node) && (*node)->next && (*node)->next->type == AND)
+		skip(node, AND);
+	else if ((*node) && (*node)->next)
+		(*node) = (*node)->next->next;
+	else
+		(*node) = (*node)->next;
+	return (vars->exit);
+}
+
 int	execution(t_shell *vars, t_list **ast)
 {
 	t_list	**node;
-
+	// char	*cmd_path;
 	node = ast;
 	while (*node)
 	{
-		if ((*node) && (*node)->type == CMD && \
-			(!(*node)->next || (*node)->next->type <= AND))
+		if ((*node) && (*node)->type == CMD && (!(*node)->next || (*node)->next->type <= AND))
 			vars->exit = execute_cmd(vars, node);
-		else if ((*node) && ((*node)->type == CMD || (*node)->type == SUBSHELL)
-			&& (*node)->next && (*node)->next->type == PIPE)
+		else if ((*node) && ((*node)->type == CMD || (*node)->type == SUBSHELL) && (*node)->next && (*node)->next->type == PIPE)
 		{
 			vars->exit = pipex(vars, node);
 			traverse_sub(vars, node);

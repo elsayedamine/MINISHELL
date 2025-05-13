@@ -3,42 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 16:45:49 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/13 19:07:50 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	print_ast(t_list *node, int depth)
-{
-	while (node)
-	{
-		for (int i = 0; i < depth; i++)
-			printf("	");
-		if (node->content)
-			printf("- %s\n", (char *)node->content);
-		else
-			printf("- (group)\n");
-		if (node->arr)
-		{
-			printf("	Array elements:\n");
-			for (int i = 0; node->arr[i] != NULL; i++)
-			{
-				for (int j = 0; j < depth + 1; j++)
-					printf("	");
-				printf("- %s\n", node->arr[i]);
-			}
-		}
-		if (node->child)
-			print_ast(node->child, depth + 1);
-		node = node->next;
-	}
-}
-
-t_type define_type(char *content)
+t_type	define_type(char *content)
 {
 	if (!content)
 		return (SUBSHELL);

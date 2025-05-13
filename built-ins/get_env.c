@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:47:01 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/12 17:06:09 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:10:51 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ char	*get_env(char *k, t_shell *vars)
 	tmp = vars->env;
 	while (tmp)
 	{
-		if (ft_strnstr((char *)tmp->content, k, ft_strlen(k)) == (char *)tmp->content \
+		if (ft_strnstr((char *)tmp->content, k, \
+			ft_strlen(k)) == (char *)tmp->content \
 			&& ((char *)tmp->content)[ft_strlen(k)] == '=')
 			return ((char *)tmp->content + ft_strlen(k) + 1);
 		tmp = tmp->next;

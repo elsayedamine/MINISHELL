@@ -19,7 +19,6 @@ sources = \
 		execution/execution.c \
 		execution/get_path.c \
 		execution/pipeline.c \
-		execution/ast_traversal.c \
 		\
 		\
 		built-ins/cd.c \

@@ -6,13 +6,11 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/09 16:38:48 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:08:10 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-extern t_shell	g_vars;
 
 int	ft_nodejoin(t_shell *vars)
 {
@@ -114,7 +112,7 @@ int	ft_check(t_shell *vars)
 void	throw_error(int error, char *file, int *exitt)
 {
 	if (error == ENOENT)
-		printfd(2, "%s: %s\n", file, strerror(ENOENT));	
+		printfd(2, "%s: %s\n", file, strerror(ENOENT));
 	if (error == SYNTAX)
 		printfd(2, "Invalid Syntax : Something is missing \" or ' or ( or )\n");
 	if (error == OP)

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/12 01:31:14 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:08:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ char	*removequotes(char *str, t_list	*s)
 	ft_init(3, &i, &j, &c);
 	while (str[i])
 	{
-		if (!ft_lstgetnode(s, i)->type && (str[i] == '\'' || str[i] == '"') && !c)
+		if (!ft_lstgetnode(s, i)->type && \
+			(str[i] == '\'' || str[i] == '"') && !c)
 			c = str[i];
 		else if (!ft_lstgetnode(s, i)->type && str[i] == c)
 			c = 0;
@@ -37,11 +38,10 @@ char	*removequotes(char *str, t_list	*s)
 			result[j++] = str[i];
 		i++;
 	}
-	result[j] = '\0';
-	return (free(str), result);
+	return (result[j] = '\0', free(str), result);
 }
 
-t_list *remove_quotes_from_list(t_list *lst)
+t_list	*remove_quotes_from_list(t_list *lst)
 {
 	t_list	*curr;
 	t_list	*new_lst;

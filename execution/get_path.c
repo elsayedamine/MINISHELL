@@ -12,7 +12,9 @@
 
 #include "../minishell.h"
 
-int	is_dir(const char *path)
+extern t_shell	g_vars;
+
+int is_dir(const char *path)
 {
 	struct stat	sb;
 
@@ -57,6 +59,5 @@ char	*get_path(char *cmd, t_shell *vars)
 		ft_free("11", checker, path);
 	}
 	vars->exit = 127;
-	return (throw_error(CMD_NOT_FOUND, cmd, &vars->exit), \
-		ft_free("2", paths), NULL);
+	return (ft_free("2", paths), throw_error(CMD_NOT_FOUND, cmd, &vars->exit), NULL);
 }

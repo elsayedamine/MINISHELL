@@ -12,27 +12,6 @@
 
 #include "minishell.h"
 
-// int	check_builts(char **arr, t_shell *vars)
-// {
-// 	if (!arr)
-// 		return (FALSE);
-// 	if (!ft_strcmp("pwd", *arr))
-// 		return (pwd(ft_arrlen(arr), arr, vars), TRUE);
-// 	if (!ft_strcmp("cd", *arr))
-// 		return (cd(ft_arrlen(arr), arr, vars), TRUE);
-// 	if (!ft_strcmp("echo", *arr))
-// 		return (echo(ft_arrlen(arr), arr, vars), TRUE);
-// 	if (!ft_strcmp("env", *arr))
-// 		return (env(ft_arrlen(arr), arr, vars), TRUE);
-// 	if (!ft_strcmp("exit", *arr))
-// 		return (ft_exit(ft_arrlen(arr), arr, vars), TRUE);
-// 	if (!ft_strcmp("export", *arr))
-// 		return (export(ft_arrlen(arr), arr, vars), TRUE);
-// 	if (!ft_strcmp("unset", *arr))
-// 		return (unset(ft_arrlen(arr), arr, vars), TRUE);
-// 	return (FALSE);
-// }
-
 int	is_in_cwd(char *path)
 {
 	char	*cwd;

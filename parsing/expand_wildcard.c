@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:18:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 18:30:08 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:06:07 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,6 @@ int	handle_quotes(char *quote, char c, char sep, int type)
 	else if (!*quote && c == sep)
 		return (TRUE);
 	return (FALSE);
-}
-
-int	canbexpanded(char *str, int i)
-{
-	if (!ft_strncmp(str, "export ", 7))
-	{
-		while (i > 0 && str[i] != ' ' && str[i] != '=')
-			i--;
-		if (str[i] == '=')
-			return (FALSE);
-	}
-	return (TRUE);
 }
 
 int	*extract_pattern(char *str, int index, char sep, t_list *s)
@@ -88,6 +76,18 @@ int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 	ft_lstadd_back(new, ft_str_to_lst(pattern, 1));
 	diff = bords[1] - index;
 	return (free(bords), diff);
+}
+
+int	canbexpanded(char *str, int i)
+{
+	if (!ft_strncmp(str, "export ", 7))
+	{
+		while (i > 0 && str[i] != ' ' && str[i] != '=')
+			i--;
+		if (str[i] == '=')
+			return (FALSE);
+	}
+	return (TRUE);
 }
 
 char	*expand_wildcard(char **str, t_list **old)
