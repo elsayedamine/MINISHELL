@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_traversal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 19:25:11 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 19:25:21 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:38:09 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	traverse_sub(t_shell *vars, t_list **node)
 		skip(node, AND);
 	else if ((*node) && (*node)->next)
 		(*node) = (*node)->next->next;
-	else
+	else if (*node)
 		(*node) = (*node)->next;
 	return (vars->exit);
 }

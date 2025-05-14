@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/12 17:06:24 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:43:50 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ int	pwd(int ac, char **av, t_shell *vars)
 	char	*cwd;
 
 	(void)vars;
+	(void)ac;
 	if (!av)
 		return (FALSE);
-	if (ac != 1)
-		return (printfd(2, "pwd: too many arguments\n"), TRUE);
 	if (vars->pwd)
 		return (printf("%s\n", vars->pwd), TRUE);
 	cwd = getcwd(NULL, 0);
