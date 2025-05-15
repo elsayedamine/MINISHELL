@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtok.c                                        :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:16:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/23 23:01:49 by sayed            ###   ########.fr       */
+/*   Updated: 2025/05/15 10:09:18 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../minishell.h"
 
 static char	*handle_quotes(char **next_token)
 {
@@ -43,7 +43,7 @@ static char	*handle_op(char **next_token)
 	return (ft_strndup(start, 1));
 }
 
-char	*ft_strtok(char *str, char const *delim)
+char	*tokenizer(char *str, char const *delim)
 {
 	static char	*next_token;
 	char		*start;

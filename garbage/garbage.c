@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 03:48:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 19:19:45 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:33:10 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,39 +33,39 @@
 // 	return (FALSE);
 // }
 
-int	is_in_cwd(char *path)
-{
-	char	*cwd;
-	char	*full;
-	char	*tmp;
-	int		ret;
-	int		len;
+// int	is_in_cwd(char *path)
+// {
+// 	char	*cwd;
+// 	char	*full;
+// 	char	*tmp;
+// 	int		ret;
+// 	int		len;
 
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		return (-1);
-	if (path[0] == '/')
-		full = ft_strdup(path);
-	else
-	{
-		tmp = ft_strjoin(cwd, "/");
-		full = ft_strjoin(tmp, path);
-		free(tmp);
-	}
-	len = ft_strlen(cwd);
-	ret = 0;
-	if (!ft_strncmp(full, cwd, len) && (full[len] == '/' || full[len] == '\0'))
-		ret = 1;
-	free(full);
-	return (ret);
-}
+// 	cwd = getcwd(NULL, 0);
+// 	if (!cwd)
+// 		return (-1);
+// 	if (path[0] == '/')
+// 		full = ft_strdup(path);
+// 	else
+// 	{
+// 		tmp = ft_strjoin(cwd, "/");
+// 		full = ft_strjoin(tmp, path);
+// 		free(tmp);
+// 	}
+// 	len = ft_strlen(cwd);
+// 	ret = 0;
+// 	if (!ft_strncmp(full, cwd, len) && (full[len] == '/' || full[len] == '\0'))
+// 		ret = 1;
+// 	free(full);
+// 	return (ret);
+// }
 
-void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
-{
-	ft_free("1", cmd);
-	throw_error(CMD_NOT_FOUND, cmd, &vars->exit);
-	skip(ast, AND);
-}
+// void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
+// {
+// 	ft_free("1", cmd);
+// 	throw_error(CMD_NOT_FOUND, cmd, &vars->exit);
+// 	skip(ast, AND);
+// }
 
 // void	redirect(t_pip *pipe)
 // {
@@ -172,7 +172,6 @@ void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 // 	return (EXIT_SUCCESS);
 // }
 
-
 // int	pipex(t_shell *vars, t_list **node)
 // {
 // 	t_list	*pipeline;
@@ -180,7 +179,8 @@ void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 // 	pipeline = NULL;
 // 	while ((*node))
 // 	{
-// 		if ((*node)->type == CMD && (*node)->next && (*node)->next->type == PIPE)
+// 		if ((*node)->type == CMD && (*node)->next 
+//			&& (*node)->next->type == PIPE)
 // 		{
 // 			ft_lstadd_back(&pipeline, create_node((*node)->content));
 // 			(*node) = (*node)->next->next;
@@ -193,75 +193,71 @@ void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 // 	return (execute_pipe(vars, ft_list2arr(pipeline), *node, &pipe));
 // }
 
-int execute_pipeline(t_shell *vars, t_list *pipeline);
+// int execute_pipeline(t_shell *vars, t_list *pipeline);
 
-int pipexX(t_shell *vars, t_list **node)
-{
-	t_list *pipeline = NULL;
-	// t_list *start = *node;
-	// t_pip pipe_info;
+// int pipexX(t_shell *vars, t_list **node)
+// {
+// 	t_list *pipeline = NULL;
+// 	// t_list *start = *node;
+// 	// t_pip pipe_info;
 
-	while (*node && ((*node)->type == CMD || (*node)->type == SUBSHELL))
-	{
-		ft_lstadd_back(&pipeline, *node);
-		if ((*node)->next && (*node)->next->type == PIPE)
-			*node = (*node)->next->next;
-		else
-			break;
-	}
-	return (execute_pipeline(vars, pipeline));
-}
+// 	while (*node && ((*node)->type == CMD || (*node)->type == SUBSHELL))
+// 	{
+// 		ft_lstadd_back(&pipeline, *node);
+// 		if ((*node)->next && (*node)->next->type == PIPE)
+// 			*node = (*node)->next->next;
+// 		else
+// 			break;
+// 	}
+// 	return (execute_pipeline(vars, pipeline));
+// }
 
-int execute_pipeline(t_shell *vars, t_list *pipeline)
-{
-	int fd[2];
-	int in = 0;
-	pid_t pid;
-	t_list *cur = pipeline;
-	int last_status = 0;
+// int execute_pipeline(t_shell *vars, t_list *pipeline)
+// {
+// 	int fd[2];
+// 	int in = 0;
+// 	pid_t pid;
+// 	t_list *cur = pipeline;
+// 	int last_status = 0;
 
-	while (cur)
-	{
-		if (cur->next && cur->next->type == PIPE)
-			pipe(fd);
+// 	while (cur)
+// 	{
+// 		if (cur->next && cur->next->type == PIPE)
+// 			pipe(fd);
 
-		pid = fork();
-		if (pid == 0)
-		{
-			if (in != 0)
-			{
-				dup2(in, 0);
-				close(in);
-			}
-			if (cur->next && cur->next->type == PIPE)
-			{
-				close(fd[0]);
-				dup2(fd[1], 1);
-				close(fd[1]);
-			}
+// 		pid = fork();
+// 		if (pid == 0)
+// 		{
+// 			if (in != 0)
+// 			{
+// 				dup2(in, 0);
+// 				close(in);
+// 			}
+// 			if (cur->next && cur->next->type == PIPE)
+// 			{
+// 				close(fd[0]);
+// 				dup2(fd[1], 1);
+// 				close(fd[1]);
+// 			}
 
-			if (cur->type == CMD)
-				exit(execute_cmd(vars, &cur));
-			else if (cur->type == SUBSHELL)
-				exit(execution(vars, &cur->child));
-			exit(1);
-		}
+// 			if (cur->type == CMD)
+// 				exit(execute_cmd(vars, &cur));
+// 			else if (cur->type == SUBSHELL)
+// 				exit(execution(vars, &cur->child));
+// 			exit(1);
+// 		}
 
-		if (in != 0)
-			close(in);
-		if (cur->next && cur->next->type == PIPE)
-		{
-			close(fd[1]);
-			in = fd[0];
-		}
+// 		if (in != 0)
+// 			close(in);
+// 		if (cur->next && cur->next->type == PIPE)
+// 		{
+// 			close(fd[1]);
+// 			in = fd[0];
+// 		}
 
-		cur = cur->next && cur->next->type == PIPE ? cur->next->next : NULL;
-	}
-
-	while (wait(&last_status) > 0);
-	vars->exit = WIFEXITED(last_status) ? WEXITSTATUS(last_status) : 1;
-	return (vars->exit);
-}
-
-
-
+// 		cur = cur->next && cur->next->type == PIPE ? cur->next->next : NULL;
+// 	}
+// 	while (wait(&last_status) > 0);
+// 	vars->exit = WIFEXITED(last_status) ? WEXITSTATUS(last_status) : 1;
+// 	return (vars->exit);
+// }

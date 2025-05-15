@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 19:07:50 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:05:00 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,38 @@ t_list	*create_node(void *content)
 	return (new);
 }
 
-int	fill_args(t_shell *vars)
+int	validater(t_shell *vars)
 {
 	char	*token;
 
-	if (!*vars->cmd)
+	if (!vars->cmd || !*vars->cmd)
 		return (FALSE);
-	token = ft_strtok(vars->cmd, "'\"()|&");
+	token = tokenizer(vars->cmd, "'\"()|&<>");
 	vars->args = NULL;
 	while (token)
 	{
 		ft_lstadd_back(&vars->args, create_node(token));
-		token = ft_strtok(NULL, "'\"()|&");
+		token = tokenizer(NULL, "'\"()|&<>");
 	}
 	if (!ft_check(vars))
 		return (FALSE);
+	ft_lstclear(&vars->args, free);
+	return (TRUE);
+}
+
+int	fill_args(t_shell *vars)
+{
+	char	*token;
+
+	if (validater(vars) == FALSE)
+		return (FALSE);
+	vars->args = NULL;
+	token = tokenizer(vars->cmd, "'\"()|&");
+	while (token)
+	{
+		ft_lstadd_back(&vars->args, create_node(token));
+		token = tokenizer(NULL, "'\"()|&");
+	}
 	vars->tmp = vars->args;
 	vars->ast = ast_builder(&vars->tmp);
 	return (TRUE);

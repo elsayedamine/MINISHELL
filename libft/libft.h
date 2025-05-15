@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/11 23:12:37 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:07:29 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int		ft_count_char(char *str, char c);
 char	*ft_strdup(const char *src);
 char	**ft_arrdup(char **arr);
 char	*ft_strndup(const char *src, size_t n);
-char	*ft_strtok(char *str, char const *delim);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t destsize);
 char	*ft_strchr(const char *s, int c);

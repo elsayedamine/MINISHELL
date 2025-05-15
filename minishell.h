@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 19:23:43 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:22:32 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,9 @@ typedef int (t_fct)(int ac, char **av, t_shell *vars);
 t_list	*ast_builder(t_list **cursor);
 int		fill_args(t_shell *vars);
 t_list	*create_node(void *content);
+char	*tokenizer(char *str, char const *delim);
+void	ft_nullenv(t_shell *vars);
+void	ft_shlvl(t_shell *vars);
 
 /* Validation */
 int		ft_check(t_shell *vars);
@@ -129,11 +132,9 @@ int		isvalid_quotes(t_shell *vars);
 /* Processing */
 int		ft_nodejoin(t_shell *vars);
 char	*removequotes(char *str, t_list *s);
-// char	**removequotes_arr(char **arr);
 t_list	*remove_quotes_from_list(t_list *lst);
 char	**_ft_split(char const *s, char b);
 void	pop_spaces(t_shell *vars);
-
 void	throw_error(int error, char *file, int *status);
 
 /* Expansion */
@@ -150,10 +151,13 @@ int		cd(int ac, char **av, t_shell *vars);
 int		echo(int ac, char **av, t_shell *vars);
 int		env(int ac, char **av, t_shell *vars);
 int		ft_exit(int ac, char **av, t_shell *vars);
-int		export(int ac, char **av, t_shell *vars);
 int		pwd(int ac, char **av, t_shell *vars);
 int		unset(int ac, char **av, t_shell *vars);
+int		export(int ac, char **av, t_shell *vars);
 char	*get_env(char *k, t_shell *vars);
+char	*ft_strjoin_f(char *s1, char *s2, int free_s);
+void	ft_printexport(t_shell	*vars);
+void	append_value(char *v, char *av, t_shell *vars);
 
 /*-------------------------------------- execution --------------------------------------*/
 

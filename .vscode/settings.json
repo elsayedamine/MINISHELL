@@ -1,34 +1,8 @@
 {
     "files.associations": {
-        "libft.h": "c",
         "minishell.h": "c",
-        "fcntl.h": "c",
-        "history.h": "c",
-        "pipex.h": "c",
-        "stdbool.h": "c",
-        "charconv": "c",
-        "chrono": "c",
-        "optional": "c",
-        "format": "c",
-        "ratio": "c",
-        "system_error": "c",
-        "array": "c",
-        "functional": "c",
-        "tuple": "c",
-        "type_traits": "c",
-        "utility": "c",
-        "wait.h": "c",
-        "cstdlib": "c",
-        "stdio.h": "c",
-        "stdio2-decl.h": "c",
-        "errno.h": "c",
-        "signal.h": "c",
-        "readline.h": "c",
-        "stat.h": "c",
-        "features.h": "c",
-        "errno-base.h": "c",
-        "algorithm": "c",
-        "limits.h": "c"
+        "libft.h": "c",
+        "random": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

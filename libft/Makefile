@@ -18,7 +18,6 @@ SOURCES = \
 		new/ft_arrlen.c \
 		new/ft_strcmp.c \
 		new/ft_strndup.c \
-		new/ft_strtok.c \
 		new/ft_init.c \
 		new/ft_free.c \
 		new/ft_malloc.c \

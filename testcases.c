@@ -50,3 +50,5 @@ ls Makefile README.md built-ins execution garbage.c libft main.c minishell.h par
 ls: cannot access '**': No such file or directory
 
 we should test if anyfile has "quotes" how it would work with us even mahndlia like touch '"' and ls *'"' shoould show us the file
+
+ls>(asd) :: syntax error

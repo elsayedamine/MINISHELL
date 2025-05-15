@@ -14,6 +14,8 @@ sources = \
 		parsing/wildcard.c \
 		parsing/expand_wildcard.c \
 		parsing/split_list.c \
+		parsing/tokenizer.c \
+		parsing/shlvl.c \
 		\
 		\
 		execution/execution.c \
@@ -27,6 +29,7 @@ sources = \
 		built-ins/env.c \
 		built-ins/exit.c \
 		built-ins/export.c \
+		built-ins/export_utils.c \
 		built-ins/pwd.c \
 		built-ins/unset.c \
 		built-ins/get_env.c \

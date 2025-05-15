@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:19:39 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/10 16:33:40 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/15 11:31:15 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ unsigned char	check_args(char *str, int *error)
 	return (free(trim), result);
 }
 
+// have to add clear() fct for signals inside the two first ifs 
+// before exit() and before the last return
+
 int	ft_exit(int ac, char **av, t_shell *vars)
 {
 	unsigned char	round;
@@ -58,14 +61,12 @@ int	ft_exit(int ac, char **av, t_shell *vars)
 	error = TRUE;
 	if (ac <= 1)
 	{
-		// clear();
 		exit(vars->exit);
 	}
 	round = check_args(av[1], &error);
 	if (error == FALSE)
 	{
 		printfd(2, M": exit: %s: numeric argument required\n", av[1]);
-		// clear();
 		exit(2);
 	}
 	if (ac > 2)
@@ -73,17 +74,5 @@ int	ft_exit(int ac, char **av, t_shell *vars)
 		vars->exit = 1;
 		return (printfd(2, "exit: too many arguments\n"), FALSE);
 	}
-	// clear();
 	return (exit(round), TRUE);
 }
-
-// int main(int ac, char **av)
-// {
-// 	t_shell vars;
-
-// 	vars.exit = 0;
-
-// 	ft_exit(ac, av, &vars);
-// 	exit(vars.exit);
-// 	return (0);
-// }

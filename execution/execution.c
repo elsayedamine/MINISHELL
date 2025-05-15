@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/14 14:10:58 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/15 11:33:59 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,5 @@ int	execution(t_shell *vars, t_list **ast)
 // ls || (ls | ls | ls && ls) || ls && ls
 // p (char *)node->content
 // ls && (ls -l && ls -a || asasd||ASDSA||ASD && touch a) && touch ls
-//(ls && (echo A || (echo B && echo C))) || ((echo D && echo 	E) && (echo F || echo G)) && (echo H || (echo I && (echo J || echo K)))
+//(ls && (echo A || (echo B && echo C))) || ((echo D && echo E) 
+// && (echo F || echo G)) && (echo H || (echo I && (echo J || echo K)))
