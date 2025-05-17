@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/15 11:07:12 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/18 00:23:28 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ char	*read_cmd(char *cmd)
 
 	trim = readline("minishell$ ");
 	cmd = ft_strtrim(trim, WHITE);
+	if (trim && *trim)
+		add_history(trim);
 	free(trim);
-	if (!cmd || !ft_strcmp("exit", cmd))
+	if (!trim || !ft_strcmp("exit", cmd))
 		return (NULL);
-	if (*cmd)
-		add_history(cmd);
 	return (cmd);
 }
 

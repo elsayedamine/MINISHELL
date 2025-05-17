@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 19:06:57 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/18 00:27:21 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,6 @@ int	add_value(t_shell *vars, t_list **s, char *str, int q)
 		get_var_len(str + 1) + 1 + (*str == '$' && str[1] == '?'));
 }
 
-int	append(t_list **s, char c, int type)
-{
-	t_list	*new;
-
-	new = ft_lstnew(ft_strndup(&c, 1));
-	new->type = type;
-	ft_lstadd_back(s, new);
-	return (1);
-}
-
 void	handle_single_quotes(t_list **s, int *i, char *str)
 {
 	(*i) += append(s, '\'', 0);
@@ -66,7 +56,7 @@ void	handle_single_quotes(t_list **s, int *i, char *str)
 		*i += append(s, '\'', 0);
 }
 
-void	expand(t_shell *vars, char **str, char ***arr)
+t_list	*breakdown(t_shell *vars, char **str)
 {
 	int		i;
 	int		q;
@@ -88,9 +78,18 @@ void	expand(t_shell *vars, char **str, char ***arr)
 		else
 			i += append(&s, (*str)[i], 0);
 	}
+	return (s);
+}
+
+void	expand(t_shell *vars, char **str, char ***arr)
+{
+	t_list	*lst;
+
+	// redir(str);
+	lst = breakdown(vars, str);
 	ft_free("12", *str, *arr);
-	*str = ft_lst2str(s);
-	*str = expand_wildcard(str, &s);
-	*arr = split_list(s, ' ');
-	ft_lstclear(&s, free);
+	*str = ft_lst2str(lst);
+	*str = expand_wildcard(str, &lst);
+	*arr = split_list(lst, ' ');
+	ft_lstclear(&lst, free);
 }

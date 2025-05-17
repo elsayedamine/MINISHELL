@@ -6,11 +6,21 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:58:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 19:08:47 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/18 00:03:58 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	append(t_list **s, char c, int type)
+{
+	t_list	*new;
+
+	new = ft_lstnew(ft_strndup(&c, 1));
+	new->type = type;
+	ft_lstadd_back(s, new);
+	return (1);
+}
 
 void	handle_quote(char *quote, t_list **chunk, char *c)
 {
