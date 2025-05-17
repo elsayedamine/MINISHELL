@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/15 11:33:59 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/17 22:39:31 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_builts(char **arr, t_shell *vars, int i)
 		cd,
 	};
 
-	while (ft_strcmp(strs[i], *arr))
+	while (arr && *arr && ft_strcmp(strs[i], *arr))
 		i++;
 	if (i != 7)
 		return (fcts[i](ft_arrlen(arr), arr, vars), TRUE);
