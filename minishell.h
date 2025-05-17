@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/15 11:22:32 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/17 22:48:27 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef enum type
 	READ,
 	WRITE,
 	APPEND,
-	HEREDOC 
+	HEREDOC
 }			t_type;
 
 /* **************************************** */
@@ -75,7 +75,7 @@ typedef struct s_pipe
 	pid_t	pid1;
 	pid_t	pid2;
 	char	*path1;
-	char	*path2;   
+	char	*path2;
 	char	**args;
 	int		pipefd[2];
 }			t_pip;
@@ -83,9 +83,9 @@ typedef struct s_pipe
 typedef struct s_check
 {
 	int		dquot;
-	int		squot; 
+	int		squot;
 	int		lpar;
-	int		fpar; 
+	int		fpar;
 	int		par;
 	int		special;
 }			t_check;
@@ -111,7 +111,7 @@ typedef int (t_fct)(int ac, char **av, t_shell *vars);
 /*           FUNCTION PROTOTYPES            */
 /* **************************************** */
 
-/*-------------------------------------- PARSING --------------------------------------*/
+/*---------------------------- PARSING ----------------------------*/
 
 /* Building */
 t_list	*ast_builder(t_list **cursor);
@@ -145,7 +145,7 @@ int		append(t_list **s, char c, int type);
 char	*expand_wildcard(char **str, t_list **s);
 t_list	*ft_str_to_lst(char *str, int flag);
 
-/*-------------------------------------- BUILTINS --------------------------------------*/
+/*---------------------------- BUILTINS ----------------------------*/
 
 int		cd(int ac, char **av, t_shell *vars);
 int		echo(int ac, char **av, t_shell *vars);
@@ -159,7 +159,7 @@ char	*ft_strjoin_f(char *s1, char *s2, int free_s);
 void	ft_printexport(t_shell	*vars);
 void	append_value(char *v, char *av, t_shell *vars);
 
-/*-------------------------------------- execution --------------------------------------*/
+/*---------------------------- execution ----------------------------*/
 
 int		pipex(t_shell *vars, t_list **node);
 int		execution(t_shell *vars, t_list **ast);

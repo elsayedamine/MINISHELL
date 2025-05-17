@@ -3,60 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   ft_freealloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:51:24 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/15 12:51:42 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/17 22:46:03 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    ft_lst_add_back(t_malloc **head, t_malloc *new)
+void	ft_lst_add_back(t_list **head, t_list *new)
 {
-    t_malloc    *temp;
+	t_list	*temp;
 
-    if (!new)
-        return ;
-    if (!*head)
-    {
-        *head = new;
-        return ;
-    }
-    temp = *head;
-    while (temp->next)
-        temp = temp->next;
-    temp->next = new;
+	if (!new)
+		return ;
+	if (!*head)
+	{
+		*head = new;
+		return ;
+	}
+	temp = *head;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new;
 }
 
-t_malloc    *ft_lst_new(size_t size)
+t_list	*ft_lst_new(size_t size)
 {
-    t_malloc    *new_node;
-    void        *ptr;
+	t_list	*new_node;
+	void	*content;
 
-    ptr = malloc(size);
-    if (!ptr)
-        return (NULL);
-    new_node = malloc(sizeof(t_malloc));
-    if (!new_node)
-        return (free(ptr), NULL);
-    new_node->ptr = ptr;
-    new_node->next = NULL;
-    return (new_node);
+	content = malloc(size);
+	if (!content)
+		return (NULL);
+	new_node = malloc(sizeof(t_list));
+	if (!new_node)
+		return (free(content), NULL);
+	new_node->content = content;
+	new_node->next = NULL;
+	return (new_node);
 }
 
-void    free_all_memory(t_malloc **head)
+void	free_all_memory(t_list **head)
 {
-    t_malloc    *temp;
-    t_malloc    *help;
+	t_list	*temp;
+	t_list	*help;
 
-    temp = *head;
-    while (temp)
-    {
-        help = temp;
-        temp = temp->next;
-        if (help->ptr)
-            free(help->ptr);
-        free(help);
-    }
+	temp = *head;
+	while (temp)
+	{
+		help = temp;
+		temp = temp->next;
+		if (help->content)
+			free(help->content);
+		free(help);
+	}
 }
