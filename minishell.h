@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/17 22:48:27 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/18 05:40:26 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef enum error
 	EXEC,
 	PIP,
 	DIRECT,
+	REDIR,
 	CMD_NOT_FOUND
 }			t_error;
 
@@ -59,9 +60,9 @@ typedef enum type
 	PIPE,
 	CMD,
 	READ,
-	WRITE,
-	APPEND,
-	HEREDOC
+	HEREDOC,
+	TRUNC,
+	APPEND
 }			t_type;
 
 /* **************************************** */
@@ -79,6 +80,14 @@ typedef struct s_pipe
 	char	**args;
 	int		pipefd[2];
 }			t_pip;
+
+typedef struct s_redir
+{
+	t_type	mode;
+	int		fd;
+	int		flag;
+	char	*target;
+}			t_redir;
 
 typedef struct s_check
 {
@@ -101,6 +110,7 @@ typedef struct s_shell
 	t_list		*env;
 	t_list		*args;
 	t_list		*tmp;
+	t_list		*redir;
 	t_check		check;
 	t_list		*ast;
 }				t_shell;
@@ -144,7 +154,7 @@ char	**wildcard(char *pattern);
 int		append(t_list **s, char c, int type);
 char	*expand_wildcard(char **str, t_list **s);
 t_list	*ft_str_to_lst(char *str, int flag);
-
+t_list	*breakdown(t_shell *vars, char **str);
 /*---------------------------- BUILTINS ----------------------------*/
 
 int		cd(int ac, char **av, t_shell *vars);
@@ -169,4 +179,7 @@ void	skip(t_list **node, int op);
 int		traverse_sub(t_shell *vars, t_list **node);
 int		execute_cmd(t_shell *vars, t_list **ast);
 int		check_builts(char **arr, t_shell *vars, int i);
+void	redir(t_shell *vars, char **original);
+int		apply_redirections(t_shell *vars);
+
 #endif

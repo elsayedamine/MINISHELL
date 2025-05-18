@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/18 00:27:21 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/18 05:40:49 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,12 @@ void	expand(t_shell *vars, char **str, char ***arr)
 {
 	t_list	*lst;
 
-	// redir(str);
+	redir(vars, str);
 	lst = breakdown(vars, str);
-	ft_free("12", *str, *arr);
+	ft_free("1", *str);
 	*str = ft_lst2str(lst);
 	*str = expand_wildcard(str, &lst);
+	ft_free("2", *arr);
 	*arr = split_list(lst, ' ');
 	ft_lstclear(&lst, free);
 }

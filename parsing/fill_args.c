@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/17 23:02:42 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/18 03:27:56 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ t_type	define_type(char *content)
 		return (AND);
 	if (!ft_strcmp(content, "|"))
 		return (PIPE);
+	if (!ft_strcmp(content, ">"))
+		return (TRUNC);
+	if (!ft_strcmp(content, "<"))
+		return (READ);
+	if (!ft_strcmp(content, ">>"))
+		return (APPEND);
+	if (!ft_strcmp(content, "<<"))
+		return (HEREDOC);
 	return (CMD);
 }
 
