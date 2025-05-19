@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/13 19:08:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/19 03:12:52 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*removequotes(char *str, t_list	*s)
 	int		j;
 	int		c;
 
-	if (!str || !(*str))
+	if (!str || !*str)
 		return (NULL);
 	if (ft_count_char(str, '\'') == 0 && ft_count_char(str, '"') == 0)
 		return (str);

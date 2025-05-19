@@ -57,3 +57,5 @@ minishell$ ls>*
 Command not found : ls>ls>*
 
 $* should be handled !!
+
+close the fd 1 with close(1) in terminal

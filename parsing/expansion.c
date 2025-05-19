@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/18 05:40:49 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/19 03:52:21 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_list	*breakdown(t_shell *vars, char **str)
 
 	s = NULL;
 	ft_init(2, &i, &q);
-	while ((*str)[i])
+	while (*str && (*str)[i])
 	{
 		if ((*str)[i] == '"')
 		{
@@ -85,7 +85,6 @@ void	expand(t_shell *vars, char **str, char ***arr)
 {
 	t_list	*lst;
 
-	redir(vars, str);
 	lst = breakdown(vars, str);
 	ft_free("1", *str);
 	*str = ft_lst2str(lst);

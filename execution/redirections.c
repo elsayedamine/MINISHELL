@@ -6,64 +6,13 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 00:18:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/18 06:02:11 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/19 03:55:37 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	join(t_list **tokens)
-{
-	char	*new_content;
-	char	*tmp_content;
-	t_list	*to_delete;
-	t_list	*tmp;
-
-	tmp = *tokens;
-	while (tmp && tmp->next)
-	{
-		tmp_content = (char *)tmp->content;
-		if (!is_op(tmp_content) && !is_op((char *)tmp->next->content) && \
-			!is_par(tmp_content) && !is_par((char *)tmp->next->content))
-		{
-			new_content = ft_strjoin(tmp_content, (char *)tmp->next->content);
-			free(tmp->content);
-			tmp->content = new_content;
-			to_delete = tmp->next;
-			tmp->next = tmp->next->next;
-			ft_lstdelone(to_delete, free);
-		}
-		else
-			tmp = tmp->next;
-	}
-	return (TRUE);
-}
-
-void	pop_space(t_list **s)
-{
-	t_list	*new;
-	t_list	*tmp;
-	t_list	*next;
-	t_list	*node;
-
-	tmp = *s;
-	new = NULL;
-	while (tmp)
-	{
-		next = tmp->next;
-		if (ft_iswhitespace(tmp->content) == FALSE)
-		{
-			node = ft_lstnew(ft_strdup(tmp->content));
-			ft_lstadd_back(&new, node);
-		}
-		ft_free("1", tmp->content);
-		free(tmp);
-		tmp = next;
-	}
-	*s = new;
-}
-
-t_redir	*create_redir(t_type mode, char *target)
+t_redir	*create_redir_node(t_type mode, char *target)
 {
 	t_redir	*redir;
 
@@ -84,7 +33,7 @@ t_redir	*create_redir(t_type mode, char *target)
 	return (redir);
 }
 
-t_list	*extract_redirections(t_list **s)
+t_list	*create_redir_list(t_list **s)
 {
 	t_list	*raw;
 	t_list	*tmp;
@@ -95,9 +44,9 @@ t_list	*extract_redirections(t_list **s)
 	raw = NULL;
 	while (tmp)
 	{
-		if (tmp->type >= READ)
+		if (tmp->type >= READ && tmp->next)
 		{
-			ft_lstadd_back(&redir, ft_lstnew(create_redir(tmp->type, \
+			ft_lstadd_back(&redir, ft_lstnew(create_redir_node(tmp->type, \
 				ft_strdup(tmp->next->content))));
 			tmp = tmp->next->next;
 		}
@@ -112,25 +61,71 @@ t_list	*extract_redirections(t_list **s)
 	return (redir);
 }
 
-void	redir(t_shell *vars, char **original)
+int	add_token(char *str, t_list **lst)
 {
-	char	*token;
-	t_list	*s;
+	int		i;
+	char	q;
 
-	if (!original || !*original || !ft_strstr(*original, ">") || !ft_strstr(*original, ">>") || \
-		!ft_strstr(*original, "<") || !ft_strstr(*original, "<<"))
-		return ;
-	s = NULL;
-	token = tokenizer(*original, "<>'\" ");
-	while (token)
+	i = 0;
+	while (str[i])
 	{
-		ft_lstadd_back(&s, create_node(token));
-		token = tokenizer(NULL, "<>'\" ");
+		if (str[i] == '\'' || str[i] == '"')
+		{
+			q = str[i++];
+			while (str[i] && str[i] != q)
+				i++;
+			if (str[i] == q)
+				i++;
+		}
+		else if (ft_strchr(WHITE, str[i]) || str[i] == '<' || str[i] == '>')
+			break ;
+		else
+			i++;
 	}
-	join(&s);
-	pop_space(&s);
-	vars->redir = extract_redirections(&s);
+	ft_lstadd_back(lst, ft_lstnew(ft_strndup(str, i)));
+	return (i);
+}
+
+t_list	*tokenize_command(char *cmd)
+{
+	int		i;
+	t_list	*lst;
+
+	lst = NULL;
+	i = 0;
+	while (cmd[i])
+	{
+		while (ft_strchr(WHITE, cmd[i]))
+			i++;
+		if (cmd[i] == '\'' || cmd[i] == '"')
+			i += add_token(cmd + i, &lst);
+		else if ((!ft_strncmp(&cmd[i], "<<", 2) || !ft_strncmp(&cmd[i], ">>", 2)))
+		{
+			ft_lstadd_back(&lst, create_node(ft_strndup(cmd + i, 2)));
+			i += 2;
+		}
+		else if (cmd[i] == '<' || cmd[i] == '>')
+			ft_lstadd_back(&lst, create_node(ft_strndup(&cmd[i++], 1)));
+		else if (cmd[i])
+			i += add_token(cmd + i, &lst);
+	}
+	return (lst);
+}
+
+void	extract_redirections(t_shell *vars, char **original)
+{
+	int		i;
+	int		q;
+	t_list	*s;
+	char	**arr;
+
+	if (!original)
+		return ;
+	ft_init(2, &q, &i);
+	s = tokenize_command(*original);
+	vars->redir = create_redir_list(&s);
 	free(*original);
-	*original = ft_lst2str(s);
-	// apply_redirections(vars);
+	arr = ft_list2arr(s);
+	*original = ft_arr2str(arr, ' ');
+	ft_free("2", arr);
 }

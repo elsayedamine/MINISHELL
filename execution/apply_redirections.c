@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 05:26:59 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/18 05:42:58 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/19 03:25:30 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	expand_target(t_shell *vars, char **str)
 	*str = expand_wildcard(str, &lst);
 	arr = split_list(lst, ' ');
 	ft_lstclear(&lst, free);
-	if (ft_arrlen(arr) != 1 && *arr)
+	if (!arr || (ft_arrlen(arr) != 1 && *arr))
 		return (ft_free("21", arr, *str), throw_error(REDIR, NULL, NULL), FALSE);
 	return (TRUE);
 }
@@ -32,11 +32,7 @@ int	open_file(t_redir *r, char **filename)
 {
 	r->fd = open(*filename, r->flag, 0644);
 	if (r->fd < 0)
-	{
-		perror(*filename);
-		free(*filename);
-		return (FALSE);
-	}
+		return (perror(*filename), free(*filename), FALSE);
 	if (r->mode == READ)
 	{
 		if (dup2(r->fd, STDIN) == -1)
@@ -46,8 +42,8 @@ int	open_file(t_redir *r, char **filename)
 	else
 	{
 		if (dup2(r->fd, STDOUT) == -1)
-			return (printfd(2, "minishell: %s", strerror(errno)), close(r->fd), \
-				FALSE);
+			return (printfd(2, "minishell: %s", strerror(errno)), \
+				close(r->fd), FALSE);
 	}
 	close(r->fd);
 	return (TRUE);
@@ -72,7 +68,10 @@ int	apply_redirections(t_shell *vars)
 		}
 		else	
 			if (open_file(r, &expanded) == FALSE)
+			{
+				// close all open fds	
 				return (FALSE);
+			}
 		free(expanded);
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/18 05:40:26 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/19 03:43:17 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ void	skip(t_list **node, int op);
 int		traverse_sub(t_shell *vars, t_list **node);
 int		execute_cmd(t_shell *vars, t_list **ast);
 int		check_builts(char **arr, t_shell *vars, int i);
-void	redir(t_shell *vars, char **original);
+void	extract_redirections(t_shell *vars, char **original);
 int		apply_redirections(t_shell *vars);
 
 #endif
