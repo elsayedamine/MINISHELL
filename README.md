@@ -71,13 +71,14 @@ we still have a big prob in the pipeline
 ⬛🟥⬛⬛🟥⬛🟥🟥🟥🟥⬛🟥🟥🟥⬛⬛🟥⬛🟥⬛⬛🟥⬛🟥🟥🟥🟥⬛🟥🟥🟥🟥⬛🟥⬛⬛⬛🟥⬛⬛⬛🟥⬛⬛🟥🟥🟥⬛⬛🟥⬛⬛🟥🟥⬛
 ⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛
 
-
-i guess i get an Idea about how can we handle redirection
-we gonna use you strtok to get the tokens '<' '<<' '>>' '>' and we gonna have the list that containe something like this :
-[cmd, <, >, <<, >>, args] or what ever ...
-so then we gonna work for its logic, syntax ...
-
-
 ```
+```bash
+so redirections are working properly but their syntax need to be re DONE 
+here doc is not coded yet
+parsong dial redirections west les commands rah s7i7 o khdm mzn 
+khaso t9ad fih chi 7aja li ma3rftch chno hia (fwst minishell kaykhdem mrat o mra makaykhdmch haakak o makay3awdch yban defo)
+mzl machft wach kayn khtilaf f redirect b nsba l pipeline wla subshell
+```
+
 
 

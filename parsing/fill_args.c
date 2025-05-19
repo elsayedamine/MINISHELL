@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/19 04:56:25 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/19 20:45:32 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	validater(t_shell *vars)
 		ft_lstadd_back(&vars->args, create_node(token));
 		token = tokenizer(NULL, "'\"()|&<>");
 	}
-	if (!ft_check(vars))
-		return (FALSE);
+	// if (!ft_check(vars))
+	// 	return (FALSE);
 	ft_lstclear(&vars->args, free);
 	return (TRUE);
 }
