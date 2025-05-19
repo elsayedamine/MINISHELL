@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 05:26:59 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/19 03:25:30 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/19 04:11:16 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,14 @@ int	apply_redirections(t_shell *vars)
 		{
 			//
 		}
-		else	
+		else
+		{
 			if (open_file(r, &expanded) == FALSE)
 			{
 				// close all open fds	
 				return (FALSE);
 			}
+		}	
 		free(expanded);
 		tmp = tmp->next;
 	}

@@ -55,7 +55,7 @@ ls>(asd) :: syntax error
 
 minishell$ ls>*
 Command not found : ls>ls>*
-
+ls>$HOME
 $* should be handled !!
 
 close the fd 1 with close(1) in terminal

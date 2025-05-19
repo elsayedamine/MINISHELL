@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/18 03:27:56 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/19 04:56:25 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	fill_args(t_shell *vars)
 		token = tokenizer(NULL, "'\"()|&");
 	}
 	if (!ft_check(vars))
-		return (FALSE); // u little idiot u told me no need to check again but the minishell failed beacause we dont join them heheheehehe (issue in quotes)
+		return (TRUE); // u little idiot u told me no need to check again but the minishell failed beacause we dont join them heheheehehe (issue in quotes)
 	vars->tmp = vars->args;
 	vars->ast = ast_builder(&vars->tmp);
 	return (TRUE);
