@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/19 04:51:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 02:27:36 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	if (pid == 0)
 	{
 		if (apply_redirections(vars) == FALSE)
-			exit(EXIT_FAILURE);
+			exit(errno);
 		if (execve(cmd, (*ast)->arr, vars->envp) == -1)
 			exit_execve(cmd, vars, ast);
 	}
@@ -87,8 +87,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 		if (WIFEXITED(status))
 			vars->exit = WEXITSTATUS(status);
 	}
-	free(cmd);
-	return (process_cmd(vars, ast, 1));
+	return (free(cmd), process_cmd(vars, ast, 1));
 }
 
 int	execution(t_shell *vars, t_list **ast)

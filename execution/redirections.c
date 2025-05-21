@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 00:18:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/19 04:41:18 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 02:28:32 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ t_list	*tokenize_command(char *cmd)
 			i++;
 		if (cmd[i] == '\'' || cmd[i] == '"')
 			i += add_token(cmd + i, &lst);
-		else if ((!ft_strncmp(&cmd[i], "<<", 2) || !ft_strncmp(&cmd[i], ">>", 2)))
+		else if ((!ft_strncmp(&cmd[i], "<<", 2) \
+			|| !ft_strncmp(&cmd[i], ">>", 2)))
 		{
 			ft_lstadd_back(&lst, create_node(ft_strndup(cmd + i, 2)));
 			i += 2;
@@ -122,7 +123,7 @@ void	extract_redirections(t_shell *vars, char **original)
 	if (!original || !*original)
 	{
 		vars->redir = NULL;
-		return ;	
+		return ;
 	}
 	ft_init(2, &q, &i);
 	s = tokenize_command(*original);
