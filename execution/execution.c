@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 02:42:12 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 04:19:08 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	check_builts(char **arr, t_shell *vars, int i)
 
 	while (arr && *arr && ft_strcmp(strs[i], *arr))
 		i++;
-	if (i != 7)
-		return (fcts[i](ft_arrlen(arr), arr, vars), 1);
+	if (i != 7 && arr)
+		return (fcts[i](ft_arrlen(arr), arr, vars), TRUE);
 	return (FALSE);
 }
 
@@ -87,7 +87,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 		if (WIFEXITED(status))
 			vars->exit = WEXITSTATUS(status);
 	}
-	return (free(cmd), process_cmd(vars, ast, 1));
+	return (ft_free("1",cmd), process_cmd(vars, ast, 1));
 }
 
 int	execution(t_shell *vars, t_list **ast)

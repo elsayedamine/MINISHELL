@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 05:26:59 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 02:31:25 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 03:14:20 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	expand_target(t_shell *vars, char **str)
 {
 	t_list	*lst;
 	char	**arr;
+	char	*original;
 
+	original = ft_strdup(*str);
 	lst = breakdown(vars, str);
 	free(*str);
 	*str = ft_lst2str(lst);
@@ -25,8 +27,8 @@ int	expand_target(t_shell *vars, char **str)
 	ft_lstclear(&lst, free);
 	if (!arr || (ft_arrlen(arr) != 1 && *arr))
 		return (ft_free("21", arr, *str),
-			throw_error(REDIR, NULL, NULL), FALSE);
-	return (TRUE);
+			throw_error(REDIR, original	, NULL), ft_free("1", original), FALSE);
+	return (ft_free("1", original), TRUE);
 }
 
 int	open_file(t_redir *r, char **filename)

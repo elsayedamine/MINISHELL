@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/18 03:01:48 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 03:19:12 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,16 +112,18 @@ int	ft_check(t_shell *vars)
 void	throw_error(int error, char *file, int *exitt)
 {
 	if (error == ENOENT)
-		printfd(2, "%s: %s\n", file, strerror(ENOENT));
+		printfd(2, M": %s: %s\n", file, strerror(ENOENT));
 	if (error == SYNTAX)
-		printfd(2, "Invalid Syntax : Something is missing \" or ' or ( or )\n");
+		printfd(2, M": Invalid Syntax : Something is missing \" or ' or ( or )\n");
 	if (error == OP)
-		printfd(2, "Invalid Syntax : Error in operators input\n");
+		printfd(2, M": Invalid Syntax : Error in operators input\n");
 	if (error == CMD_NOT_FOUND)
 	{
-		printfd(2, "Command not found : %s\n", file);
+		printfd(2, M": Command not found : %s\n", file);
 		return (*exitt = 127, (void)file);
 	}
 	if (error == DIRECT)
-		printfd(2, "Cannot open current working directory\n");
+		printfd(2, M": Cannot open current working directory\n");
+	if (error == REDIR)
+		printfd(2, M": %s: ambiguous redirect\n", file);
 }

@@ -76,9 +76,10 @@ we still have a big prob in the pipeline
 so redirections are working properly but their syntax need to be re DONE 
 here doc is not coded yet
 parsong dial redirections west les commands rah s7i7 o khdm mzn 
-khaso t9ad fih chi 7aja li ma3rftch chno hia (fwst minishell kaykhdem mrat o mra makaykhdmch haakak o makay3awdch yban defo)
+
+khaso t9ad fih chi 7aja li ma3rftch chno hia (fwst minishell kaykhdem mrat o mra makaykhdmch haakak o makay3awdch yban defo) // had lmchkil yalah 7lito lyoum 21 may !!!
+
 mzl machft wach kayn khtilaf f redirect b nsba l pipeline wla subshell
 ```
 
-
-
+we should not forget about splitting with the white spaces not only with the space
