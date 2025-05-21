@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 04:19:08 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 04:40:05 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 
 	if (process_cmd(vars, ast, 0) == EXIT_SUCCESS)
 		return (EXIT_SUCCESS);
-	cmd = get_path((*ast)->arr[0], vars);
+	if (!(*ast)->arr)
+		cmd = ft_strdup("");
+	else
+		cmd = get_path((*ast)->arr[0], vars);
 	if (!cmd)
 		return (skip(ast, AND), vars->exit);
 	status = 0;

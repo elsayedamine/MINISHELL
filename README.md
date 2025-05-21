@@ -83,3 +83,8 @@ mzl machft wach kayn khtilaf f redirect b nsba l pipeline wla subshell
 ```
 
 we should not forget about splitting with the white spaces not only with the space
+ambiguous redirect error should be displayed before  command not found
+we have double free when the input is "" or '' in execute_cmd fct
+ls && ls -l not working good we have some garbage value when i do space btween operators
+minishell$ <*
+    Invalid Syntax : Error in operators input : why  ??
