@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 00:18:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 02:28:32 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 03:01:50 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	add_token(char *str, t_list **lst)
 		else
 			i++;
 	}
-	ft_lstadd_back(lst, ft_lstnew(ft_strndup(str, i)));
+	ft_lstadd_back(lst, create_node(ft_strndup(str, i)));
 	return (i);
 }
 
