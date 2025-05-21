@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 00:18:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 04:18:14 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 06:46:17 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_list	*tokenize_command(char *cmd)
 	i = 0;
 	while (cmd[i])
 	{
-		while (ft_strchr(WHITE, cmd[i]))
+		while (ft_strchr(WHITE, cmd[i]) && cmd[i])
 			i++;
 		if (cmd[i] == '\'' || cmd[i] == '"')
 			i += add_token(cmd + i, &lst);

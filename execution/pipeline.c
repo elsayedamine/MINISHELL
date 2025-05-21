@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:48:32 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/18 04:45:38 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 06:29:06 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 {
-	ft_free("1", cmd);
 	throw_error(CMD_NOT_FOUND, cmd, &vars->exit);
 	skip(ast, AND);
 }

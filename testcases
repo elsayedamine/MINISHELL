@@ -59,3 +59,13 @@ ls>$HOME
 $* should be handled !!
 
 close the fd 1 with close(1) in terminal
+
+minishell$ ls "" > test && "" || ls
+Minishell: Command not found : 
+minishell$ ls "" > test && "" || ls
+Minishell: Command not found : 
+minishell$ ls "" > test && "" || ls
+Minishell: Command not found : 
+minishell$ ls "" > test && "" || ls
+Minishell: Command not found : 
+the ls "" in bash consider "" as a file but we simply skip it
