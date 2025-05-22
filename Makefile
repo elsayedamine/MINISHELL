@@ -16,6 +16,7 @@ sources = \
 		parsing/split_list.c \
 		parsing/tokenizer.c \
 		parsing/shlvl.c \
+		parsing/ft_red_check.c \
 		\
 		\
 		execution/execution.c \

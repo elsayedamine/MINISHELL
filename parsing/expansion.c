@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 04:11:03 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:50:56 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	add_value(t_shell *vars, t_list **s, char *str, int q)
 
 	var_value = NULL;
 	var_name = NULL;
-	if (*str == '$' && ft_strchr("'\"", *(str + 1)) && !q)
+	if (*str == '$' && ft_strchr("'\"", *(str + 1)) && *(str + 1) && !q)
 		return (1);
 	if (*str == '$' && *(str + 1) == '?')
 		var_value = ft_itoa(vars->exit);

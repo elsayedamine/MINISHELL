@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isvalid.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:43:13 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/01 12:25:57 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:23:14 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_op(char *str)
 	{
 		c = str[0];
 		len = ft_strlen(str);
-		if (len <= 2 && (c == '&' || c == '|' || c == '>' || c == '<'))
+		if (len <= 2 && (c == '&' || c == '|'))
 			return (TRUE);
 	}
 	return (FALSE);

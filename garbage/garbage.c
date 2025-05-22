@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 03:48:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/15 11:33:10 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 11:35:37 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@
 // 		if (cur->next && cur->next->type == PIPE)
 // 			pipe(fd);
 
-// 		pid = fork();
+// 		pid = ();
 // 		if (pid == 0)
 // 		{
 // 			if (in != 0)

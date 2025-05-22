@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/18 04:43:57 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:24:34 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_var = 0;
 
 char	*read_cmd(char *cmd)
 {
@@ -29,11 +31,15 @@ char	*read_cmd(char *cmd)
 void	foo(int sig)
 {
 	(void)sig;
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	if (g_var == 0)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
+
 
 void	free_args(int flag, t_shell *vars)
 {
@@ -52,9 +58,9 @@ void	prompt_loop(t_shell *vars)
 {
 	while (1)
 	{
-		ft_init(7, &vars->check.dquot, &vars->check.squot, \
+		ft_init(8, &vars->check.dquot, &vars->check.squot, \
 			&vars->check.par, &vars->check.special, &vars->check.fpar, \
-				&vars->check.lpar, &vars->exit);
+				&vars->check.lpar, &vars->exit, &g_var);
 		vars->cmd = read_cmd(vars->cmd);
 		if (!vars->cmd)
 			return (rl_clear_history(), exit(EXIT_SUCCESS));
@@ -63,6 +69,7 @@ void	prompt_loop(t_shell *vars)
 			free(vars->cmd);
 			continue ;
 		}
+		g_var = 1;
 		if (!fill_args(vars))
 			free_args(0, vars);
 		else
@@ -70,8 +77,10 @@ void	prompt_loop(t_shell *vars)
 			execution(vars, &vars->ast);
 			free_args(1, vars);
 		}
+		g_var = 0;
 	}
 }
+
 
 int	main(int ac, char **av, char **envp)
 {
@@ -80,7 +89,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
-	printfd(1, "pid = %d\n", getpid());
+	// printfd(1, "pid = %d\n", getpid());
 	vars.envp = ft_arrdup(envp);
 	if (!*vars.envp)
 		ft_nullenv(&vars);

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 03:19:12 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/22 02:32:20 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	ft_check(t_shell *vars)
 	return (TRUE);
 }
 
+
 void	throw_error(int error, char *file, int *exitt)
 {
 	if (error == ENOENT)
@@ -126,4 +127,7 @@ void	throw_error(int error, char *file, int *exitt)
 		printfd(2, M": Cannot open current working directory\n");
 	if (error == REDIR)
 		printfd(2, M": %s: ambiguous redirect\n", file);
+	if (error == PARSE_REDIR)
+		printfd(2, M": syntax error near unexpected token `%s'\n", file);
 }
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 06:39:51 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:38:49 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	validater(t_shell *vars)
 		ft_lstadd_back(&vars->args, create_node(token));
 		token = tokenizer(NULL, "'\"()|&<>");
 	}
-	// if (!ft_check(vars))
-	// 	return (FALSE);
+	if (!ft_check_red(vars))
+		return (FALSE);
 	ft_lstclear(&vars->args, free);
 	return (TRUE);
 }

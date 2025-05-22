@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:58:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/18 00:03:58 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:45:13 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,15 @@ int	append(t_list **s, char c, int type)
 	return (1);
 }
 
-void	handle_quote(char *quote, t_list **chunk, char *c)
+void	handle_quote(char *quote, t_list **chunk, char *c, t_list *n)
 {
 	if (!*quote)
 		*quote = *c;
+	else if (*quote == *c && ((n && *(char *)(*n).content == ' ' ) || !n))
+	{
+		*quote = 0;
+		ft_lstadd_back(chunk, ft_lstnew(ft_strdup("\0")));
+	}
 	else if (*quote == *c)
 		*quote = 0;
 	else
@@ -55,7 +60,7 @@ t_list	*create_list(t_list *lst, char sep)
 	while (lst)
 	{
 		if (lst->type != 1 && ft_strchr("'\"", *(char *)lst->content))
-			handle_quote(&quote, &chunk, lst->content);
+			handle_quote(&quote, &chunk, lst->content, lst->next);
 		else if (!quote && *(char *)lst->content == sep)
 			split_space(&chunk, &new, &lst, sep);
 		else

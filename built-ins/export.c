@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/15 11:27:41 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:10:03 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,14 @@ int	ft_isvn(char *v, int flag, t_shell *vars)
 	return (TRUE);
 }
 
+void	export_failed(char *str, char *v, t_shell *vars)
+{
+	vars->exit = 1;
+	printfd(2, "export: `%s': not a valid identifier\n", str);
+	ft_free("1", v);
+	return ;
+}
+
 int	export(int ac, char **av, t_shell *vars)
 {
 	char	*v;
@@ -101,10 +109,7 @@ int	export(int ac, char **av, t_shell *vars)
 		else if (ft_isvn(av[i], 0, vars) && i++)
 			continue ;
 		else
-		{
-			printfd(2, "export: `%s': not a valid identifier\n", av[i]);
-			ft_free("1", v);
-		}
+			export_failed(av[1], v, vars);
 		i++;
 	}
 	ft_free("2", vars->envp);
