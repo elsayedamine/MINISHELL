@@ -73,19 +73,13 @@ we still have a big prob in the pipeline
 
 ```
 ```bash
-so redirections are working properly but their syntax need to be re DONE 
 here doc is not coded yet
-handle dial redirections west les commands rah s7i7 o khdm mzn 
-
-khaso t9ad fih chi 7aja li ma3rftch chno hia (fwst minishell kaykhdem mrat o mra makaykhdmch haakak o makay3awdch yban defo) // had lmchkil yalah 7lito lyoum 21 may !!!
 
 mzl machft wach kayn khtilaf f redirect b nsba l pipeline wla subshell
 ```
 ```bash
 we should not forget about splitting with the white spaces not only with the space
-ambiguous redirect error should be displayed before  command not found (i solved it)
+ambiguous redirect error should be displayed before  command not found
 we have double free when the input is "" or '' in execute_cmd fct (i solved it)
 ls && ls -l not working good we have some garbage value when i do space btween operators
-minishell$ <*
-    Invalid Syntax : Error in operators input : why  ??
 ```
