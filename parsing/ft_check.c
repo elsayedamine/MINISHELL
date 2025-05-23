@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 15:47:28 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:09:30 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 int	ft_nodejoin(t_shell *vars)
 {
-	char *(new_content), *(tmp_content);
-	t_list *(to_delete), *(tmp) = vars->args;
+	char	*new_content;
+	char	*tmp_content;
+	t_list	*to_delete;
+	t_list	*tmp;
+
+	tmp	= vars->args;
 	while (tmp && tmp->next)
 	{
 		tmp_content = (char *)tmp->content;
@@ -36,8 +40,6 @@ int	ft_nodejoin(t_shell *vars)
 	}
 	return (TRUE);
 }
-
-
 
 int	isvalid_syntax(t_shell *vars)
 {
@@ -90,7 +92,7 @@ void	pop_spaces(t_shell *vars)
 	vars->args = new;
 }
 
-int	ft_check(t_shell *vars)
+int	all_checks(t_shell *vars)
 {
 	if (isvalid_quotes(vars) == FALSE)
 		return (FALSE);
@@ -98,10 +100,12 @@ int	ft_check(t_shell *vars)
 		return (FALSE);
 	if (isvalid_par(vars) == FALSE)
 		return (FALSE);
+	if (isvalid_syntax(vars) == FALSE) // i changed the place of this one before nodejoin to work
+		return (FALSE);
 	if (ft_nodejoin(vars) == FALSE)
 		return (FALSE);
 	pop_spaces(vars);
-	if (isvalid_syntax(vars) == FALSE)
+	if (isvalid_red(vars) == FALSE)
 		return (FALSE);
 	return (TRUE);
 }
@@ -114,7 +118,7 @@ void	throw_error(int error, char *file, int *exitt)
 		printfd(2, M": syntax error near unexpected token `%s'\n", file);
 	if (error == CMD_NOT_FOUND)
 	{
-		printfd(2, M": Command not found : %s\n", file);
+		printfd(2, "%s: command not found\n", file);
 		return (*exitt = 127, (void)file);
 	}
 	if (error == DIRECT)
