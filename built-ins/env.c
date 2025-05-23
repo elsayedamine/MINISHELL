@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:38:48 by sayed             #+#    #+#             */
-/*   Updated: 2025/05/13 19:10:37 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 02:01:25 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	env(int ac, char **av, t_shell *vars)
 	tmp = vars->env;
 	if (ac != 1)
 		return (printfd(2, "env: No options or "), \
-			printfd(2, "arguments are allowed!\n"), TRUE);
+			printfd(2, "arguments are allowed!\n"), EXIT_FAILURE);
 	while (tmp)
 	{
 		str = (char *)tmp->content;
@@ -29,5 +29,5 @@ int	env(int ac, char **av, t_shell *vars)
 			printf("%s\n", str);
 		tmp = tmp->next;
 	}
-	return (TRUE);
+	return (EXIT_SUCCESS);
 }

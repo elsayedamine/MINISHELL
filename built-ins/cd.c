@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:06:14 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/13 19:10:25 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 02:04:11 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ int	cd(int ac, char **av, t_shell *vars)
 {
 	if (ac == 1)
 		return (printfd(2, \
-			"%s: cd: only relative or absolute path supported\n", M));
+			"%s: cd: only relative or absolute path supported\n", M), 1);
 	if (ac > 2)
-		return (printfd(2, "cd: too many arguments\n"), 127);
+		return (printfd(2, "cd: too many arguments\n"), EXIT_FAILURE);
 	if (!change_dir(av[1], vars->envp, vars))
-		return (FALSE);
+		return (EXIT_FAILURE);
 	ft_lstclear(&vars->env, free);
 	vars->env = ft_arr2list(vars->envp);
 	ft_free("1", vars->pwd);
 	vars->pwd = ft_strdup(get_env("PWD", vars));
-	return (TRUE);
+	return (EXIT_SUCCESS);
 }

@@ -3,52 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 17:09:45 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 02:29:14 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_builts(char **arr, t_shell *vars, int i)
-{
-	static char		*strs[] = {
-		"export",
-		"exit",
-		"unset",
-		"pwd",
-		"echo",
-		"env",
-		"cd",
-		NULL
-	};
-	static t_fct	*fcts[] = {
-		export,
-		ft_exit,
-		unset,
-		pwd,
-		echo,
-		env,
-		cd,
-	};
-
-	while (arr && *arr && ft_strcmp(strs[i], *arr))
-		i++;
-	if (i != 7 && arr)
-		return (fcts[i](ft_arrlen(arr), arr, vars), TRUE);
-	return (FALSE);
-}
-
 int	process_cmd(t_shell *vars, t_list **ast, int flag)
 {
+	int	is_builtin;
+
 	if (flag == 0)
 	{
 		extract_redirections(vars, (char **)&((*ast)->content));
 		expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
-		if (check_builts((*ast)->arr, vars, 0) == TRUE)
-			return (skip(ast, OR), EXIT_SUCCESS);
+		is_builtin = check_builts((*ast)->arr, vars, 0);
+		if (is_builtin == -1)
+			return (FALSE);
+		return (skip(ast, is_builtin), TRUE);
 	}
 	else if (flag == 1)
 	{
@@ -61,20 +36,27 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 	return (1);
 }
 
+int	checks(t_shell *vars, t_list **ast,char **cmd)
+{
+	if (process_cmd(vars, ast, 0) == TRUE)
+		return (vars->exit);
+	if (!(*ast)->arr)
+		*cmd = ft_strdup("");
+	else
+		*cmd = get_path((*ast)->arr[0], vars);
+	if (!*cmd)
+		return (skip(ast, AND), vars->exit);
+	return (-1);
+}
+
 int	execute_cmd(t_shell *vars, t_list **ast)
 {
 	char	*cmd;
 	pid_t	pid;
 	int		status;
 
-	if (process_cmd(vars, ast, 0) == EXIT_SUCCESS)
-		return (EXIT_SUCCESS);
-	if (!(*ast)->arr)
-		cmd = ft_strdup("");
-	else
-		cmd = get_path((*ast)->arr[0], vars);
-	if (!cmd)
-		return (skip(ast, AND), vars->exit);
+	if (checks(vars, ast, &cmd) != -1)
+		return (vars->exit);
 	status = 0;
 	pid = fork();
 	if (pid == 0)

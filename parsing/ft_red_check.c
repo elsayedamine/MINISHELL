@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:54 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/22 02:37:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 03:04:58 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ int	isvalid_red(t_shell *vars)
 		if (tmp->next)
 			n = (char *)tmp->next->content;
 		if (is_red(c) && !tmp->next)
-			return (throw_error(PARSE_REDIR, "newline", NULL), FALSE);
+			return (throw_error(SYNTAX, "newline", NULL), FALSE);
 		if (is_red(c) && tmp->next && is_op(n))
-			return (throw_error(PARSE_REDIR, n, NULL), FALSE);
+			return (throw_error(SYNTAX, n, NULL), FALSE);
 		if (is_red(c) && tmp->next && is_red(n))
-			return (throw_error(PARSE_REDIR, c, NULL), FALSE);
+			return (throw_error(SYNTAX, c, NULL), FALSE);
 		tmp = tmp->next;
 	}
 	return (TRUE);

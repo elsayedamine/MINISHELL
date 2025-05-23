@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isvalid.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:43:13 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 10:23:14 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 03:06:26 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ int	isvalid_par(t_shell *vars)
 			vars->check.par--;
 			vars->check.lpar = ')';
 			if (vars->check.fpar == 0)
-				return (throw_error(SYNTAX, NULL, NULL), FALSE);
+				return (throw_error(SYNTAX, ")", NULL), FALSE);
 		}
 		vars->tmp = vars->tmp->next;
 	}
 	if (!vars->check.par)
 		return (TRUE);
-	return (throw_error(SYNTAX, NULL, NULL), FALSE);
+	return (throw_error(SYNTAX, "newline", NULL), FALSE);
 }
 
 int	isvalid_quotes(t_shell *vars)
@@ -82,14 +82,14 @@ int	isvalid_quotes(t_shell *vars)
 			len = ft_strlen((char *)tmp->content);
 			if (((char *)tmp->content)[0] == '"' && \
 			(((char *)tmp->content)[len - 1] != '"' || len == 1))
-				return (throw_error(SYNTAX, NULL, NULL), FALSE);
+				return (throw_error(SYNTAX, "newline", NULL), FALSE);
 		}
 		if (tmp->content)
 		{
 			len = ft_strlen((char *)tmp->content);
 			if (((char *)tmp->content)[0] == '\'' && \
 			(((char *)tmp->content)[len - 1] != '\'' || len == 1))
-				return (throw_error(SYNTAX, NULL, NULL), FALSE);
+				return (throw_error(SYNTAX, "newline", NULL), FALSE);
 		}
 		tmp = tmp->next;
 	}
@@ -108,17 +108,17 @@ int	isvalid_op(t_shell *vars)
 		{
 			len = ft_strlen((char *)tmp->content);
 			if (len == 1 && ((char *)tmp->content)[0] == '&')
-				return (throw_error(OP, NULL, NULL), FALSE);
+				return (throw_error(SYNTAX, "newline", NULL), FALSE);
 			if (is_op((char *)tmp->content) && tmp->next && \
 				is_op((char *)tmp->next->content))
-				return (throw_error(OP, NULL, NULL), FALSE);
+				return (throw_error(SYNTAX, (char *)tmp->next->content, NULL), 0);
 			if (is_op((char *)tmp->content) && tmp->next && \
 				ft_iswhitespace((char *)tmp->next->content) && \
-					((tmp->next->next && is_op((char *)tmp->next->next->content
-						)) || !(tmp->next->next)))
-				return (throw_error(OP, NULL, NULL), FALSE);
+					tmp->next->next && is_op((char *)tmp->next->next->content))
+				return (throw_error(SYNTAX, (char *)tmp->next->next->content, \
+NULL), FALSE);
 			if (is_op((char *)tmp->content) && !tmp->next)
-				return (throw_error(OP, NULL, NULL), FALSE);
+				return (throw_error(SYNTAX, "newline", NULL), FALSE);
 		}
 		tmp = tmp->next;
 	}

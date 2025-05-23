@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/22 02:32:20 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 03:11:50 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	ft_nodejoin(t_shell *vars)
 {
 	char *(new_content), *(tmp_content);
 	t_list *(to_delete), *(tmp) = vars->args;
-	if (tmp && is_op((char *)tmp->content))
-		return (throw_error(OP, NULL, NULL), FALSE);
 	while (tmp && tmp->next)
 	{
 		tmp_content = (char *)tmp->content;
@@ -36,8 +34,6 @@ int	ft_nodejoin(t_shell *vars)
 		else
 			tmp = tmp->next;
 	}
-	if (tmp && is_op((char *)tmp->content))
-		return (throw_error(OP, NULL, NULL), FALSE);
 	return (TRUE);
 }
 
@@ -54,15 +50,13 @@ int	isvalid_syntax(t_shell *vars)
 		if (tmp->next)
 			n = (char *)tmp->next->content;
 		if (is_par(c) && tmp->next && is_par(n) && *c != *n)
-			return (throw_error(OP, NULL, NULL), FALSE);
+			return (throw_error(SYNTAX, n, NULL), FALSE);
 		if (!is_par(c) && !is_op(c) && tmp->next && is_par(n) && *n == '(')
-			return (throw_error(OP, NULL, NULL), FALSE);
+			return (throw_error(SYNTAX, n, NULL), FALSE);
 		if (!is_par(c) && is_op(c) && tmp->next && is_par(n) && *n == ')')
-			return (throw_error(OP, NULL, NULL), FALSE);
-		if (is_par(c) && *c == '(' && tmp->next && is_op(n) && *n != '<')
-			return (throw_error(OP, NULL, NULL), FALSE);
+			return (throw_error(SYNTAX, n, NULL), FALSE);
 		if (is_par(c) && *c == ')' && tmp->next && !is_op(n) && !is_par(n))
-			return (throw_error(OP, NULL, NULL), FALSE);
+			return (throw_error(SYNTAX, n, NULL), FALSE);
 		tmp = tmp->next;
 	}
 	return (TRUE);
@@ -109,15 +103,12 @@ int	ft_check(t_shell *vars)
 	return (TRUE);
 }
 
-
 void	throw_error(int error, char *file, int *exitt)
 {
 	if (error == ENOENT)
 		printfd(2, M": %s: %s\n", file, strerror(ENOENT));
 	if (error == SYNTAX)
-		printfd(2, M": Invalid Syntax : Something is missing \" or ' or ( or )\n");
-	if (error == OP)
-		printfd(2, M": Invalid Syntax : Error in operators input\n");
+		printfd(2, M": syntax error near unexpected token `%s'\n", file);
 	if (error == CMD_NOT_FOUND)
 	{
 		printfd(2, M": Command not found : %s\n", file);
@@ -127,7 +118,4 @@ void	throw_error(int error, char *file, int *exitt)
 		printfd(2, M": Cannot open current working directory\n");
 	if (error == REDIR)
 		printfd(2, M": %s: ambiguous redirect\n", file);
-	if (error == PARSE_REDIR)
-		printfd(2, M": syntax error near unexpected token `%s'\n", file);
 }
-

@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:03:58 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/30 15:47:08 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/22 23:11:29 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	echo(int ac, char **av, t_shell *vars)
 
 	check = 0;
 	i = 1;
-	(void)vars;
+	vars->exit = 0;
 	if (ac == 1)
-		return (printf("\n"), TRUE);
+		return (printf("\n"), EXIT_SUCCESS);
 	while (av[i])
 	{
 		if (is_option(av[i]) == FALSE)
@@ -54,7 +54,7 @@ int	echo(int ac, char **av, t_shell *vars)
 	}
 	if (!check)
 		printf("\n");
-	return (TRUE);
+	return (EXIT_SUCCESS);
 }
 
 // int main(int ac, char **av)

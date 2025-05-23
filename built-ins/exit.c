@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:19:39 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/15 11:31:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 02:05:48 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_exit(int ac, char **av, t_shell *vars)
 	if (ac > 2)
 	{
 		vars->exit = 1;
-		return (printfd(2, "exit: too many arguments\n"), FALSE);
+		return (printfd(2, "exit: too many arguments\n"), 130);
 	}
-	return (exit(round), TRUE);
+	return (exit(round), EXIT_SUCCESS);
 }

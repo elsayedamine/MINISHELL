@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/04/30 04:40:56 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 02:08:43 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	unset(int ac, char **av, t_shell *vars)
 		unset_variable(av[i], vars);
 		i++;
 	}
-	return (TRUE);
+	return (EXIT_SUCCESS);
 }
 // int main (int ac, char **av, char **envp)
 // {

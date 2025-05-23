@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/14 13:43:50 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 02:08:16 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	pwd(int ac, char **av, t_shell *vars)
 	(void)vars;
 	(void)ac;
 	if (!av)
-		return (FALSE);
+		return (EXIT_FAILURE);
 	if (vars->pwd)
-		return (printf("%s\n", vars->pwd), TRUE);
+		return (printf("%s\n", vars->pwd), EXIT_SUCCESS);
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 		return (perror("pwd: error retrieving current directory: getcwd: cannot \
-access parent directories"), FALSE);
+access parent directories"), EXIT_FAILURE);
 	printf("%s\n", cwd);
 	free(cwd);
-	return (TRUE);
+	return (EXIT_SUCCESS);
 }

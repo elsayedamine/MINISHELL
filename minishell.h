@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/22 02:32:44 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 03:08:29 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,10 @@
 
 typedef enum error
 {
-	IN = 512,
-	OUT,
-	SYNTAX,
-	CHARS,
-	OP,
-	DUP,
-	EXEC,
-	PIP,
+	SYNTAX = 512,
 	DIRECT,
 	REDIR,
-	PARSE_REDIR,
 	CMD_NOT_FOUND,
-	TOKEN
 }			t_error;
 
 typedef enum type
@@ -171,6 +162,7 @@ char	*get_env(char *k, t_shell *vars);
 char	*ft_strjoin_f(char *s1, char *s2, int free_s);
 void	ft_printexport(t_shell	*vars);
 void	append_value(char *v, char *av, t_shell *vars);
+int		check_builts(char **arr, t_shell *vars, int i);
 
 /*---------------------------- execution ----------------------------*/
 
