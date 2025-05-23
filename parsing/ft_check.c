@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 03:11:50 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:47:28 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	ft_nodejoin(t_shell *vars)
 	return (TRUE);
 }
 
+
+
 int	isvalid_syntax(t_shell *vars)
 {
 	t_list	*tmp;
@@ -55,7 +57,8 @@ int	isvalid_syntax(t_shell *vars)
 			return (throw_error(SYNTAX, n, NULL), FALSE);
 		if (!is_par(c) && is_op(c) && tmp->next && is_par(n) && *n == ')')
 			return (throw_error(SYNTAX, n, NULL), FALSE);
-		if (is_par(c) && *c == ')' && tmp->next && !is_op(n) && !is_par(n))
+		if (is_par(c) && *c == ')' && tmp->next && !is_op(n) && \
+			!is_par(n) && !is_there_red(n))
 			return (throw_error(SYNTAX, n, NULL), FALSE);
 		tmp = tmp->next;
 	}

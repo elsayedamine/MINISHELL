@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 03:08:29 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:36:51 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,12 @@ typedef struct s_redir
 	char	*target;
 }			t_redir;
 
+typedef struct s_sig
+{
+	int		flag;
+	int		exit_status;
+}			t_sig;
+
 typedef struct s_check
 {
 	int		dquot;
@@ -110,6 +116,8 @@ typedef struct s_shell
 
 typedef int (t_fct)(int ac, char **av, t_shell *vars);
 
+extern t_sig	*g_var;
+
 /* **************************************** */
 /*           FUNCTION PROTOTYPES            */
 /* **************************************** */
@@ -132,6 +140,7 @@ int		isvalid_op(t_shell *vars);
 int		is_op(char *str);
 int		is_par(char *str);
 int		isvalid_quotes(t_shell *vars);
+int		is_there_red(char *str);
 
 /* Processing */
 int		ft_nodejoin(t_shell *vars);

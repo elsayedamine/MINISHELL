@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 02:29:14 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:39:13 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 	}
 	else if (flag == 1)
 	{
-		if (vars->exit == 0)
+		if (g_var->exit_status == 0)
 			skip(ast, OR);
 		else
 			traverse_sub(vars, ast);
-		return (vars->exit);
+		return (g_var->exit_status);
 	}
 	return (1);
 }
@@ -39,13 +39,13 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 int	checks(t_shell *vars, t_list **ast,char **cmd)
 {
 	if (process_cmd(vars, ast, 0) == TRUE)
-		return (vars->exit);
+		return (g_var->exit_status);
 	if (!(*ast)->arr)
 		*cmd = ft_strdup("");
 	else
 		*cmd = get_path((*ast)->arr[0], vars);
 	if (!*cmd)
-		return (skip(ast, AND), vars->exit);
+		return (skip(ast, AND), g_var->exit_status);
 	return (-1);
 }
 
@@ -56,7 +56,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	int		status;
 
 	if (checks(vars, ast, &cmd) != -1)
-		return (vars->exit);
+		return (g_var->exit_status);
 	status = 0;
 	pid = fork();
 	if (pid == 0)
@@ -70,7 +70,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			vars->exit = WEXITSTATUS(status);
+			g_var->exit_status = WEXITSTATUS(status);
 	}
 	return (ft_free("1",cmd), process_cmd(vars, ast, 1));
 }
@@ -84,24 +84,24 @@ int	execution(t_shell *vars, t_list **ast)
 	{
 		if ((*node) && (*node)->type == CMD && \
 			(!(*node)->next || (*node)->next->type <= AND))
-			vars->exit = execute_cmd(vars, node);
+			g_var->exit_status = execute_cmd(vars, node);
 		else if ((*node) && ((*node)->type == CMD || (*node)->type == SUBSHELL)
 			&& (*node)->next && (*node)->next->type == PIPE)
 		{
-			vars->exit = pipex(vars, node);
+			g_var->exit_status = pipex(vars, node);
 			traverse_sub(vars, node);
 			continue ;
 		}
 		else if ((*node) && (*node)->type == SUBSHELL)
 		{
-			vars->exit = execution(vars, &(*node)->child);
+			g_var->exit_status = execution(vars, &(*node)->child);
 			traverse_sub(vars, node);
 			continue ;
 		}
 		else
 			(*node) = (*node)->next;
 	}
-	return (vars->exit);
+	return (g_var->exit_status);
 }
 
 // ls || (ls | ls | ls && ls) || ls && ls

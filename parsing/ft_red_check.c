@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:54 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/23 03:04:58 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 17:27:08 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,19 @@ int	is_red(char *str)
 	}
 	return (FALSE);
 }
+int	is_there_red(char *str)
+{
+	int	i;
 
+	i = 0;
+	if (!str)
+		return (0);
+	while (ft_strchr(WHITE, str[i]) && str[i])
+		i++;
+	if (ft_strchr("<>", str[i]))
+		return (TRUE);
+	return (FALSE);
+}
 int	is_word(char *str)
 {
 	if (ft_strlen(str) > 2)

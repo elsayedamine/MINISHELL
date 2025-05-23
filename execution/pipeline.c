@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:48:32 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 11:38:48 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 16:39:32 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 {
-	throw_error(CMD_NOT_FOUND, cmd, &vars->exit);
+	(void)vars;
+	throw_error(CMD_NOT_FOUND, cmd, &g_var->exit_status);
 	skip(ast, AND);
 }
 int	execute_single_cmd(t_shell *vars, t_list *cmd_node)
@@ -28,7 +29,7 @@ int	execute_single_cmd(t_shell *vars, t_list *cmd_node)
 		return (EXIT_SUCCESS);
 	cmd = get_path(cmd_node->content, vars);
 	if (!cmd)
-		return (vars->exit);
+		return (g_var->exit_status);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -39,10 +40,10 @@ int	execute_single_cmd(t_shell *vars, t_list *cmd_node)
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			vars->exit = WEXITSTATUS(status);
+			g_var->exit_status = WEXITSTATUS(status);
 	}
 	free(cmd);
-	return (vars->exit);
+	return (g_var->exit_status);
 }
 
 
@@ -88,12 +89,12 @@ int pipex(t_shell *vars, t_list **node)
 				close(fd[1]);
 				in_fd = fd[0];
 			}
-			waitpid(pid, &vars->exit, 0);
-			if (WIFEXITED(vars->exit))
-				vars->exit = WEXITSTATUS(vars->exit);
+			waitpid(pid, &g_var->exit_status, 0);
+			if (WIFEXITED(g_var->exit_status))
+				g_var->exit_status = WEXITSTATUS(g_var->exit_status);
 		}
 		current = next;
 	}
 	*node = current; // Let parent continue traversal
-	return (vars->exit);
+	return (g_var->exit_status);
 }

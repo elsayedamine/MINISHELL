@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 17:10:03 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 16:39:56 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ int	ft_isvn(char *v, int flag, t_shell *vars)
 
 void	export_failed(char *str, char *v, t_shell *vars)
 {
-	vars->exit = 1;
+	(void)vars;
+	g_var->exit_status = 1;
 	printfd(2, "export: `%s': not a valid identifier\n", str);
 	ft_free("1", v);
 	return ;

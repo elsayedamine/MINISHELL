@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:03:58 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/22 23:11:29 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 16:38:46 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	echo(int ac, char **av, t_shell *vars)
 	int	i;
 	int	check;
 
-	check = 0;
-	i = 1;
-	vars->exit = 0;
-	if (ac == 1)
+	ft_init(2, &check, &i);
+	g_var->exit_status = 0;
+	(void)vars;
+	if (++i && ac == 1)
 		return (printf("\n"), EXIT_SUCCESS);
 	while (av[i])
 	{

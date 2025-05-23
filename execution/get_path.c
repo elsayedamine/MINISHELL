@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:07:20 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 04:38:14 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:39:23 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ int	is_dir(const char *path)
 
 char	*handle_dir(char *path, t_shell *vars)
 {
+	(void)vars;
 	if (is_dir(path))
 	{
 		printfd(2, M": %s: Is a directory\n", path);
-		vars->exit = 126;
+		g_var->exit_status = 126;
 		return (NULL);
 	}
 	if (access(path, X_OK) == 0)
@@ -56,7 +57,7 @@ char	*get_path(char *cmd, t_shell *vars)
 				return (ft_free("21", paths, path), checker);
 		ft_free("11", checker, path);
 	}
-	vars->exit = 127;
-	return (throw_error(CMD_NOT_FOUND, cmd, &vars->exit), \
+	g_var->exit_status = 127;
+	return (throw_error(CMD_NOT_FOUND, cmd, &g_var->exit_status), \
 		ft_free("2", paths), NULL);
 }

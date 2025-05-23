@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:19:39 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/23 02:05:48 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:38:51 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ int	ft_exit(int ac, char **av, t_shell *vars)
 	unsigned char	round;
 	int				error;
 
+	(void)vars;
 	write(1, "exit\n", 5);
 	error = TRUE;
 	if (ac <= 1)
 	{
-		exit(vars->exit);
+		exit(g_var->exit_status);
 	}
 	round = check_args(av[1], &error);
 	if (error == FALSE)
@@ -71,7 +72,7 @@ int	ft_exit(int ac, char **av, t_shell *vars)
 	}
 	if (ac > 2)
 	{
-		vars->exit = 1;
+		g_var->exit_status = 1;
 		return (printfd(2, "exit: too many arguments\n"), 130);
 	}
 	return (exit(round), EXIT_SUCCESS);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 03:03:45 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:46:38 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_var = 0;
+t_sig	*g_var;
 
 char	*read_cmd(char *cmd)
 {
@@ -31,8 +31,9 @@ char	*read_cmd(char *cmd)
 void	foo(int sig)
 {
 	(void)sig;
-	if (g_var == 0)
+	if (g_var->flag == 0)
 	{
+		g_var->exit_status = 130;
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -56,12 +57,12 @@ void	free_args(int flag, t_shell *vars)
 
 void	prompt_loop(t_shell *vars)
 {
-	vars->exit = 0;
+	g_var->exit_status = 0;
 	while (1)
 	{
 		ft_init(7, &vars->check.dquot, &vars->check.squot, \
 			&vars->check.par, &vars->check.special, &vars->check.fpar, \
-				&vars->check.lpar, &g_var);
+				&vars->check.lpar, &g_var->flag);
 		vars->cmd = read_cmd(vars->cmd);
 		if (!vars->cmd)
 			return (rl_clear_history(), exit(EXIT_SUCCESS));
@@ -70,7 +71,7 @@ void	prompt_loop(t_shell *vars)
 			free(vars->cmd);
 			continue ;
 		}
-		g_var = 1;
+		g_var->flag = 1;
 		if (!fill_args(vars))
 			free_args(0, vars);
 		else
@@ -86,6 +87,7 @@ int	main(int ac, char **av, char **envp)
 	t_shell		vars;
 
 	(void)av;
+	g_var = malloc(sizeof(t_sig));
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
 	// printfd(1, "pid = %d\n", getpid());
