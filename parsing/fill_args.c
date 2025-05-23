@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 18:12:13 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:22:14 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,6 @@ int	validater(t_shell *vars)
 	if (!all_checks(vars))
 		return (FALSE);
 	ft_lstclear(&vars->args, free);
-	return (TRUE);
-}
-
-int	nodejoin(t_shell *vars)
-{
-	if (ft_nodejoin(vars) == FALSE)
-		return (FALSE);
-	pop_spaces(vars);
 	return (TRUE);
 }
 

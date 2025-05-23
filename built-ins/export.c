@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 16:39:56 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:21:33 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,5 @@ int	export(int ac, char **av, t_shell *vars)
 	}
 	ft_free("2", vars->envp);
 	vars->envp = ft_list2arr(vars->env);
-	return (TRUE);
+	return (EXIT_SUCCESS);
 }

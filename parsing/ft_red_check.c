@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:54 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/23 18:10:10 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:22:41 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ int	isvalid_red(t_shell *vars)
 	return (TRUE);
 }
 
-// int	ft_check_red(t_shell *vars)
-// {
-// 	pop_spaces(vars);
-// 	if (isvalid_red(vars) == FALSE)
-// 		return (FALSE);
-// 	return (TRUE);
-// }
+int	nodejoin(t_shell *vars)
+{
+	if (ft_nodejoin(vars) == FALSE)
+		return (FALSE);
+	pop_spaces(vars);
+	return (TRUE);
+}

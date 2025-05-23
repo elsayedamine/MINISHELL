@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:14:29 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/15 11:22:19 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:46:31 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*ft_strjoin_f(char *s1, char *s2, int free_s)
 		free(s1);
 	if (free_s == 2)
 		free(s2);
+	if (free_s == 3)
+		ft_free("11", s1, s2);
 	return (res);
 }
 

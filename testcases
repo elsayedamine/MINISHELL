@@ -70,5 +70,5 @@ minishell$ ls "" > test && "" || ls
 Minishell: Command not found : 
 the ls "" in bash consider "" as a file but we simply skip it
 
-"ls                        "-l > pop
+asdasdasd > pop
 pop wasn't created

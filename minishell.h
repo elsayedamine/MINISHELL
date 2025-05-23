@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 17:52:49 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 19:07:58 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int		is_op(char *str);
 int		is_par(char *str);
 int		isvalid_quotes(t_shell *vars);
 int		is_there_red(char *str);
+int		nodejoin(t_shell *vars);
 
 /* Processing */
 int		ft_nodejoin(t_shell *vars);
