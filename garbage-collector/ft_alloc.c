@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:49:07 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/17 22:45:51 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 19:23:27 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,22 @@ void	*ft_alloc(size_t size, void *content, char c)
 	static t_list	*head;
 	t_list			*new_node;
 
+
 	if (content)
 	{
-		ft_lst_add_back(&head, (t_list *)content);
+		new_node = ft_lstnew(content);
+		if (!new_node)
+			return (NULL);
+		new_node->type = c;
+		ft_lst_add_back(&head, new_node);
 		return (content);
 	}
 	else if (c == 'M')
 	{
-		new_node = ft_lst_new(size);
+		new_node = ft_lstnew(malloc(size));
 		if (!new_node)
 			return (NULL);
+		new_node->type = c;
 		ft_lst_add_back(&head, new_node);
 		return (new_node->content);
 	}
