@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 12:41:21 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 15:23:55 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 typedef struct s_list
 {
 	void			*content;
+	char			*raw;
 	char			**arr;
 	int				type;
 	struct s_list	*next;
@@ -82,6 +83,7 @@ char	*ft_strndup(const char *src, size_t n);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t destsize);
 char	*ft_strchr(const char *s, int c);
+char	*ft_strpbrk(char const *str, char *set);
 int		ft_strchr_index(const char *s, char c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strstr(char const *str, char const *to_find);

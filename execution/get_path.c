@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:07:20 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 16:39:23 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/24 16:09:07 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	store_err(t_shell *vars, int err, char *str)
+{
+	vars->err.errn = err;
+	vars->err.str = str;
+}
 
 int	is_dir(const char *path)
 {
@@ -32,7 +38,7 @@ char	*handle_dir(char *path, t_shell *vars)
 	}
 	if (access(path, X_OK) == 0)
 		return (ft_strdup(path));
-	return (throw_error(ENOENT, path, NULL), NULL);
+	return (store_err(vars, ENOENT, path), NULL);
 }
 
 char	*get_path(char *cmd, t_shell *vars)
@@ -46,7 +52,7 @@ char	*get_path(char *cmd, t_shell *vars)
 		return (handle_dir(cmd, vars));
 	paths = ft_split(get_env("PATH", vars), ':');
 	if (!paths || !*paths)
-		return (throw_error(ENOENT, cmd, NULL), NULL);
+		return (store_err(vars, ENOENT, cmd), NULL);
 	i = 0;
 	while (paths && paths[i])
 	{
@@ -58,6 +64,5 @@ char	*get_path(char *cmd, t_shell *vars)
 		ft_free("11", checker, path);
 	}
 	g_var->exit_status = 127;
-	return (throw_error(CMD_NOT_FOUND, cmd, &g_var->exit_status), \
-		ft_free("2", paths), NULL);
+	return (store_err(vars, CMD_NOT_FOUND, cmd), ft_free("2", paths), NULL);
 }

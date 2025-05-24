@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 13:24:48 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:12:16 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 
 	if (flag == 0)
 	{
+		(*ast)->raw = ft_strdup((*ast)->content);
+		// free previous redirections
 		extract_redirections(vars, (char **)&((*ast)->content));
 		expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
 		is_builtin = check_builts((*ast)->arr, vars, 0);
@@ -36,16 +38,45 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 	return (1);
 }
 
-int	checks(t_shell *vars, t_list **ast,char **cmd)
+int open_files(t_shell *vars)
+{
+	t_redir *r;
+	t_list	*redir;
+	int		fd;
+
+	redir = vars->redir;
+	while (redir)
+	{
+		r = (t_redir *)redir->content;
+		fd = open(r->target, r->flag, 0644);
+		if (fd == -1)
+			return (perror(r->target), g_var->exit_status = errno, FALSE);
+		close(fd);
+		redir = redir->next;
+	}
+	return (TRUE);
+}
+
+int	checks(t_shell *vars, t_list **ast, char **cmd)
 {
 	if (process_cmd(vars, ast, 0) == TRUE)
 		return (g_var->exit_status);
-	if (!(*ast)->arr)
-		*cmd = ft_strdup("");
+	if (!*(char *)(*ast)->content)
+	{
+		if (open_files(vars) == FALSE)
+			return (skip(ast, AND), g_var->exit_status);
+		g_var->exit_status = 0;
+		return (skip(ast, OR), g_var->exit_status);
+	}
 	else
 		*cmd = get_path((*ast)->arr[0], vars);
 	if (!*cmd)
+	{
+		if (open_files(vars) == FALSE)
+			return (skip(ast, AND), g_var->exit_status);
+		throw_error(vars->err.errn, vars->err.str, NULL);
 		return (skip(ast, AND), g_var->exit_status);
+	}
 	return (-1);
 }
 
