@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 16:15:13 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:20:45 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,12 @@ typedef struct s_check
 	int		special;
 }			t_check;
 
+typedef struct	s_err
+{
+	int		errn;
+	char	*str;
+}			t_err;
+
 // Main shell structure
 typedef struct s_shell
 {
@@ -113,8 +119,9 @@ typedef struct s_shell
 	t_list		*args;
 	t_list		*tmp;
 	t_list		*redir;
-	t_check		check;
 	t_list		*ast;
+	t_check		check;
+	t_err		err;
 }				t_shell;
 
 typedef int (t_fct)(int ac, char **av, t_shell *vars);

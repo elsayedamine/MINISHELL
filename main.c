@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 16:14:12 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:18:54 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	foo(int sig)
 		rl_redisplay();
 	}
 }
-
 
 void	free_args(int flag, t_shell *vars)
 {
