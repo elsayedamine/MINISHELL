@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_red_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:54 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/23 20:18:24 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/24 16:48:49 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	is_red(char *str)
 	}
 	return (FALSE);
 }
+
 int	is_there_red(char *str)
 {
 	int	i;

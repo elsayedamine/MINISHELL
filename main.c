@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 16:18:54 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:56:15 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	prompt_loop(t_shell *vars)
 	}
 }
 
+// printfd(1, "pid = %d\n", getpid());
 int	main(int ac, char **av, char **envp)
 {
 	t_shell		vars;
@@ -89,7 +90,6 @@ int	main(int ac, char **av, char **envp)
 	g_var = malloc(sizeof(t_sig));
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
-	// printfd(1, "pid = %d\n", getpid());
 	vars.envp = ft_arrdup(envp);
 	if (!*vars.envp)
 		ft_nullenv(&vars);

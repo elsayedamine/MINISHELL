@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 10:29:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 12:55:33 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:49:12 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	*expand_heredoc_line(t_shell *vars, char **str)
 void	fill_heredoc(t_shell *vars, t_redir *r)
 {
 	char	*line;
+
 	while (1)
 	{
 		line = readline("> ");
@@ -103,7 +104,8 @@ void	process_heredocs(t_shell *vars)
 	while (vars->tmp)
 	{
 		if (!ft_strcmp(vars->tmp->content, "<<") && vars->tmp->next)
-			ft_lstadd_back(&heredocs, ft_lstnew(heredoc_node(vars, vars->tmp->next->content)));
+			ft_lstadd_back(&heredocs, \
+					ft_lstnew(heredoc_node(vars, vars->tmp->next->content)));
 		vars->tmp = vars->tmp->next;
 	}
 	vars->heredoc = heredocs;

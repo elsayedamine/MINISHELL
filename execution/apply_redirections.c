@@ -6,11 +6,20 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 05:26:59 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 13:28:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:57:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+t_redir	*get_heredoc_node(t_shell *vars)
+{
+	t_redir	*hd;
+
+	hd = (t_redir *)vars->heredoc->content;
+	vars->heredoc = vars->heredoc->next;
+	return (hd);
+}
 
 int	expand_target(t_shell *vars, char **str)
 {
@@ -27,7 +36,7 @@ int	expand_target(t_shell *vars, char **str)
 	ft_lstclear(&lst, free);
 	if (!arr || (ft_arrlen(arr) != 1 && *arr))
 		return (vars->exit = 1, ft_free("21", arr, *str),
-			throw_error(REDIR, original	, NULL), ft_free("1", original), FALSE);
+			throw_error(REDIR, original, NULL), ft_free("1", original), FALSE);
 	return (ft_free("1", original), TRUE);
 }
 

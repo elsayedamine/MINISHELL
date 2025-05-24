@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 01:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 02:12:01 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:56:54 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	execute_builtins(t_shell *vars, t_fct *fct, char **arr)
 {
 	int	in;
 	int	out;
-	int exit;
+	int	exit;
 
 	exit = 0;
 	in = dup(STDIN);

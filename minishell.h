@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 16:30:06 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:55:15 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,15 @@ typedef struct s_pipe
 	int		pipefd[2];
 }			t_pip;
 
-	typedef struct s_redir
-	{
-		t_type	mode;
-		int		fd;
-		int		flag;
-		int		q;
-		char	*target;
-		char	*delim;
-	}			t_redir;
+typedef struct s_redir
+{
+	t_type	mode;
+	int		fd;
+	int		flag;
+	int		q;
+	char	*target;
+	char	*delim;
+}			t_redir;
 
 typedef struct s_sig
 {
@@ -100,7 +100,7 @@ typedef struct s_check
 	int		special;
 }			t_check;
 
-typedef struct	s_err
+typedef struct s_err
 {
 	int		errn;
 	char	*str;
@@ -163,6 +163,7 @@ char	**_ft_split(char const *s, char b);
 void	pop_spaces(t_shell *vars);
 void	throw_error(int error, char *file, int *status);
 void	process_heredocs(t_shell *vars);
+t_redir	*get_heredoc_node(t_shell *vars);
 
 /* Expansion */
 char	**split_list(t_list *lst, char sep);

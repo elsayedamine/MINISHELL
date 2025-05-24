@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 15:59:28 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:41:10 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_nodejoin(t_shell *vars)
 	t_list	*to_delete;
 	t_list	*tmp;
 
-	tmp	= vars->args;
+	tmp = vars->args;
 	while (tmp && tmp->next)
 	{
 		tmp_content = (char *)tmp->content;
@@ -38,16 +38,6 @@ int	ft_nodejoin(t_shell *vars)
 			tmp = tmp->next;
 	}
 	return (TRUE);
-}
-
-char	*ft_skip(char *str, char *set)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && ft_strchr(set, str[i]))
-		i++;
-	return (str + i);
 }
 
 int	isvalid_syntax(t_shell *vars)

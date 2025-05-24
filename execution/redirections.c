@@ -6,20 +6,11 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 00:18:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 13:01:06 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:53:22 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-t_redir	*get_heredoc_node(t_shell *vars)
-{
-	t_redir	*hd;
-
-	hd = (t_redir *)vars->heredoc->content;
-	vars->heredoc = vars->heredoc->next;
-	return (hd);
-}
 
 t_redir	*create_redir_node(t_shell *vars, t_type mode, char *target)
 {
@@ -59,7 +50,7 @@ t_list	*create_redir_list(t_shell *vars, t_list **s)
 	{
 		if (tmp->type >= READ && tmp->next)
 		{
-			ft_lstadd_back(&redir, ft_lstnew(create_redir_node(vars, tmp->type,
+			ft_lstadd_back(&redir, ft_lstnew(create_redir_node(vars, tmp->type, \
 				ft_strdup(tmp->next->content))));
 			tmp = tmp->next->next;
 		}
@@ -140,8 +131,7 @@ void	extract_redirections(t_shell *vars, char **original)
 	}
 	ft_init(2, &q, &i);
 	s = tokenize_command(*original);
-	vars->redir = create_redir_list(vars, 
-		&s);
+	vars->redir = create_redir_list(vars, &s);
 	free(*original);
 	arr = ft_list2arr(s);
 	*original = ft_arr2str(arr, ' ');
