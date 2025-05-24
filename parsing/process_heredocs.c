@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 10:29:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 16:49:12 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 19:09:00 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,44 @@ char	*expand_heredoc_line(t_shell *vars, char **str)
 	return (ft_lst2str(lst));
 }
 
-void	fill_heredoc(t_shell *vars, t_redir *r)
+void	fill_heredoc(t_shell *vars, t_redir **r)
 {
 	char	*line;
-
-	while (1)
+	pid_t	pid;
+	int		status;
+	
+	status = 0;
+	pid = fork();
+	if (pid == 0)
 	{
-		line = readline("> ");
-		if (!line || !ft_strcmp(line, r->delim))
-			break ;
-		if (!r->q)
-			line = expand_heredoc_line(vars, &line);
-		printfd(r->fd, "%s\n", line);
+		signal(SIGINT, SIG_DFL);
+		while (1)
+		{
+			line = readline("> ");
+			if (!line || !ft_strcmp(line, (*r)->delim))
+				break ;
+			if (!(*r)->q)
+				line = expand_heredoc_line(vars, &line);
+			printfd((*r)->fd, "%s\n", line);
+			free(line);
+		}
 		free(line);
+		close((*r)->fd);
+		exit(EXIT_SUCCESS);
 	}
-	free(line);
-	close(r->fd);
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			g_var->exit_status = WEXITSTATUS(status);
+		if (WIFSIGNALED(status))
+		{
+			g_var->exit_status = 128 + WTERMSIG(status);
+			write(1, "\n", 1);
+			*r = NULL;
+		}
+	}
 }
 
 char	*extract_raw_heredoc_delim(char *str)
@@ -91,22 +113,29 @@ t_redir	*heredoc_node(t_shell *vars, char *target)
 	r->fd = open(r->target, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (r->fd == -1)
 		return (perror("heredoc opening failed"), free(r), NULL);
-	fill_heredoc(vars, r);
+	fill_heredoc(vars, &r);
 	return (r);
 }
 
-void	process_heredocs(t_shell *vars)
+int	process_heredocs(t_shell *vars)
 {
 	t_list	*heredocs;
+	t_redir	*flag;
 
 	heredocs = NULL;
 	vars->tmp = vars->args;
 	while (vars->tmp)
 	{
 		if (!ft_strcmp(vars->tmp->content, "<<") && vars->tmp->next)
-			ft_lstadd_back(&heredocs, \
-					ft_lstnew(heredoc_node(vars, vars->tmp->next->content)));
+		{
+			flag = heredoc_node(vars, vars->tmp->next->content);
+			if (!flag)
+				return (FALSE);
+			// free_all_rdir_list
+			ft_lstadd_back(&heredocs, ft_lstnew(flag));
+		}
 		vars->tmp = vars->tmp->next;
 	}
 	vars->heredoc = heredocs;
+	return (TRUE);
 }

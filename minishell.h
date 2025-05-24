@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 16:55:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 19:09:57 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ t_list	*remove_quotes_from_list(t_list *lst);
 char	**_ft_split(char const *s, char b);
 void	pop_spaces(t_shell *vars);
 void	throw_error(int error, char *file, int *status);
-void	process_heredocs(t_shell *vars);
+int		process_heredocs(t_shell *vars);
 t_redir	*get_heredoc_node(t_shell *vars);
 
 /* Expansion */

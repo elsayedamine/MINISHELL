@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 16:53:56 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 18:50:15 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,20 +92,26 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 
 	if (checks(vars, ast, &cmd) != -1)
 		return (g_var->exit_status);
-	status = 0;
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		if (apply_redirections(vars) == -1)
 			exit(vars->exit);
-		if (execve(cmd, (*ast)->arr, vars->envp) == -1)
-			exit(exit_execve(cmd, vars, ast));
+		execve(cmd, (*ast)->arr, vars->envp);
+		exit(exit_execve(cmd, vars, ast));
 	}
 	else
 	{
+		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			g_var->exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+		{
+			g_var->exit_status = 128 + WTERMSIG(status);
+			write(1, "\n", 1);
+		}
 	}
 	return (ft_free("1", cmd), process_cmd(vars, ast, 1));
 }
