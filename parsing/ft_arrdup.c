@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_arrdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 16:35:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/04/08 16:43:16 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/25 00:29:48 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../minishell.h"
 
 char	**ft_arrdup(char **arr)
 {
@@ -20,15 +20,18 @@ char	**ft_arrdup(char **arr)
 	i = 0;
 	if (!arr)
 		return (NULL);
-	dup = (char **)malloc(sizeof(char *) * (ft_arrlen(arr) + 1));
+	dup = (char **)alloc(sizeof(char *) * (ft_arrlen(arr) + 1), NULL, 'M');
 	if (!dup)
 		return (NULL);
 	i = 0;
 	while (arr[i])
 	{
-		dup[i] = ft_strdup(arr[i]);
+		dup[i] = (char *)alloc(0, ft_strdup(arr[i]), 0);
 		if (!dup[i])
-			return (ft_free("2", dup), NULL);
+		{
+			// clear();
+			return (ft_free("2", dup), NULL);		
+		}
 		i++;
 	}
 	dup[i] = NULL;

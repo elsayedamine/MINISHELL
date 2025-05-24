@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/12 01:02:43 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 23:13:07 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,22 @@ int	match_pattern(const char *pattern, const char *str)
 	return (*str == '\0');
 }
 
+int c_files(void)
+{
+    DIR        *dir;
+    struct    dirent *entry;
+    int        count;
+
+    count = 0;
+    dir = opendir(".");
+    if (!dir)
+        return (-1);
+    while ((entry = readdir(dir)) != NULL)
+        count++;
+    closedir(dir);
+    return (count);
+}
+
 char	**wildcard(char *pattern)
 {
 	DIR				*dir;
@@ -46,44 +62,24 @@ char	**wildcard(char *pattern)
 	char			**matches;
 	int				count;
 
+	matches = (char **)alloc(sizeof(char *) * (c_files() + 1), NULL, 'M');
 	count = 0;
-	matches = (char **)malloc(sizeof(char *) * (MAX_MATCHES + 1));
 	dir = opendir(".");
 	if (!matches || !dir)
-		return (ft_free("1", matches), throw_error(DIRECT, NULL, NULL), NULL);
+		return (throw_error(DIRECT, NULL, NULL), NULL);
 	entry = readdir(dir);
 	while (entry)
 	{
 		if (entry->d_name[0] != '.' && match_pattern(pattern, entry->d_name))
 		{
 			if (count < MAX_MATCHES)
-				matches[count++] = ft_strdup(entry->d_name);
+				matches[count++] = alloc(0, ft_strdup(entry->d_name), 0);
 			else
 				break ;
 		}
 		entry = readdir(dir);
 	}
 	if (!count)
-		return (free(matches), NULL);
+		return (NULL);
 	return (closedir(dir), matches[count] = NULL, matches);
 }
-
-// int	main(int ac, char **av)
-// {
-// 	char	**matches;
-// 	int		i;
-
-// 	i = 0;
-// 	if (ac == 1)
-// 		return (0);
-// 	matches = wildcard_match(av[1]);
-// 	if (matches)
-// 	{
-// 		while (matches[i] != NULL)
-// 			printf("Match: %s\n", matches[i++]);
-// 		ft_free("2", matches);
-// 	}
-// 	else
-// 		printfd(2, "No matches found or an error occurred.\n");
-// 	return (0);
-// }

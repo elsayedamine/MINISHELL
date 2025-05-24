@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:03:58 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/23 16:38:46 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/24 21:08:48 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,3 @@ int	echo(int ac, char **av, t_shell *vars)
 		printf("\n");
 	return (EXIT_SUCCESS);
 }
-
-// int main(int ac, char **av)
-// {
-// 	echo(ac, av);
-// 	return (0);
-// }

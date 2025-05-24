@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 16:41:10 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:31:46 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	ft_nodejoin(t_shell *vars)
 {
 	char	*new_content;
 	char	*tmp_content;
-	t_list	*to_delete;
 	t_list	*tmp;
 
 	tmp = vars->args;
@@ -30,9 +29,7 @@ int	ft_nodejoin(t_shell *vars)
 				return (FALSE);
 			free(tmp->content);
 			tmp->content = new_content;
-			to_delete = tmp->next;
 			tmp->next = tmp->next->next;
-			ft_lstdelone(to_delete, free);
 		}
 		else
 			tmp = tmp->next;
@@ -46,13 +43,13 @@ int	isvalid_syntax(t_shell *vars)
 	char	*c;
 	char	*n;
 
-	n = NULL;
 	tmp = vars->args;
 	while (tmp)
 	{
 		c = (char *)tmp->content;
 		if (tmp->next)
-			n = ft_strtrim(tokenizer((char *)tmp->next->content, "<>"), WHITE);
+			n = alloc(0, ft_strtrim(alloc(0, \
+				tokenizer((char *)tmp->next->content, "<>"), 0), WHITE), 0);
 		if (is_par(c) && tmp->next && is_par(n) && *c != *n)
 			return (throw_error(SYNTAX, n, NULL), free(n), FALSE);
 		if (!is_par(c) && !is_op(c) && tmp->next && is_par(n) && *n == '(')
@@ -63,8 +60,6 @@ int	isvalid_syntax(t_shell *vars)
 			!is_par(n) && !is_there_red(n))
 			return (throw_error(SYNTAX, n, NULL), free(n), FALSE);
 		tmp = tmp->next;
-		ft_free("1", n);
-		n = NULL;
 	}
 	return (TRUE);
 }
@@ -83,12 +78,10 @@ void	pop_spaces(t_shell *vars)
 		next = tmp->next;
 		if (ft_iswhitespace(tmp->content) == FALSE)
 		{
-			node = ft_lstnew(ft_strdup(tmp->content));
+			node = ft_lstnew(alloc(0, ft_strdup(tmp->content), 0));
 			node->arr = ft_arrdup(tmp->arr);
-			ft_lstadd_back(&new, node);
+			ft_lstadd_back(&new, alloc(0, node, 0));
 		}
-		ft_free("12", tmp->content, tmp->arr);
-		free(tmp);
 		tmp = next;
 	}
 	vars->args = new;

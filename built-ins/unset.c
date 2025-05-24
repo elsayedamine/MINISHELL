@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 02:08:43 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 21:39:22 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,14 @@ int	unset_variable(char *key, t_shell *vars)
 	{
 		next = curr->next;
 		content = (char *)curr->content;
-		if (!ft_strncmp(content, key, ft_strlen(key)) \
-			&& (content[ft_strlen(key)] == '=' || !content[ft_strlen(key)]))
-			ft_free("11", content, curr);
-		else
+		if (!(!ft_strncmp(content, key, ft_strlen(key)) \
+			&& (content[ft_strlen(key)] == '=' || !content[ft_strlen(key)])))
 		{
 			curr->next = NULL;
 			ft_lstadd_back(&new_env, curr);
 		}
 		curr = next;
 	}
-	ft_free("2", vars->envp);
 	vars->envp = ft_list2arr(new_env);
 	return (TRUE);
 }

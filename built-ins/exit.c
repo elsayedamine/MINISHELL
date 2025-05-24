@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:19:39 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/23 16:38:51 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/24 21:11:05 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ unsigned char	check_args(char *str, int *error)
 	unsigned char	result;
 	char			*trim;
 
-	trim = ft_strtrim(str, WHITE);
+	trim = (char *)alloc(0, ft_strtrim(str, WHITE), 0);
 	result = (unsigned char)_atoi(trim, error);
-	return (free(trim), result);
+	return (result);
 }
 
 // have to add clear() fct for signals inside the two first ifs 

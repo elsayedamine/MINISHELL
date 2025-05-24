@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 19:09:57 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 00:44:28 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,5 +204,12 @@ int		execute_cmd(t_shell *vars, t_list **ast);
 int		check_builts(char **arr, t_shell *vars, int i);
 void	extract_redirections(t_shell *vars, char **original);
 int		apply_redirections(t_shell *vars);
+
+void	*alloc(size_t n, void *content, char c);
+char	**ft_arrdup(char **arr);
+t_list	*ft_arr2list(char **arr);
+char	**ft_list2arr(t_list *lst);
+void	clear(int sig);
+void	foo(int sig);
 
 #endif

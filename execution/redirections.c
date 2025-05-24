@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 00:18:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 16:53:22 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:51:09 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_redir	*create_redir_node(t_shell *vars, t_type mode, char *target)
 
 	if (mode == HEREDOC)
 		return (get_heredoc_node(vars));
-	redir = (t_redir *)malloc(sizeof(t_redir));
+	redir = (t_redir *)alloc(sizeof(t_redir), NULL, 'M');
 	if (!redir)
 		return (NULL);
 	redir->mode = mode;
@@ -50,17 +50,16 @@ t_list	*create_redir_list(t_shell *vars, t_list **s)
 	{
 		if (tmp->type >= READ && tmp->next)
 		{
-			ft_lstadd_back(&redir, ft_lstnew(create_redir_node(vars, tmp->type, \
-				ft_strdup(tmp->next->content))));
+			ft_lstadd_back(&redir, alloc(0, ft_lstnew(create_redir_node(vars, \
+				tmp->type, alloc(0, ft_strdup(tmp->next->content), 0))), 0));
 			tmp = tmp->next->next;
 		}
 		else
 		{
-			ft_lstadd_back(&raw, create_node(ft_strdup(tmp->content)));
+			ft_lstadd_back(&raw, create_node(alloc(0, ft_strdup(tmp->content), 0)));
 			tmp = tmp->next;
 		}
 	}
-	ft_lstclear(s, free);
 	*s = raw;
 	return (redir);
 }
@@ -69,6 +68,7 @@ int	add_token(char *str, t_list **lst)
 {
 	int		i;
 	char	q;
+	char	*s;
 
 	i = 0;
 	while (str[i])
@@ -86,7 +86,8 @@ int	add_token(char *str, t_list **lst)
 		else
 			i++;
 	}
-	ft_lstadd_back(lst, create_node(ft_strndup(str, i)));
+	s = ft_strndup(str, i);
+	ft_lstadd_back(lst, create_node(alloc(0, s, 0)));
 	return (i);
 }
 
@@ -106,11 +107,11 @@ t_list	*tokenize_command(char *cmd)
 		else if ((!ft_strncmp(&cmd[i], "<<", 2) \
 			|| !ft_strncmp(&cmd[i], ">>", 2)))
 		{
-			ft_lstadd_back(&lst, create_node(ft_strndup(cmd + i, 2)));
+			ft_lstadd_back(&lst, create_node(alloc(0, ft_strndup(cmd + i, 2), 0)));
 			i += 2;
 		}
 		else if (cmd[i] == '<' || cmd[i] == '>')
-			ft_lstadd_back(&lst, create_node(ft_strndup(&cmd[i++], 1)));
+			ft_lstadd_back(&lst, create_node(alloc(0, ft_strndup(&cmd[i++], 1), 0)));
 		else if (cmd[i])
 			i += add_token(cmd + i, &lst);
 	}
@@ -132,8 +133,6 @@ void	extract_redirections(t_shell *vars, char **original)
 	ft_init(2, &q, &i);
 	s = tokenize_command(*original);
 	vars->redir = create_redir_list(vars, &s);
-	free(*original);
 	arr = ft_list2arr(s);
-	*original = ft_arr2str(arr, ' ');
-	ft_free("2", arr);
+	*original = alloc(0, ft_arr2str(arr, ' '), 0);
 }

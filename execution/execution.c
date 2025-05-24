@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   execution copy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 18:50:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 00:43:44 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 	if (flag == 0)
 	{
 		(*ast)->raw = ft_strdup((*ast)->content);
-		// free previous redirections
+		alloc(0, (*ast)->raw, 0);
 		extract_redirections(vars, (char **)&((*ast)->content));
 		expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
 		is_builtin = check_builts((*ast)->arr, vars, 0);
@@ -49,7 +49,7 @@ int	open_files(t_shell *vars)
 	while (redir)
 	{
 		r = (t_redir *)redir->content;
-		exp = ft_strdup(r->target);
+		exp = alloc(0, ft_strdup(r->target), 0);
 		if (expand_target(vars, &exp) == FALSE)
 			return (FALSE);
 		fd = open(r->target, r->flag, 0644);
@@ -73,7 +73,7 @@ int	checks(t_shell *vars, t_list **ast, char **cmd)
 		return (skip(ast, OR), g_var->exit_status);
 	}
 	else
-		*cmd = get_path((*ast)->arr[0], vars);
+		*cmd = alloc(0, get_path((*ast)->arr[0], vars), 0);
 	if (!*cmd)
 	{
 		if (open_files(vars) == FALSE)
@@ -82,6 +82,12 @@ int	checks(t_shell *vars, t_list **ast, char **cmd)
 		return (skip(ast, AND), g_var->exit_status);
 	}
 	return (-1);
+}
+
+void	clear(int sig)
+{
+	(void)sig;
+	alloc(0, NULL, 'F');
 }
 
 int	execute_cmd(t_shell *vars, t_list **ast)
@@ -97,9 +103,10 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	{
 		signal(SIGINT, SIG_DFL);
 		if (apply_redirections(vars) == -1)
-			exit(vars->exit);
+			clear(0);
 		execve(cmd, (*ast)->arr, vars->envp);
-		exit(exit_execve(cmd, vars, ast));
+		g_var->exit_status = exit_execve(cmd, vars, ast);
+		clear(0);
 	}
 	else
 	{
@@ -112,8 +119,9 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 			g_var->exit_status = 128 + WTERMSIG(status);
 			write(1, "\n", 1);
 		}
+		signal(SIGINT, foo);
 	}
-	return (ft_free("1", cmd), process_cmd(vars, ast, 1));
+	return (process_cmd(vars, ast, 1));
 }
 
 int	execution(t_shell *vars, t_list **ast)

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:55:06 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/15 11:08:24 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 21:50:11 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,14 @@ void	ft_nullenv(t_shell *vars)
 	char	*cwd;
 	char	*j;
 
-	cwd = getcwd(NULL, 0);
-	j = ft_strjoin("_=", cwd);
-	ft_free("2", vars->envp);
-	vars->envp = (char **)malloc(sizeof(char *) * 5);
-	(vars->envp)[0] = ft_strdup("OLDPWD");
-	(vars->envp)[1] = ft_strjoin("PWD=", cwd);
-	(vars->envp)[2] = ft_strdup("SHLVL=0");
-	(vars->envp)[3] = ft_strjoin(j, "/./minishell");
+	cwd = (char *)alloc(0, getcwd(NULL, 0), 0);
+	j = (char *)alloc(0, ft_strjoin("_=", cwd), 0);
+	vars->envp = (char **)alloc(sizeof(char *) * 5, NULL, 'M');
+	(vars->envp)[0] = (char *)alloc(0, ft_strdup("OLDPWD"), 0);
+	(vars->envp)[1] = (char *)alloc(0, ft_strjoin("PWD=", cwd), 0);
+	(vars->envp)[2] = (char *)alloc(0, ft_strdup("SHLVL=0"), 0);
+	(vars->envp)[3] = (char *)alloc(0, ft_strjoin(j, "/./minishell"), 0);
 	(vars->envp)[4] = NULL;
-	ft_free("11", j, cwd);
 }
 
 int	ft_atoishell(char *str)

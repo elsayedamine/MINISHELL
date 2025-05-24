@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/24 10:51:59 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 23:10:20 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ char	*removequotes(char *str, t_list	*s)
 		return (NULL);
 	if (ft_count_char(str, '\'') == 0 && ft_count_char(str, '"') == 0)
 		return (str);
-	result = (char *)malloc(ft_strlen(str) + 1);
+	result = (char *)alloc(ft_strlen(str) + 1, NULL, 'M');
 	if (!result)
-		return (free(str), NULL);
+		return (NULL);
 	ft_init(3, &i, &j, &c);
 	while (str[i])
 	{
@@ -38,7 +38,7 @@ char	*removequotes(char *str, t_list	*s)
 			result[j++] = str[i];
 		i++;
 	}
-	return (result[j] = '\0', free(str), result);
+	return (result[j] = '\0', result);
 }
 
 char	*old_removequotes(char *str)
@@ -52,9 +52,9 @@ char	*old_removequotes(char *str)
 		return (NULL);
 	if (ft_count_char(str, '\'') == 0 && ft_count_char(str, '"') == 0)
 		return (str);
-	result = (char *)malloc(ft_strlen(str) + 1);
+	result = (char *)alloc(ft_strlen(str) + 1, NULL, 'M');
 	if (!result)
-		return (free(str), NULL);
+		return (NULL);
 	ft_init(3, &i, &j, &c);
 	while (str[i])
 	{
@@ -67,7 +67,7 @@ char	*old_removequotes(char *str)
 		i++;
 	}
 	result[j] = '\0';
-	return (free(str), result);
+	return (result);
 }
 
 t_list	*remove_quotes_from_list(t_list *lst)
@@ -119,7 +119,7 @@ t_list	*ft_str_to_lst(char *str, int flag)
 	node = NULL;
 	while (str && str[i])
 	{
-		new = ft_lstnew(ft_strndup(&str[i++], 1));
+		new = alloc(0, ft_lstnew(alloc(0, ft_strndup(&str[i++], 1), 0)), 0);
 		new->type = flag;
 		ft_lstadd_back(&node, new);
 	}

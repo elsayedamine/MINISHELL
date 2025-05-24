@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 10:29:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 19:09:00 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:23:05 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char	*expand_heredoc_line(t_shell *vars, char **str)
 	char	*s;
 	int		i;
 	int		q;
+	char	*new;
 	t_list	*lst;
 
 	s = *str;
@@ -30,7 +31,8 @@ char	*expand_heredoc_line(t_shell *vars, char **str)
 			ft_lstadd_back(&lst, ft_lstnew(ft_strndup(&s[i++], 1)));
 	}
 	free(*str);
-	return (ft_lst2str(lst));
+	new = ft_lst2str(lst);
+	return (ft_lstclear(&lst, free), new);
 }
 
 void	fill_heredoc(t_shell *vars, t_redir **r)
@@ -94,7 +96,7 @@ char	*extract_raw_heredoc_delim(char *str)
 			break ;
 		i++;
 	}
-	return (ft_substr(str, start, i - start));
+	return (alloc(0, ft_substr(str, start, i - start), 0));
 }
 
 t_redir	*heredoc_node(t_shell *vars, char *target)
@@ -102,17 +104,18 @@ t_redir	*heredoc_node(t_shell *vars, char *target)
 	static int	n = 0;
 	t_redir		*r;
 
-	r = (t_redir *)malloc(sizeof(t_redir));
+	r = (t_redir *)alloc(sizeof(t_redir), NULL, 'M');
 	if (!r)
 		return (NULL);
 	r->mode = HEREDOC;
 	r->delim = old_removequotes(extract_raw_heredoc_delim(target));
 	r->flag = O_RDONLY;
 	r->target = ft_strjoin_f("/tmp/minishell", ft_itoa(n++), 2);
+	alloc(0, r->target, 0);
 	r->q = ft_strchr(target, '\'') || ft_strchr(target, '"');
 	r->fd = open(r->target, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (r->fd == -1)
-		return (perror("heredoc opening failed"), free(r), NULL);
+		return (perror("heredoc opening failed"), NULL);
 	fill_heredoc(vars, &r);
 	return (r);
 }
@@ -131,8 +134,7 @@ int	process_heredocs(t_shell *vars)
 			flag = heredoc_node(vars, vars->tmp->next->content);
 			if (!flag)
 				return (FALSE);
-			// free_all_rdir_list
-			ft_lstadd_back(&heredocs, ft_lstnew(flag));
+			ft_lstadd_back(&heredocs, alloc(0, ft_lstnew(flag), 0));
 		}
 		vars->tmp = vars->tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 15:23:55 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 00:33:27 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ size_t	ft_arrlen(char **arr);
 void	ft_putarr(char **arr);
 int		ft_count_char(char *str, char c);
 char	*ft_strdup(const char *src);
-char	**ft_arrdup(char **arr);
 char	*ft_strndup(const char *src, size_t n);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t destsize);
@@ -133,8 +132,6 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, int (*f)(char const *, ...));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-char	**ft_list2arr(t_list *lst);
-t_list	*ft_arr2list(char **arr);
 t_list	*ft_lstdup(t_list *head);
 t_list	*ft_lstndup(t_list *head, t_list *stop);
 t_list	*ft_lstgetnode(t_list *lst, size_t pos);

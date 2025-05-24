@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:18:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/13 19:06:07 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 23:21:51 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	*extract_pattern(char *str, int index, char sep, t_list *s)
 	int		*borders;
 	char	quote;
 
-	borders = (int *)malloc(sizeof(int) * 2);
+	borders = (int *)alloc(sizeof(int) * 2, NULL, 'M');
 	if (!str || index < 0 || index >= (int)ft_strlen(str) || !borders)
-		return (int_free("1", borders));
+		return (NULL);
 	quote = 0;
 	borders[0] = index;
 	borders[1] = index;
@@ -60,22 +60,23 @@ int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 	t_list	*node;
 
 	bords = extract_pattern(str, index, ' ', s);
-	pattern = removequotes(ft_substr(str, bords[0], bords[1] - bords[0]), s);
+	if (!bords)
+		return (0);
+	pattern = removequotes(alloc(0, \
+		ft_substr(str, bords[0], bords[1] - bords[0]), 0), s);
 	arr = wildcard(pattern);
-	ft_free("1", pattern);
 	if (arr)
 	{
 		node = ft_lstgetnode(*new, bords[0] - 1);
-		if (node && node->next)
-			ft_lstclear(&node->next, free);
+		while (node && node->next)
+			node->next = node->next->next; // maybe could be an error
 		pattern = ft_arr2str(arr, ' ');
-		ft_free("2", arr);
 	}
 	else
 		pattern = ft_substr(str, bords[0], bords[1] - bords[0]);
-	ft_lstadd_back(new, ft_str_to_lst(pattern, 1));
+	ft_lstadd_back(new, ft_str_to_lst(alloc(0, pattern, 0), 1));
 	diff = bords[1] - index;
-	return (free(bords), diff);
+	return (diff);
 }
 
 int	canbexpanded(char *str, int i)
@@ -112,8 +113,7 @@ char	*expand_wildcard(char **str, t_list **old)
 		else
 			i += append(&new, (*str)[i], ft_lstgetnode(*old, i)->type);
 	}
-	new_str = ft_lst2str(new);
-	ft_lstclear(old, free);
+	new_str = alloc(0, ft_lst2str(new), 0);
 	*old = new;
-	return (free(*str), new_str);
+	return (new_str);
 }

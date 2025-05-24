@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 21:18:07 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/24 22:33:13 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*var_name(char *s)
 		i++;
 	if (s[i] != '+' && s[i] != '=')
 		return (NULL);
-	var = (char *)malloc(sizeof(char) * (i + 1));
+	var = (char *)alloc(sizeof(char) * (i + 1), NULL, 'M');
 	i = 0;
 	while (s[i] && s[i] != '+' && s[i] != '=')
 	{
@@ -52,8 +52,8 @@ void	ft_add(char *v, char *av, t_shell *vars)
 		tmp = tmp->next;
 	}
 	if (!tmp)
-		ft_lstadd_back(&vars->env, ft_lstnew(ft_strdup(av)));
-	free(v);
+		ft_lstadd_back(&vars->env, \
+			alloc(0, ft_lstnew(alloc(0, ft_strdup(av), 0)), 0));
 }
 
 int	ft_isvn(char *v, int flag, t_shell *vars)
@@ -78,17 +78,17 @@ int	ft_isvn(char *v, int flag, t_shell *vars)
 				return (TRUE);
 			tmp = tmp->next;
 		}
-		ft_lstadd_back(&vars->env, ft_lstnew(ft_strdup(v)));
+		ft_lstadd_back(&vars->env, \
+			alloc(0, ft_lstnew(alloc(0, ft_strdup(v), 0)), 0));
 	}
 	return (TRUE);
 }
 
-void	export_failed(char *str, char *v, t_shell *vars)
+void	export_failed(char *str, t_shell *vars)
 {
 	(void)vars;
 	g_var->exit_status = 1;
 	printfd(2, "export: `%s': not a valid identifier\n", str);
-	ft_free("1", v);
 	return ;
 }
 
@@ -110,10 +110,9 @@ int	export(int ac, char **av, t_shell *vars)
 		else if (ft_isvn(av[i], 0, vars) && i++)
 			continue ;
 		else
-			export_failed(av[1], v, vars);
+			export_failed(av[1], vars);
 		i++;
 	}
-	ft_free("2", vars->envp);
 	vars->envp = ft_list2arr(vars->env);
 	return (g_var->exit_status);
 }

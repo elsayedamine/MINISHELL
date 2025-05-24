@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 16:56:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 00:18:03 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ char	*read_cmd(char *cmd)
 {
 	char	*trim;
 
-	trim = readline("minishell$ ");
-	cmd = ft_strtrim(trim, WHITE);
+	trim = alloc(0, readline("minishell$ "), 0);
+	cmd = alloc(0, ft_strtrim(trim, WHITE), 0);
 	if (trim && *trim)
 		add_history(trim);
-	free(trim);
 	if (!trim || !ft_strcmp("exit", cmd))
 		return (NULL);
 	return (cmd);
@@ -41,19 +40,6 @@ void	foo(int sig)
 	}
 }
 
-void	free_args(int flag, t_shell *vars)
-{
-	free(vars->cmd);
-	vars->tmp = vars->args;
-	while (flag && vars->tmp)
-	{
-		if (vars->tmp->arr)
-			ft_free("2", vars->tmp->arr);
-		vars->tmp = vars->tmp->next;
-	}
-	ft_lstclear(&vars->args, free);
-}
-
 void	prompt_loop(t_shell *vars)
 {
 	g_var->exit_status = 0;
@@ -64,37 +50,30 @@ void	prompt_loop(t_shell *vars)
 				&vars->check.lpar, &g_var->flag);
 		vars->cmd = read_cmd(vars->cmd);
 		if (!vars->cmd)
-			return (rl_clear_history(), exit(EXIT_SUCCESS));
+			return (rl_clear_history(), exit(g_var->exit_status));
 		if (!*vars->cmd)
-		{
-			free(vars->cmd);
 			continue ;
-		}
 		g_var->flag = 1;
 		if (!fill_args(vars))
-			free_args(0, vars);
+			continue ;
 		else
-		{
 			execution(vars, &vars->ast);
-			free_args(1, vars);
-		}
 	}
 }
 
-// printfd(1, "pid = %d\n", getpid());
 int	main(int ac, char **av, char **envp)
 {
 	t_shell		vars;
 
 	(void)av;
-	g_var = malloc(sizeof(t_sig));
+	g_var = (t_sig *)alloc(sizeof(t_sig), NULL, 'M');
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
 	vars.envp = ft_arrdup(envp);
 	if (!*vars.envp)
 		ft_nullenv(&vars);
 	vars.env = ft_arr2list(vars.envp);
-	vars.pwd = getcwd(NULL, 0);
+	vars.pwd = (char *)alloc(0, getcwd(NULL, 0), 0);
 	ft_shlvl(&vars);
 	signal(SIGINT, foo);
 	signal(SIGQUIT, SIG_IGN);
