@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 16:39:13 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/24 13:24:48 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (apply_redirections(vars) == FALSE)
-			exit(errno);
+		if (apply_redirections(vars) == -1)
+			exit(vars->exit);
 		if (execve(cmd, (*ast)->arr, vars->envp) == -1)
-			exit_execve(cmd, vars, ast);
+			exit(exit_execve(cmd, vars, ast));
 	}
 	else
 	{

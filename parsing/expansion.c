@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 16:39:43 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/24 11:45:54 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int	get_var_len(char *str)
 	return (i);
 }
 
-int	add_value(t_shell *vars, t_list **s, char *str, int q)
+int	extract_var_value(t_shell *vars, t_list **s, char *str, int q)
 {
 	char	*var_name;
 	char	*var_value;
 
 	var_value = NULL;
 	var_name = NULL;
-	if (*str == '$' && ft_strchr("'\"", *(str + 1)) && *(str + 1) && !q)
+	if (*str == '$' && *(str + 1) && ft_strchr("'\"", *(str + 1)) && !q)
 		return (1);
 	if (*str == '$' && *(str + 1) == '?')
 		var_value = ft_itoa(g_var->exit_status);
@@ -56,7 +56,7 @@ void	handle_single_quotes(t_list **s, int *i, char *str)
 		*i += append(s, '\'', 0);
 }
 
-t_list	*breakdown(t_shell *vars, char **str)
+t_list	*breakdown(t_shell *vars, char *str)
 {
 	int		i;
 	int		q;
@@ -64,19 +64,19 @@ t_list	*breakdown(t_shell *vars, char **str)
 
 	s = NULL;
 	ft_init(2, &i, &q);
-	while (*str && (*str)[i])
+	while (str && str[i])
 	{
-		if ((*str)[i] == '"')
+		if (str[i] == '"')
 		{
 			q = !q;
-			i += append(&s, (*str)[i], 0);
+			i += append(&s, str[i], 0);
 		}
-		else if ((*str)[i] == '\'' && !q)
-			handle_single_quotes(&s, &i, *str);
-		else if ((*str)[i] == '$')
-			i += add_value(vars, &s, &(*str)[i], q);
+		else if (str[i] == '\'' && !q)
+			handle_single_quotes(&s, &i, str);
+		else if (str[i] == '$')
+			i += extract_var_value(vars, &s, &str[i], q);
 		else
-			i += append(&s, (*str)[i], 0);
+			i += append(&s, str[i], 0);
 	}
 	return (s);
 }
@@ -85,7 +85,7 @@ void	expand(t_shell *vars, char **str, char ***arr)
 {
 	t_list	*lst;
 
-	lst = breakdown(vars, str);
+	lst = breakdown(vars, *str);
 	ft_free("1", *str);
 	*str = ft_lst2str(lst);
 	*str = expand_wildcard(str, &lst);

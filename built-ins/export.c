@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 18:21:33 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 21:18:07 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	export(int ac, char **av, t_shell *vars)
 
 	i = 1;
 	if (ac == 1)
-		return (ft_printexport(vars), TRUE);
+		return (ft_printexport(vars), EXIT_SUCCESS);
 	while (i < ac)
 	{
 		v = var_name(av[i]);
@@ -115,5 +115,5 @@ int	export(int ac, char **av, t_shell *vars)
 	}
 	ft_free("2", vars->envp);
 	vars->envp = ft_list2arr(vars->env);
-	return (EXIT_SUCCESS);
+	return (g_var->exit_status);
 }

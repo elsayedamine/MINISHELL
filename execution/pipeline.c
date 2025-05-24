@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:48:32 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 16:39:32 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/24 13:09:04 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	exit_execve(char *cmd, t_shell *vars, t_list **ast)
+int	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 {
 	(void)vars;
 	throw_error(CMD_NOT_FOUND, cmd, &g_var->exit_status);
 	skip(ast, AND);
+	return (errno);
 }
+
 int	execute_single_cmd(t_shell *vars, t_list *cmd_node)
 {
 	char	*cmd;

@@ -72,3 +72,9 @@ the ls "" in bash consider "" as a file but we simply skip it
 
 asdasdasd > pop
 pop wasn't created
+
+<< e"f" | asdd aSD|ASD ASD}ASD| (ls << e"  "f'-l ) << e""""""""''f
+when there is an error in the quotes we have syntax error near newline which is wrong
+
+<< a cat && export a=amine && cat << eof
+crazy test

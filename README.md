@@ -1,10 +1,4 @@
-# ----------------------------------------------------------#
 
-# SEGV
-    ila mssahna l env : MAZAL MAKHDMNAHACH
-
-
-```
 
 ⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛
 ⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛
@@ -50,5 +44,12 @@ redirections errors should be displayed before  command not found
 but the reirection of the subshell is not working : (ls) > test #it is wokring in bash#
 i fixed also the exit status all the built ins so the exit status is now perfectly working
 only the heredoc is left with the pipeline
-
+we have an error in shlvl i guess when env -i
+when we have a yes command like  then we do Ctrl+C the exit status is wrong and the minishell is wrongly placed
+little problem in makefile when we change in libft and make it says all done
 ```
+```bash
+new fixes:
+heredoc added and inserted in code
+exit_status for rediection error fixed
+error in read redirection fixed also

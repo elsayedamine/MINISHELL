@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 19:17:54 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/23 20:59:37 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int	ft_nodejoin(t_shell *vars)
 	while (tmp && tmp->next)
 	{
 		tmp_content = (char *)tmp->content;
-		if (!is_op(tmp_content) && !is_op((char *)tmp->next->content) && \
-			!is_par(tmp_content) && !is_par((char *)tmp->next->content))
+		if (is_word(tmp_content) && is_word((char *)tmp->next->content))
 		{
 			new_content = ft_strjoin(tmp_content, (char *)tmp->next->content);
 			if (!new_content)
@@ -107,6 +106,8 @@ void	pop_spaces(t_shell *vars)
 
 int	all_checks(t_shell *vars)
 {
+	if (vars->args && is_op((char *)vars->args->content))
+		return (throw_error(SYNTAX, (char *)vars->args->content, NULL), 0);
 	if (isvalid_quotes(vars) == FALSE)
 		return (FALSE);
 	if (isvalid_op(vars) == FALSE)
@@ -116,7 +117,7 @@ int	all_checks(t_shell *vars)
 	if (ft_nodejoin(vars) == FALSE)
 		return (FALSE);
 	pop_spaces(vars);
-	if (isvalid_syntax(vars) == FALSE) // i changed the place of this one before nodejoin to work
+	if (isvalid_syntax(vars) == FALSE)
 		return (FALSE);
 	if (isvalid_red(vars) == FALSE)
 		return (FALSE);

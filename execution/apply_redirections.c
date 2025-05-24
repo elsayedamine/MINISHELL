@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 05:26:59 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/21 03:14:20 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 13:28:15 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,35 +19,34 @@ int	expand_target(t_shell *vars, char **str)
 	char	*original;
 
 	original = ft_strdup(*str);
-	lst = breakdown(vars, str);
+	lst = breakdown(vars, *str);
 	free(*str);
 	*str = ft_lst2str(lst);
 	*str = expand_wildcard(str, &lst);
 	arr = split_list(lst, ' ');
 	ft_lstclear(&lst, free);
 	if (!arr || (ft_arrlen(arr) != 1 && *arr))
-		return (ft_free("21", arr, *str),
+		return (vars->exit = 1, ft_free("21", arr, *str),
 			throw_error(REDIR, original	, NULL), ft_free("1", original), FALSE);
 	return (ft_free("1", original), TRUE);
 }
 
 int	open_file(t_redir *r, char **filename)
 {
+	int	dup;
+
 	r->fd = open(*filename, r->flag, 0644);
 	if (r->fd < 0)
 		return (perror(*filename), free(*filename), FALSE);
-	if (r->mode == READ)
-	{
-		if (dup2(r->fd, STDIN) == -1)
-			return (printfd(2, "minishell: %s", strerror(errno)), \
-				close(r->fd), FALSE);
-	}
+	if (r->mode == READ || r->mode == HEREDOC)
+		dup = dup2(r->fd, STDIN);
 	else
-	{
-		if (dup2(r->fd, STDOUT) == -1)
-			return (printfd(2, "minishell: %s", strerror(errno)), \
-				close(r->fd), FALSE);
-	}
+		dup = dup2(r->fd, STDOUT);
+	if (dup == -1)
+		return (perror("dup2"), close(r->fd), FALSE);
+	if (r->mode == HEREDOC)
+		unlink(r->target);
+	free(r->delim);
 	close(r->fd);
 	return (TRUE);
 }
@@ -63,19 +62,13 @@ int	apply_redirections(t_shell *vars)
 	{
 		r = (t_redir *)tmp->content;
 		expanded = ft_strdup(r->target);
-		if (expand_target(vars, &expanded) == FALSE)
-			return (FALSE);
-		if (r->mode == HEREDOC)
+		if (r->mode != HEREDOC && expand_target(vars, &expanded) == FALSE)
+			return (-1);
+		if (open_file(r, &expanded) == FALSE)
 		{
-			// we should read from heredoc files from here
-		}
-		else
-		{
-			if (open_file(r, &expanded) == FALSE)
-			{
-				// close all open fds	
-				return (FALSE);
-			}
+			vars->exit = errno;
+			// close all open fds
+			return (-1);
 		}
 		free(expanded);
 		tmp = tmp->next;

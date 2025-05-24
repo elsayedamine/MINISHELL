@@ -17,6 +17,7 @@ sources = \
 		parsing/tokenizer.c \
 		parsing/shlvl.c \
 		parsing/ft_red_check.c \
+		parsing/process_heredocs.c \
 		\
 		\
 		execution/execution.c \

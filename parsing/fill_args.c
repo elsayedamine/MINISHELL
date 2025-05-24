@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 18:22:14 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/24 11:59:51 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	validater(t_shell *vars)
 	}
 	if (!all_checks(vars))
 		return (FALSE);
+	process_heredocs(vars);
 	ft_lstclear(&vars->args, free);
 	return (TRUE);
 }
