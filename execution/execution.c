@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution copy.c                                   :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 00:43:44 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:56:50 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,6 @@ int	checks(t_shell *vars, t_list **ast, char **cmd)
 	return (-1);
 }
 
-void	clear(int sig)
-{
-	(void)sig;
-	alloc(0, NULL, 'F');
-}
-
 int	execute_cmd(t_shell *vars, t_list **ast)
 {
 	char	*cmd;
@@ -101,7 +95,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, clear);
 		if (apply_redirections(vars) == -1)
 			clear(0);
 		execve(cmd, (*ast)->arr, vars->envp);
@@ -112,6 +106,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	{
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
+		signal(SIGINT, foo);
 		if (WIFEXITED(status))
 			g_var->exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
@@ -119,7 +114,6 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 			g_var->exit_status = 128 + WTERMSIG(status);
 			write(1, "\n", 1);
 		}
-		signal(SIGINT, foo);
 	}
 	return (process_cmd(vars, ast, 1));
 }

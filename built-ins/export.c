@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 22:33:13 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:43:37 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,33 @@ char	*var_name(char *s)
 	return (var);
 }
 
+// void	ft_add(char *v, char *av, t_shell *vars)
+// {
+// 	t_list	*tmp;
+
+// 	tmp = vars->env;
+// 	while (tmp)
+// 	{
+// 		if (!ft_strncmp((char *)tmp->content, v, ft_strlen(v)) \
+// 			&& (((char *)tmp->content)[ft_strlen(v)] == '=' \
+// 				|| ((char *)tmp->content)[ft_strlen(v)] == '\0') \
+// 					&& ft_strlen(v) <= ft_strlen(av))
+// 		{
+// 			free(tmp->content);
+// 			tmp->content = ft_strdup(av);
+// 			break ;
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	if (!tmp)
+// 		ft_lstadd_back(&vars->env, \
+// 			alloc(0, ft_lstnew(alloc(0, ft_strdup(av), 0)), 0));
+// }
 void	ft_add(char *v, char *av, t_shell *vars)
 {
 	t_list	*tmp;
+	char	*new_value;
+	t_list 	*new_node;
 
 	tmp = vars->env;
 	while (tmp)
@@ -45,16 +69,20 @@ void	ft_add(char *v, char *av, t_shell *vars)
 				|| ((char *)tmp->content)[ft_strlen(v)] == '\0') \
 					&& ft_strlen(v) <= ft_strlen(av))
 		{
-			free(tmp->content);
-			tmp->content = ft_strdup(av);
-			break ;
+			new_value = alloc(0, ft_strdup(av), 0);
+			if (!new_value)
+				return ;
+			tmp->content = new_value;
+			return ;
 		}
 		tmp = tmp->next;
 	}
-	if (!tmp)
-		ft_lstadd_back(&vars->env, \
-			alloc(0, ft_lstnew(alloc(0, ft_strdup(av), 0)), 0));
+	new_node = alloc(0, ft_lstnew(alloc(0, ft_strdup(av), 0)), 0);
+	if (!new_node)
+		return ;
+	ft_lstadd_back(&vars->env, new_node);
 }
+
 
 int	ft_isvn(char *v, int flag, t_shell *vars)
 {

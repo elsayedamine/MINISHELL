@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:58:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 00:17:05 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 13:41:40 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 int	append(t_list **s, char c, int type)
 {
 	t_list	*new;
+	char	tmp[2];
 
-	new = ft_lstnew(ft_strndup(&c, 1));
+	tmp[0] = c;
+	tmp[1] = '\0';
+	new = alloc(0, ft_lstnew(alloc(0, ft_strndup(tmp, 1), 0)), 0);
 	new->type = type;
 	ft_lstadd_back(s, new);
 	return (1);

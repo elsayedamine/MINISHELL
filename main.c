@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 00:18:03 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:21:03 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	prompt_loop(t_shell *vars)
 				&vars->check.lpar, &g_var->flag);
 		vars->cmd = read_cmd(vars->cmd);
 		if (!vars->cmd)
-			return (rl_clear_history(), exit(g_var->exit_status));
+			return ((void)alloc(0, NULL, 'F'));
 		if (!*vars->cmd)
 			continue ;
 		g_var->flag = 1;

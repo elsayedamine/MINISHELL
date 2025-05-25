@@ -36,6 +36,18 @@ redirections errors should be displayed before  command not found
     
 ### all this has been handled 
 
+
+## READ THAT
+```bash
+
+    after bzaf dyal lhandlage
+    l9it l heardoc kan fih mochkil bdok WIFE macros so mchi tankharba9 ana o mos3ab ta l9ina fihom lmockil l9ina lhall
+    daba we need to understand chno tidiro dok lmacros
+    o 9alliya daba rah dak lhal li l9ina ana wyyah blli rah ghi dyal lplastic ya3ni temp so as I said khassna ntistiw bzaf
+    
+
+```
+
 ```bash
 but the reirection of the subshell is not working : (ls) > test #it is wokring in bash#
 we have an error in shlvl i guess when env -i

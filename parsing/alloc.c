@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:49:07 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/25 01:33:22 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:46:28 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void	ft_exit2(t_list **head)
 {
+	int	status;
+
+	status = g_var->exit_status;
 	ft_lstclear(head, free);
-	exit(g_var->exit_status);
+	exit(status);
 }
 
 void	*alloc(size_t size, void *content, char c)

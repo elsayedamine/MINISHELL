@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:18:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 23:21:51 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 13:50:27 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ char	*expand_wildcard(char **str, t_list **old)
 	char	*new_str;
 	t_list	*new;
 
-	ft_init(2, &i, &q);
+	i = 0;
+	q = 0;
 	new = NULL;
 	while ((*str)[i])
 	{

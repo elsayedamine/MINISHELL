@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shlvl.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:55:06 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 21:50:11 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 13:59:53 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ int	ft_atoishell(char *str)
 	int		sign;
 	long	n;
 
-	ft_init(3, &i, &sign, &n);
+	ft_init(2, &i, &sign);
+	n = 0;
+	if (!str)
+		return 1;
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (sign++ && (str[i] == '-' || str[i] == '+'))
@@ -55,8 +58,13 @@ void	ft_shlvl(t_shell *vars)
 	int		shlvl;
 	char	*arr[3];
 	char	*sh;
+	char	*env_shlvl;
 
-	shlvl = ft_atoishell(get_env("SHLVL", vars));
+	env_shlvl = get_env("SHLVL", vars);
+	if (!env_shlvl)
+		shlvl = 1;
+	else
+		shlvl = ft_atoishell(env_shlvl);
 	sh = ft_itoa(shlvl);
 	arr[0] = ft_strdup("export");
 	arr[1] = ft_strjoin("SHLVL=", sh);

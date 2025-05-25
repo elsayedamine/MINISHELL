@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 00:44:28 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:20:30 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ typedef struct s_sig
 {
 	int		flag;
 	int		exit_status;
+	// pid_t 	g_heredoc_pids[250];
+	// int		heredoc_count;
 }			t_sig;
 
 typedef struct s_check
@@ -211,5 +213,4 @@ t_list	*ft_arr2list(char **arr);
 char	**ft_list2arr(t_list *lst);
 void	clear(int sig);
 void	foo(int sig);
-
 #endif

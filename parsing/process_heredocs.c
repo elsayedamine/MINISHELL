@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_heredocs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 10:29:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 22:23:05 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 17:12:45 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ char	*expand_heredoc_line(t_shell *vars, char **str)
 	return (ft_lstclear(&lst, free), new);
 }
 
+void	clear(int sig)
+{
+	(void)sig;
+	g_var->exit_status = 130;
+	alloc(0, NULL, 'F');
+}
+
 void	fill_heredoc(t_shell *vars, t_redir **r)
 {
 	char	*line;
@@ -45,7 +52,7 @@ void	fill_heredoc(t_shell *vars, t_redir **r)
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, clear);
 		while (1)
 		{
 			line = readline("> ");
@@ -57,21 +64,16 @@ void	fill_heredoc(t_shell *vars, t_redir **r)
 			free(line);
 		}
 		free(line);
-		close((*r)->fd);
-		exit(EXIT_SUCCESS);
+		alloc(0, NULL, 'F');
 	}
 	else
 	{
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			g_var->exit_status = WEXITSTATUS(status);
-		if (WIFSIGNALED(status))
-		{
-			g_var->exit_status = 128 + WTERMSIG(status);
-			write(1, "\n", 1);
+		signal(SIGINT, foo);
+		if(WIFEXITED(status) && WEXITSTATUS(status) == 130)
 			*r = NULL;
-		}
+		g_var->exit_status =  WEXITSTATUS(status);
 	}
 }
 
