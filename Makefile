@@ -19,9 +19,7 @@ sources = \
 		parsing/ft_red_check.c \
 		parsing/process_heredocs.c \
 		parsing/alloc.c \
-		parsing/ft_list2arr.c \
-		parsing/ft_arrdup.c \
-		parsing/ft_arr2list.c \
+		parsing/arr_utils.c \
 		\
 		\
 		execution/execution.c \

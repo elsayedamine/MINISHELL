@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:49:07 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/25 00:24:33 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/25 01:33:22 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	*alloc(size_t size, void *content, char c)
 {
 	static t_list	*head;
 	t_list			*new_node;
-
 
 	if (content)
 	{
