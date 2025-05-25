@@ -44,8 +44,6 @@ redirections errors should be displayed before  command not found
     l9it l heardoc kan fih mochkil bdok WIFE macros so mchi tankharba9 ana o mos3ab ta l9ina fihom lmockil l9ina lhall
     daba we need to understand chno tidiro dok lmacros
     o 9alliya daba rah dak lhal li l9ina ana wyyah blli rah ghi dyal lplastic ya3ni temp so as I said khassna ntistiw bzaf
-    
-
 ```
 
 ```bash
@@ -53,4 +51,14 @@ but the reirection of the subshell is not working : (ls) > test #it is wokring i
 we have an error in shlvl i guess when env -i
 when we have a yes command like  then we do Ctrl+C the exit status is wrong and the minishell is wrongly placed
 little problem in makefile when we change in libft and make it says all done
+pwd exit status
+```
+
+
+
+
+```bash
+mnin hatb9a testi l wildcard f minishell hatl9a bzf dial leaks BZZAAAAAAAAAAAAAF
+we have a problem exaclty withe thie file of expand wilcard and wildacrd.c
+
 ```

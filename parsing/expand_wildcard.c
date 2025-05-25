@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:18:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 13:50:27 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/26 00:42:09 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,34 @@ int	*extract_pattern(char *str, int index, char sep, t_list *s)
 	return (borders);
 }
 
+// we have a problem in extract wildcard in free and performance and leaks
+// int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
+// {
+// 	int		*bord;
+// 	char	**arr;
+// 	char	*pattern[2];
+// 	int		diff;
+// 	t_list	*node;
+
+// 	bord = extract_pattern(str, index, ' ', s);
+// 	if (!bord)
+// 		return (0);
+// 	pattern[0] = removequotes(alloc(0, \
+// 		ft_substr(str, bord[0], bord[1] - bord[0]), 0), s);
+// 	arr = wildcard(pattern[0]);
+// 	node = ft_lstgetnode(*new, bord[0] - 1);
+// 	while (node && node->next)
+// 		node->next = node->next->next;
+// 	if (arr)
+// 		pattern[0] = ft_arr2str(arr, ' ');
+// 	else
+// 		pattern[0] = ft_substr(str, bord[0], bord[1] - bord[0]);
+// 	pattern[1] = removequotes(pattern[0], *new);
+// 	ft_lstadd_back(new, ft_str_to_lst(alloc(0, pattern[1], 0), 1));
+// 	diff = bord[1] - index;
+// 	return (diff);
+// }
+
 int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 {
 	int		*bords;
@@ -65,13 +93,13 @@ int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 	pattern = removequotes(alloc(0, \
 		ft_substr(str, bords[0], bords[1] - bords[0]), 0), s);
 	arr = wildcard(pattern);
+	node = ft_lstgetnode(*new, bords[0] - 1);
+	while (node && node->next)
+		node->next = node->next->next;
+	if (bords[0] - 1 <= 0)
+		*new = NULL;
 	if (arr)
-	{
-		node = ft_lstgetnode(*new, bords[0] - 1);
-		while (node && node->next)
-			node->next = node->next->next; // maybe could be an error
 		pattern = ft_arr2str(arr, ' ');
-	}
 	else
 		pattern = ft_substr(str, bords[0], bords[1] - bords[0]);
 	ft_lstadd_back(new, ft_str_to_lst(alloc(0, pattern, 0), 1));

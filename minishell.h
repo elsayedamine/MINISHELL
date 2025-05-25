@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 16:20:30 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/25 23:34:11 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ int		get_var_len(char *str);
 int		extract_var_value(t_shell *vars, t_list **s, char *str, int q);
 t_list	*breakdown(t_shell *vars, char *str);
 int		expand_target(t_shell *vars, char **str);
+t_list	*skip_nodes(t_list **head, t_list *node);
 
 /*---------------------------- BUILTINS ----------------------------*/
 
