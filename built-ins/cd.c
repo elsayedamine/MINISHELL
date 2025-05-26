@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:06:14 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/24 21:08:26 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/26 17:11:16 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	update_env(char **env, char *key, char *nv, t_shell *vars)
 	{
 		if (!ft_strncmp(env[i], key, ft_strlen(key)))
 		{
-			free(env[i]);
-			env[i] = ft_strjoin(key, nv);
+			env[i] = alloc(0, ft_strjoin(key, nv), 0);
 			return ;
 		}
 		i++;
@@ -39,7 +38,10 @@ int	change_dir(char *target, char **envp, t_shell *vars)
 
 	oldpwd = (char *)alloc(0, getcwd(NULL, 0), 0);
 	if (chdir(target) == -1)
-		return (printfd(2, "cd: %s: %s\n", strerror(errno), target), FALSE);
+	{
+		g_var->exit_status = 1;
+		return (printfd(2, M": cd: %s: %s\n", target, strerror(errno)), FALSE);
+	}
 	pwd = (char *)alloc(0, getcwd(NULL, 0), 0);
 	update_env(envp, "PWD=", pwd, vars);
 	if (oldpwd)
@@ -52,10 +54,16 @@ int	change_dir(char *target, char **envp, t_shell *vars)
 int	cd(int ac, char **av, t_shell *vars)
 {
 	if (ac == 1)
+	{
+		g_var->exit_status = 1;
 		return (printfd(2, \
 			"%s: cd: only relative or absolute path supported\n", M), 1);
+	}
 	if (ac > 2)
-		return (printfd(2, "cd: too many arguments\n"), EXIT_FAILURE);
+	{
+		g_var->exit_status = 1;
+		return (printfd(2, M"cd: too many arguments\n"), EXIT_FAILURE);
+	}
 	if (!change_dir(av[1], vars->envp, vars))
 		return (EXIT_FAILURE);
 	vars->env = ft_arr2list(vars->envp);

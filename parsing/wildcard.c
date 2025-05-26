@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/24 23:13:07 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:30:57 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ int	match_pattern(const char *pattern, const char *str)
 
 int c_files(void)
 {
-    DIR        *dir;
-    struct    dirent *entry;
-    int        count;
+	DIR				*dir;
+	struct dirent	*entry;
+	int				count;
 
-    count = 0;
-    dir = opendir(".");
-    if (!dir)
-        return (-1);
-    while ((entry = readdir(dir)) != NULL)
-        count++;
-    closedir(dir);
-    return (count);
+	count = 0;
+	dir = opendir(".");
+	if (!dir)
+		return (-1);
+	while ((entry = readdir(dir)) != NULL)
+		count++;
+	closedir(dir);
+	return (count);
 }
 
 char	**wildcard(char *pattern)
@@ -65,7 +65,7 @@ char	**wildcard(char *pattern)
 	matches = (char **)alloc(sizeof(char *) * (c_files() + 1), NULL, 'M');
 	count = 0;
 	dir = opendir(".");
-	if (!matches || !dir)
+	if ((!matches && dir && closedir(dir)) || !dir)
 		return (throw_error(DIRECT, NULL, NULL), NULL);
 	entry = readdir(dir);
 	while (entry)

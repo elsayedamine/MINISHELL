@@ -43,6 +43,10 @@ typedef enum error
 	DIRECT,
 	REDIR,
 	CMD_NOT_FOUND,
+	VALID_BUILT,
+	INVALID_BUILT,
+	NOT_BUILT,
+
 }			t_error;
 
 typedef enum type

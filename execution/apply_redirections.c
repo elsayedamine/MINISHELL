@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 05:26:59 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 23:50:32 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:53:13 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	expand_target(t_shell *vars, char **str)
 	if (!arr || (ft_arrlen(arr) != 1 && *arr))
 		return (g_var->exit_status = 1,	\
 		throw_error(REDIR, original, NULL), FALSE);
+	*str = *arr;
 	return (TRUE);
 }
 
@@ -57,26 +58,43 @@ int	open_file(t_redir *r, char **filename)
 	return (TRUE);
 }
 
+void	perform_dups(int save_in, int save_out)
+{
+	int i;
+
+	i = dup2(save_in, STDIN_FILENO);
+	i = dup2(save_out, STDOUT_FILENO);
+	close(save_in);
+	close(save_out);
+	if (i <= -1)
+		return (perror("dup2"));
+}
+
 int	apply_redirections(t_shell *vars)
 {
 	t_redir	*r;
 	t_list	*tmp;
 	char	*expanded;
+	int		in;
+	int		out;
 
+	in = dup(STDIN);
+	out = dup(STDOUT);
+	if (in == -1 || out == -1)
+		return (perror("dup"), -1);
 	tmp = vars->redir;
 	while (tmp)
 	{
 		r = (t_redir *)tmp->content;
 		expanded = alloc(0, ft_strdup(r->target), 0);
+
 		if (r->mode != HEREDOC && expand_target(vars, &expanded) == FALSE)
-			return (-1);
+			return (perform_dups(in, out), -1);
 		if (open_file(r, &expanded) == FALSE)
-		{
-			g_var->exit_status = errno;
-			// close all open fds
-			return (-1);
-		}
+			return (g_var->exit_status = 1, perform_dups(in, out), -1);
 		tmp = tmp->next;
 	}
+	close(in);
+	close(out);
 	return (TRUE);
 }

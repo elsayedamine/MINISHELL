@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 10:29:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 17:12:45 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/26 18:26:56 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ char	*expand_heredoc_line(t_shell *vars, char **str)
 
 void	clear(int sig)
 {
-	(void)sig;
-	g_var->exit_status = 130;
+	if (sig == 2)
+		g_var->exit_status = 130;
 	alloc(0, NULL, 'F');
 }
 

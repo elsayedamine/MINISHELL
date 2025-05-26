@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arr_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 02:15:03 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 00:28:10 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:19:48 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_list	*ft_arr2list(char **arr)
 		new = alloc(0, ft_lstnew(alloc(0, ft_strdup(*arr), 0)), 0);
 		if (!new)
 		{
-			clear(1);
+			clear(0);
 			return (ft_lstclear(&list, free), NULL);
 		}
 		ft_lstadd_back(&list, new);
@@ -51,7 +51,7 @@ char	**ft_arrdup(char **arr)
 		dup[i] = (char *)alloc(0, ft_strdup(arr[i]), 0);
 		if (!dup[i])
 		{
-			clear(1);
+			clear(0);
 			return (ft_free("2", dup), NULL);		
 		}
 		i++;
@@ -77,7 +77,7 @@ char	**ft_list2arr(t_list *lst)
 	{
 		arr[i] = alloc(0, ft_strdup(lst->content), 0);
 		if (!arr[i++])
-			clear(1);
+			clear(0);
 		lst = lst->next;
 	}
 	arr[words] = NULL;

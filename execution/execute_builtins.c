@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 01:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 16:56:54 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:46:17 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ int	execute_builtins(t_shell *vars, t_fct *fct, char **arr)
 	out = dup(STDOUT);
 	if (in == -1 || out == -1)
 		return (perror("dup"), FALSE);
-	if (apply_redirections(vars) == FALSE)
-		return (FALSE);
+	if (apply_redirections(vars) == -1)
+		return (INVALID_BUILT);
 	exit = fct(ft_arrlen(arr), arr, vars);
-	dup2(in, STDIN);
-	dup2(out, STDOUT);
-	if (in == -1 || out == -1)
+	if (dup2(in, STDIN) == -1 || dup2(out, STDOUT) == -1)
 		return (perror("dup2"), FALSE);
 	close(in);
 	close(out);
-	return (exit);
+	if (exit != EXIT_SUCCESS)
+		return (INVALID_BUILT);
+	return (VALID_BUILT);
 }
 
 int	check_builts(char **arr, t_shell *vars, int i)
@@ -61,5 +61,5 @@ int	check_builts(char **arr, t_shell *vars, int i)
 		i++;
 	if (i != 7 && arr)
 		return (execute_builtins(vars, fcts[i], arr));
-	return (-1);
+	return (NOT_BUILT);
 }

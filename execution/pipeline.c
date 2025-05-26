@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:48:32 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 01:24:24 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/26 17:04:46 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,46 +106,46 @@ int	pipex(t_shell *vars, t_list **node)
 
 void	execute_pipeline(t_shell *vars, t_list *node)
 {
-	int		pipefd[2];
-	pid_t	pid;
-	int 	prev_fd = -1;
+	// int		pipefd[2];
+	// pid_t	pid;
+	// int 	prev_fd = -1;
 
-	while (node && node->next && node->next->next)
-	{
-		if (pipe(pipefd) == -1)
-			return (perror("pipe"));
-		pid = fork();
-		if (pid == 0)
-		{
-			if (prev_fd != -1)
-            {
-                dup2(prev_fd, STDIN_FILENO);
-                close(prev_fd);
-            }
-			close(pipefd[IN]);
-			if (dup2(pipefd[OUT], STDOUT) == -1)
-				return (perror("dup2"));
-			close(pipefd[OUT]);
-			execute_pipe(vars, node);
-			exit(exit_execves(node->content, vars));
-		}
-		else
-		{
-			if (prev_fd != -1)
-				close(prev_fd);
-			if (node->next && node->next->type == PIPE)
-			{
-				close(pipefd[1]);
-				prev_fd = pipefd[0];
-			}
-			else
-				prev_fd = -1;
-			if (node->next && node->next->type == PIPE)
-				node = node->next->next;
-			else
-				node = NULL;
-		}
-	}
+	// while (node && node->next && node->next->next)
+	// {
+	// 	if (pipe(pipefd) == -1)
+	// 		return (perror("pipe"));
+	// 	pid = fork();
+	// 	if (pid == 0)
+	// 	{
+	// 		if (prev_fd != -1)
+    //         {
+    //             dup2(prev_fd, STDIN_FILENO);
+    //             close(prev_fd);
+    //         }
+	// 		close(pipefd[IN]);
+	// 		if (dup2(pipefd[OUT], STDOUT) == -1)
+	// 			return (perror("dup2"));
+	// 		close(pipefd[OUT]);
+	// 		execute_pipe(vars, node);
+	// 		exit(exit_execves(node->content, vars));
+	// 	}
+	// 	else
+	// 	{
+	// 		if (prev_fd != -1)
+	// 			close(prev_fd);
+	// 		if (node->next && node->next->type == PIPE)
+	// 		{
+	// 			close(pipefd[1]);
+	// 			prev_fd = pipefd[0];
+	// 		}
+	// 		else
+	// 			prev_fd = -1;
+	// 		if (node->next && node->next->type == PIPE)
+	// 			node = node->next->next;
+	// 		else
+	// 			node = NULL;
+	// 	}
+	// }
 	execute_cmd(vars, &node);
 }
 

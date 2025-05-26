@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 16:56:50 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/26 18:54:35 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 		extract_redirections(vars, (char **)&((*ast)->content));
 		expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
 		is_builtin = check_builts((*ast)->arr, vars, 0);
-		if (is_builtin == -1)
-			return (FALSE);
-		return (skip(ast, is_builtin), TRUE);
+		if (is_builtin == VALID_BUILT || is_builtin == INVALID_BUILT)
+			return (skip(ast, AND), is_builtin);
+		if (is_builtin == NOT_BUILT)
+			return (is_builtin);
 	}
 	else if (flag == 1)
 	{
@@ -63,7 +64,8 @@ int	open_files(t_shell *vars)
 
 int	checks(t_shell *vars, t_list **ast, char **cmd)
 {
-	if (process_cmd(vars, ast, 0) == TRUE)
+	int i = process_cmd(vars, ast, 0);
+	if (i == VALID_BUILT || i == INVALID_BUILT)
 		return (g_var->exit_status);
 	if (!*(char *)(*ast)->content)
 	{
