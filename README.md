@@ -62,3 +62,11 @@ like
 minishell$ M*
 it gives me MMakefile instead of Makefile cuz the first one is not removed
 ```
+
+```c
+if (line == NULL)
+{
+	printf(WARN_HEREDOC_DELIM" (wanted `%s')\n", delimiter);
+    break ;
+}
+```

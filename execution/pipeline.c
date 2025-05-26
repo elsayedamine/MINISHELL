@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:48:32 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 00:50:18 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/26 01:24:24 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,4 +200,3 @@ int	execute_pipe(t_shell *vars, t_list *node)
 	clear(0);
 	return (g_var->exit_status);
 }
-
