@@ -54,11 +54,11 @@ little problem in makefile when we change in libft and make it says all done
 pwd exit status
 ```
 
-
-
-
 ```bash
 mnin hatb9a testi l wildcard f minishell hatl9a bzf dial leaks BZZAAAAAAAAAAAAAF
 we have a problem exaclty withe thie file of expand wilcard and wildacrd.c
-
+i fixed one error for thw wildcard when it is at the begining of the string 
+like 
+minishell$ M*
+it gives me MMakefile instead of Makefile cuz the first one is not removed
 ```
