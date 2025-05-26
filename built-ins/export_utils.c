@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:14:29 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 13:42:07 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/26 21:47:59 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,16 @@ void	append_value(char *v, char *av, t_shell *vars)
 		if (!ft_strncmp((char *)tmp->content, v, ft_strlen(v)) \
 			&& ((char *)tmp->content)[ft_strlen(v)] == '=')
 		{
-			old_val = ft_strdup((char *)tmp->content + ft_strlen(v) + 1);
+			old_val = alloc(0, ft_strdup((char *)tmp->content + ft_strlen(v) + 1), 0);
 			new_val = av + ft_strlen(v) + 2;
-			appended = ft_strjoin(old_val, new_val);
-			ft_free("11", old_val, tmp->content);
-			tmp->content = ft_strjoin(v, "=");
-			tmp->content = ft_strjoin_f(tmp->content, appended, 1);
-			return ((void)ft_free("1", appended));
+			appended = alloc(0, ft_strjoin(old_val, new_val), 0);
+			tmp->content = alloc(0, ft_strjoin(v, "="), 0);
+			tmp->content = alloc(0, ft_strjoin(tmp->content, appended), 0);
+			return ;
 		}
 		tmp = tmp->next;
 	}
 	new_val = av + ft_strlen(v) + 2;
-	appended = ft_strjoin_f(ft_strjoin(v, "="), new_val, 1);
+	appended = alloc(0, ft_strjoin_f(ft_strjoin(v, "="), new_val, 1), 0);
 	ft_lstadd_back(&vars->env, alloc(0, ft_lstnew(appended), 0));
 }

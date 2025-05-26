@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 00:27:56 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/26 21:12:49 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ int	all_checks(t_shell *vars)
 void	throw_error(int error, char *file, int *exitt)
 {
 	(void)exitt;
-	if (error == ENOENT)
-		printfd(2, M": %s: %s\n", file, strerror(ENOENT));
+	if (error == ENOENT || error == EACCES)
+		printfd(2, M": %s: %s\n", file, strerror(error));
 	if (error == SYNTAX)
 		printfd(2, M": syntax error near unexpected token `%s'\n", file);
 	if (error == CMD_NOT_FOUND)

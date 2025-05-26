@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:55:06 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 13:59:53 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/26 23:12:22 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_shlvl(t_shell *vars)
 	char	*env_shlvl;
 
 	env_shlvl = get_env("SHLVL", vars);
-	if (!env_shlvl)
+	if (env_shlvl == NULL || ft_atoishell(env_shlvl) == 0)
 		shlvl = 1;
 	else
 		shlvl = ft_atoishell(env_shlvl);

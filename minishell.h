@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 23:34:11 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/26 23:53:21 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,19 @@ typedef struct s_redir
 	char	*delim;
 }			t_redir;
 
+typedef struct s_wild
+{
+	int		*b;
+	char	**arr;
+	char	*pattern;
+	int		diff;
+	t_list	*node;
+}			t_wd;
+
 typedef struct s_sig
 {
 	int		flag;
 	int		exit_status;
-	// pid_t 	g_heredoc_pids[250];
-	// int		heredoc_count;
 }			t_sig;
 
 typedef struct s_check

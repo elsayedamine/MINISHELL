@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/26 16:30:57 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/26 23:12:56 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,6 @@ char	**wildcard(char *pattern)
 		entry = readdir(dir);
 	}
 	if (!count)
-		return (NULL);
+		return (closedir(dir), NULL);
 	return (closedir(dir), matches[count] = NULL, matches);
 }

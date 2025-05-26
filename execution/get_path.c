@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:07:20 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 16:09:07 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/26 21:17:41 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,14 @@ char	*handle_dir(char *path, t_shell *vars)
 		g_var->exit_status = 126;
 		return (NULL);
 	}
-	if (access(path, X_OK) == 0)
+	else if (access(path, X_OK) == 0)
 		return (ft_strdup(path));
+	else if (access(path, F_OK) == 0)
+	{
+		g_var->exit_status = 126;
+		return (store_err(vars, EACCES, path), NULL);
+	}
+	g_var->exit_status = 127;
 	return (store_err(vars, ENOENT, path), NULL);
 }
 

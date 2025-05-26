@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:18:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 00:42:09 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/26 23:53:01 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	*extract_pattern(char *str, int index, char sep, t_list *s)
 // int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 // {
 // 	int		*bord;
-// 	char	**arr;
+// 	char	**wd.arr;
 // 	char	*pattern[2];
 // 	int		diff;
 // 	t_list	*node;
@@ -81,30 +81,29 @@ int	*extract_pattern(char *str, int index, char sep, t_list *s)
 
 int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 {
-	int		*bords;
-	char	**arr;
-	char	*pattern;
-	int		diff;
-	t_list	*node;
+	t_wd	wd;
 
-	bords = extract_pattern(str, index, ' ', s);
-	if (!bords)
+	wd.b = extract_pattern(str, index, ' ', s);
+	if (!wd.b)
 		return (0);
-	pattern = removequotes(alloc(0, \
-		ft_substr(str, bords[0], bords[1] - bords[0]), 0), s);
-	arr = wildcard(pattern);
-	node = ft_lstgetnode(*new, bords[0] - 1);
-	while (node && node->next)
-		node->next = node->next->next;
-	if (bords[0] - 1 <= 0)
+	wd.pattern = removequotes(alloc(0, \
+		ft_substr(str, wd.b[0], wd.b[1] - wd.b[0]), 0), s);
+	wd.arr = wildcard(wd.pattern);
+	wd.node = ft_lstgetnode(*new, wd.b[0] - 1);
+	while (wd.node && wd.node->next)
+		wd.node->next = wd.node->next->next;
+	if (wd.b[0] - 1 <= 0)
 		*new = NULL;
-	if (arr)
-		pattern = ft_arr2str(arr, ' ');
+	if (wd.arr)
+		wd.pattern = alloc(0, ft_arr2str(wd.arr, ' '), 0);
 	else
-		pattern = ft_substr(str, bords[0], bords[1] - bords[0]);
-	ft_lstadd_back(new, ft_str_to_lst(alloc(0, pattern, 0), 1));
-	diff = bords[1] - index;
-	return (diff);
+		wd.pattern = alloc(0, ft_substr(str, wd.b[0], wd.b[1] - wd.b[0]), 0);
+	if (!*new)
+		wd.pattern = old_removequotes(wd.pattern);
+	else
+		wd.pattern = removequotes(wd.pattern, *new);
+	wd.diff = wd.b[1] - index;
+	return (ft_lstadd_back(new, ft_str_to_lst(wd.pattern, 1)), wd.diff);
 }
 
 int	canbexpanded(char *str, int i)
