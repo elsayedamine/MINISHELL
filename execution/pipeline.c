@@ -111,7 +111,16 @@ int	check_built(char **arr, t_shell *vars)
 		return (unset(ft_arrlen(arr), arr, vars));
 	return (NOT_BUILT);
 }
-
+void	stream_dup2stdio(t_stream *stream)
+{
+	if (stream->read != STDIN_FILENO)
+		if (dup2(stream->read, STDIN_FILENO) == -1)
+			perror(strerror(errno));
+	if (stream->write != STDOUT_FILENO)
+		if (dup2(stream->write, STDOUT_FILENO) == -1)
+			perror(strerror(errno));
+	shut_stream(stream);
+}
 int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i)
 {
 	t_list	*node;
@@ -124,6 +133,7 @@ int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i)
 	node->raw = alloc(0, ft_strdup(node->content), 0);
 	extract_redirections(vars, (char **)&node->content);
 	expand(vars, (char **)&node->content, &node->arr);
+	stream_dup2stdio(&pipe.stream_line[i]);
 	if (apply_redirections(vars) == -1)
 		return (-1);
 	if (!*(char *)node->content && ft_strpbrk(node->raw, "'\""))
@@ -192,6 +202,7 @@ int	pipex(t_shell *vars, t_list **ast)
 	pipe = create_pipeline(ast);
 	while (pipe.pos < pipe.size)
 	{
+		printf ("%d\n", pipe.pos);
 		if (pipe.pos < pipe.size - 1)
 			connect_pipe(&pipe.stream_line[pipe.pos]);
 		pipe.last_pid = execute_pipe(vars, &pipe, pipe.pos);
