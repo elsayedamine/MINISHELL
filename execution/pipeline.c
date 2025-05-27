@@ -15,7 +15,8 @@
 int	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 {
 	(void)vars;
-	throw_error(CMD_NOT_FOUND, cmd, &g_var->exit_status);
+	g_var->exit_status = 127;
+	throw_error(CMD_NOT_FOUND, cmd, NULL);
 	skip(ast, AND);
 	return (errno);
 }
@@ -50,8 +51,10 @@ t_pipe	create_pipeline(t_list **ast)
 	while (*ast)
 	{
 		len++;
-		if ((*ast)->type == CMD || (*ast)->type == SUBSHELL)
+		if ((*ast)->type == CMD)
 			ft_lstadd_back(&pipe_info.pipeline, create_node((*ast)->content));
+		if ((*ast)->type == SUBSHELL)
+			ft_lstadd_back(&pipe_info.pipeline, alloc(0, ft_lstnew((*ast)->child), 0));
 		if ((*ast)->next && (*ast)->next->type == PIPE)
 			*ast = (*ast)->next->next;
 		else
@@ -88,26 +91,73 @@ void	shut_stream(t_stream *curr_stream)
 	}
 }
 
+int	check_built(char **arr, t_shell *vars)
+{
+	if (!arr)
+		return (NOT_BUILT);
+	if (!ft_strcmp("pwd", *arr))
+		return (pwd(ft_arrlen(arr), arr, vars));
+	if (!ft_strcmp("cd", *arr))
+		return (cd(ft_arrlen(arr), arr, vars));
+	if (!ft_strcmp("echo", *arr))
+		return (echo(ft_arrlen(arr), arr, vars));
+	if (!ft_strcmp("env", *arr))
+		return (env(ft_arrlen(arr), arr, vars));
+	if (!ft_strcmp("exit", *arr))
+		return (ft_exit(ft_arrlen(arr), arr, vars));
+	if (!ft_strcmp("export", *arr))
+		return (export(ft_arrlen(arr), arr, vars));
+	if (!ft_strcmp("unset", *arr))
+		return (unset(ft_arrlen(arr), arr, vars));
+	return (NOT_BUILT);
+}
+
 int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i)
 {
 	t_list	*node;
+	pid_t	pid;
 	char	*cmd;
 
 	node = ft_lstgetnode(pipe.pipeline, i);
 	if (node->type == SUBSHELL)
-		return (execution(vars, &node->child));
-	if (checks(vars, &node, &cmd) != -1)
-		return (g_var->exit_status);
-	if (pipe.stream_line[i].read != -1)
-		dup2(pipe.stream_line[i].read, STDIN);
-	if (pipe.stream_line[i].write != -1)
-		dup2(pipe.stream_line[i].write, STDOUT);
+		return (execution(vars, &node));
+	node->raw = alloc(0, ft_strdup(node->content), 0);
+	extract_redirections(vars, (char **)&node->content);
+	expand(vars, (char **)&node->content, &node->arr);
 	if (apply_redirections(vars) == -1)
-		clear(0);
+		return (-1);
+	if (!*(char *)node->content && ft_strpbrk(node->raw, "'\""))
+	{
+		if (open_files(vars) == FALSE)
+			return (-1);
+		return (g_var->exit_status = 0, 0);
+	}
+	else
+		cmd = alloc(0, get_path(node->arr[0], vars), 0);
+	if (!cmd)
+	{
+		if (open_files(vars) == FALSE)
+			return (-1);
+		throw_error(vars->err.errn, vars->err.str, NULL);
+		return (g_var->exit_status = 0, 0);
+	}
+	pid = fork();
+	if (pid < 0)
+		return (perror("fork"), -1);
+	if (pid > 0)
+		return (pid);
+	signal(SIGINT, clear);
+	if (i != pipe.size -1)
+		shut_stream	(&pipe.stream_line[i + 1]);
+	if (apply_redirections(vars) == -1)
+		return (-1);
+	int builts = check_built(node->arr, vars);
+	if (builts != NOT_BUILT)
+		return (builts);
 	execve(cmd, node->arr, vars->envp);
-	g_var->exit_status = exit_execve(cmd, vars, &node);
+	g_var->exit_status = 127;
 	clear(0);
-	return (1);
+	return (-1);
 }
 
 pid_t	execute_pipe(t_shell *vars, t_pipe *pipe, int index)

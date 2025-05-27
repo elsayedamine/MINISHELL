@@ -18,8 +18,6 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 
 	if (flag == 0)
 	{
-		(*ast)->raw = ft_strdup((*ast)->content);
-		alloc(0, (*ast)->raw, 0);
 		extract_redirections(vars, (char **)&((*ast)->content));
 		expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
 		is_builtin = check_builts((*ast)->arr, vars, 0);
