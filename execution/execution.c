@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 22:19:26 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/27 09:01:13 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,10 @@ int	open_files(t_shell *vars)
 
 int	checks(t_shell *vars, t_list **ast, char **cmd)
 {
-	int i = process_cmd(vars, ast, 0);
-	if (i == VALID_BUILT || i == INVALID_BUILT)
+	int is_valid;
+
+	is_valid = process_cmd(vars, ast, 0);
+	if (is_valid == VALID_BUILT || is_valid == INVALID_BUILT)
 		return (g_var->exit_status);
 	if (!*(char *)(*ast)->content)
 	{
