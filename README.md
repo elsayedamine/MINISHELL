@@ -83,3 +83,25 @@ o dyla no such file or directory makanch l exit dyalha shih
 ghadit leak o double free li kan 3ndi f strjoin o strjoin_f
 dakchi kamal 9adito +++ hawal tb9a test ay haja b valgrind so we can found leak 
 ```
+```bash
+we have an error in validating syntax
+(ls && ls | grep a) | cat -e | ( | cat) | wc -l
+minishell$ (ls && ls | grep a) | cat -e | ( |& cat) | wc -l
+Minishell: syntax error near unexpected token `&'
+minishell$ (ls && ls | grep a) | cat -e | ( & cat) | wc -l
+Minishell: syntax error near unexpected token `newline'
+minishell$ (ls && ls | grep a) | cat -e | ( && cat) | wc -l
+
+```
+```bash
+minishell$ (|ls
+Minishell: syntax error near unexpected token `newline'
+minishell$ (|ls)
+built-ins  garbage  main.c  Makefile   minishell.h  readline.supp  testcases
+execution  libft    main.o  minishell  parsing	    README.md	   test.sh
+minishell$ (ls|)
+Minishell: syntax error near unexpected token `)'
+minishell$ 
+free(): double free detected in tcache 2
+[1]    1571024 IOT instruction (core dumped)  ./minishell
+```

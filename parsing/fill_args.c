@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 16:18:41 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/27 09:34:22 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,32 @@ int	validater(t_shell *vars)
 	return (TRUE);
 }
 
+// void	print_ast(t_list *node, int depth)
+// {
+// 	while (node)
+// 	{
+// 		for (int i = 0; i < depth; i++)
+// 			printf("	");
+// 		if (node->content)
+// 			printf("- %s\n", (char *)node->content);
+// 		else
+// 			printf("- (group)\n");
+// 		if (node->arr)
+// 		{
+// 			printf("	Array elements:\n");
+// 			for (int i = 0; node->arr[i] != NULL; i++)
+// 			{
+// 				for (int j = 0; j < depth + 1; j++)
+// 					printf("	");
+// 				printf("- %s\n", node->arr[i]);
+// 			}
+// 		}
+// 		if (node->child)
+// 			print_ast(node->child, depth + 1);
+// 		node = node->next;
+// 	}
+// }
+
 int	fill_args(t_shell *vars)
 {
 	char	*token;
@@ -85,6 +111,7 @@ int	fill_args(t_shell *vars)
 		return (FALSE);
 	vars->tmp = vars->args;
 	vars->ast = ast_builder(&vars->tmp);
+	// print_ast(va	rs->ast, 0);
 	return (TRUE);
 }
 

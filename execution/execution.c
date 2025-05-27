@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/27 09:01:13 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:14:54 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 		extract_redirections(vars, (char **)&((*ast)->content));
 		expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
 		is_builtin = check_builts((*ast)->arr, vars, 0);
-		if (is_builtin == INVALID_BUILT)
-			return (skip(ast, AND), is_builtin);
-		if (is_builtin == VALID_BUILT)
-			return (skip(ast, OR), is_builtin);
+		if (is_builtin == INVALID_BUILT || is_builtin == VALID_BUILT)
+			return (skip(ast, is_builtin / 2), is_builtin);
 		if (is_builtin == NOT_BUILT)
 			return (is_builtin);
 	}
@@ -136,16 +134,11 @@ int	execution(t_shell *vars, t_list **ast)
 			g_var->exit_status = execute_cmd(vars, node);
 		else if ((*node) && ((*node)->type == CMD || (*node)->type == SUBSHELL)
 			&& (*node)->next && (*node)->next->type == PIPE)
-		{
 			g_var->exit_status = pipex(vars, node);
-			traverse_sub(vars, node);
-			continue ;
-		}
 		else if ((*node) && (*node)->type == SUBSHELL)
 		{
 			g_var->exit_status = execution(vars, &(*node)->child);
 			traverse_sub(vars, node);
-			continue ;
 		}
 		else
 			(*node) = (*node)->next;

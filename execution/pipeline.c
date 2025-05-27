@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 22:48:32 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 17:04:46 by ahakki           ###   ########.fr       */
+/*   Created: 2025/05/27 09:42:43 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/05/27 12:52:16 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,183 +20,161 @@ int	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 	return (errno);
 }
 
-int		exit_execves(char *cmd, t_shell *vars);
-t_list	*extract_pipeline(t_list **node);
-void	execute_pipeline(t_shell *vars, t_list *node);
-int		pipex(t_shell *vars, t_list **node);
-void	redirect(int pipefd[2]);
-int		parent(t_shell *vars, t_list *node);
-int		process_cmmd(t_shell *vars, t_list *node);
-int		open_files(t_shell *vars);
-int		check_cmd(t_shell *vars, t_list *node, char **cmd);
-int		execute_pipe(t_shell *vars, t_list *node);
-
-
-int	exit_execves(char *cmd, t_shell *vars)
+t_stream	*streams_init(int pipeline_len)
 {
-	(void)vars;
-	throw_error(CMD_NOT_FOUND, cmd, &g_var->exit_status);
-	return (errno);
+	int			i;
+	t_stream	*stream;
+
+	stream = (t_stream *)alloc(sizeof(t_stream) * (pipeline_len + 1), \
+		NULL, 'M');
+	if (!stream)
+		return (NULL);
+	i = 0;
+	while (i < pipeline_len)
+	{
+		stream[i].read = -1;
+		stream[i++].write = -1;
+	}
+	stream[0].read = STDIN;
+	stream[pipeline_len - 1].write = STDOUT;
+	return (stream);
 }
 
-t_list	*extract_pipeline(t_list **node)
+t_pipe	create_pipeline(t_list **ast)
 {
-	t_list	*pipeline;
-	t_list	*tmp;
+	int		len;
+	t_pipe	pipe_info;
 
-	pipeline = NULL;
-	tmp = *node;
-	while (tmp)
+	pipe_info.pipeline = NULL;
+	len = 0;	
+	while (*ast)
 	{
-		if (tmp->type == CMD && tmp->next && tmp->next->type == PIPE)
-		{
-			ft_lstadd_back(&pipeline, create_node(alloc(0, ft_strdup(tmp->content), 0)));
-			tmp = tmp->next;
-		}
-		else if (tmp->type == CMD)
-			ft_lstadd_back(&pipeline, create_node(alloc(0, ft_strdup(tmp->content), 0)));
+		len++;
+		if ((*ast)->type == CMD || (*ast)->type == SUBSHELL)
+			ft_lstadd_back(&pipe_info.pipeline, create_node((*ast)->content));
+		if ((*ast)->next && (*ast)->next->type == PIPE)
+			*ast = (*ast)->next->next;
 		else
 			break ;
-		tmp = tmp->next;
 	}
-	return (pipeline);
+	pipe_info.size = len;
+	pipe_info.pos = 0;
+	pipe_info.last_pid = -1;
+	pipe_info.stream_line = streams_init(len);
+	return (pipe_info);
 }
 
-int	pipex(t_shell *vars, t_list **node)
+void	connect_pipe(t_stream *curr_stream)
 {
-	t_list	*pipeline;
+	int	pipefd[2];
 
-	(void)vars;
-	pipeline = extract_pipeline(node);
-	execute_pipeline(vars, pipeline);
-	traverse_sub(vars, node);
-	return (1);
+	if (pipe(pipefd) == -1)
+		perror("pipe");
+	(*curr_stream).write = pipefd[IN];
+	(*(curr_stream + 1)).read = pipefd[OUT];
 }
 
-// void	redirect(int pipefd[2], int *fd)
-// {
-// 	if (*fd != -1)
-// 		close(*fd);
-// 	*fd = -1;
-// 	close(pipefd[OUT]);
-// 	if (dup2(pipefd[IN], STDIN) == -1)
-// 		perror("dup2");
-// 	close(pipefd[IN]);
-// 	//signals
-// }
-
-// int	parent(t_shell *vars, t_list *node)
-// {
-// 	char	*cmd;
-// 	pid_t pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		if (check_cmd(vars, node, &cmd) != -1)
-// 			return (g_var->exit_status);
-// 		signal(SIGINT, SIG_IGN);
-// 		if (apply_redirections(vars) == -1)
-// 			clear(0);
-// 		execve(cmd, node->arr, vars->envp);
-// 		g_var->exit_status = exit_execves(cmd, vars);
-// 		clear(0);
-// 		signal(SIGINT, foo);
-// 	}
-// 	return (g_var->exit_status);
-// }
-
-void	execute_pipeline(t_shell *vars, t_list *node)
+void	shut_stream(t_stream *curr_stream)
 {
-	// int		pipefd[2];
-	// pid_t	pid;
-	// int 	prev_fd = -1;
-
-	// while (node && node->next && node->next->next)
-	// {
-	// 	if (pipe(pipefd) == -1)
-	// 		return (perror("pipe"));
-	// 	pid = fork();
-	// 	if (pid == 0)
-	// 	{
-	// 		if (prev_fd != -1)
-    //         {
-    //             dup2(prev_fd, STDIN_FILENO);
-    //             close(prev_fd);
-    //         }
-	// 		close(pipefd[IN]);
-	// 		if (dup2(pipefd[OUT], STDOUT) == -1)
-	// 			return (perror("dup2"));
-	// 		close(pipefd[OUT]);
-	// 		execute_pipe(vars, node);
-	// 		exit(exit_execves(node->content, vars));
-	// 	}
-	// 	else
-	// 	{
-	// 		if (prev_fd != -1)
-	// 			close(prev_fd);
-	// 		if (node->next && node->next->type == PIPE)
-	// 		{
-	// 			close(pipefd[1]);
-	// 			prev_fd = pipefd[0];
-	// 		}
-	// 		else
-	// 			prev_fd = -1;
-	// 		if (node->next && node->next->type == PIPE)
-	// 			node = node->next->next;
-	// 		else
-	// 			node = NULL;
-	// 	}
-	// }
-	execute_cmd(vars, &node);
-}
-
-int	process_cmmd(t_shell *vars, t_list *node)
-{
-	int	is_builtin;
-
-	node->raw = ft_strdup(node->content);
-	alloc(0, node->raw, 0);
-	extract_redirections(vars, (char **)&(node->content));
-	expand(vars, (char **)&(node->content), &(node->arr));
-	is_builtin = check_builts(node->arr, vars, 0);
-	if (is_builtin == -1)
-		return (FALSE);
-	return (TRUE);
-}
-
-int	check_cmd(t_shell *vars, t_list *node, char **cmd)
-{
-	if (process_cmmd(vars, node) == TRUE)
-		return (g_var->exit_status);
-	if (!*(char *)node->content)
+	if (curr_stream->read > 0)
 	{
-		if (open_files(vars) == FALSE)
-			return (g_var->exit_status);
-		g_var->exit_status = 0;
-		return (g_var->exit_status);
+		close(curr_stream->read);
+		curr_stream->read = -1;
 	}
-	else
-		*cmd = alloc(0, get_path(node->arr[0], vars), 0);
-	if (!*cmd)
+	if (curr_stream->write >= 0 && curr_stream->write != STDOUT)
 	{
-		if (open_files(vars) == FALSE)
-			return (g_var->exit_status);
-		throw_error(vars->err.errn, vars->err.str, NULL);
-		return (g_var->exit_status);
+		close(curr_stream->write);
+		curr_stream->write = -1;
 	}
-	return (-1);
 }
 
-int	execute_pipe(t_shell *vars, t_list *node)
+int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i)
 {
+	t_list	*node;
 	char	*cmd;
 
-	if (check_cmd(vars, node, &cmd) != -1)
+	node = ft_lstgetnode(pipe.pipeline, i);
+	if (node->type == SUBSHELL)
+		return (execution(vars, &node->child));
+	if (checks(vars, &node, &cmd) != -1)
 		return (g_var->exit_status);
-	signal(SIGINT, SIG_DFL);
+	if (pipe.stream_line[i].read != -1)
+		dup2(pipe.stream_line[i].read, STDIN);
+	if (pipe.stream_line[i].write != -1)
+		dup2(pipe.stream_line[i].write, STDOUT);
 	if (apply_redirections(vars) == -1)
 		clear(0);
 	execve(cmd, node->arr, vars->envp);
-	g_var->exit_status = exit_execves(cmd, vars);
+	g_var->exit_status = exit_execve(cmd, vars, &node);
 	clear(0);
-	return (g_var->exit_status);
+	return (1);
+}
+
+pid_t	execute_pipe(t_shell *vars, t_pipe *pipe, int index)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid < 0)
+		return (perror("fork"), -1);
+	else if (pid > 0)
+	{
+		signal(SIGINT, SIG_IGN);
+		if (index == pipe->size - 1)
+			signal(SIGINT, foo);
+		return (pid);
+	}
+	signal(SIGINT, clear);
+	if (apply_redirections(vars) == -1)
+		clear(0);
+	if (index != pipe->size - 1)
+		shut_stream(&pipe->stream_line[index]);
+	g_var->exit_status = execute_cmd_pipe(vars, *pipe, index);
+	clear(0);
+	return (-1);
+}
+int	wait_child_processes(t_pipe *pipe);
+
+int	pipex(t_shell *vars, t_list **ast)
+{
+	t_pipe	pipe;
+
+	pipe = create_pipeline(ast);
+	while (pipe.pos < pipe.size)
+	{
+		if (pipe.pos < pipe.size - 1)
+			connect_pipe(&pipe.stream_line[pipe.pos]);
+		pipe.last_pid = execute_pipe(vars, &pipe, pipe.pos);
+		shut_stream(&pipe.stream_line[pipe.pos++]);
+	}
+	pipe.exit_status = wait_child_processes(&pipe);
+	skip(ast, (pipe.exit_status != 0));
+	return (pipe.exit_status);
+}
+
+int	wait_child_processes(t_pipe *pipe)
+{
+	int		status;
+	int		last_status;
+	pid_t	wait_pid;
+
+	last_status = 0;
+	while (1)
+	{
+		wait_pid = wait(&status);
+		if (wait_pid == -1)
+			break ;
+		if (wait_pid == pipe->last_pid)
+			last_status = status;
+	}
+	if (errno == EINTR)
+		return (130);
+	if (WIFEXITED(last_status))
+		return (WEXITSTATUS(last_status));
+	if (WIFSIGNALED(last_status))
+	{
+		g_var->exit_status = 128 + WTERMSIG(last_status);
+		write(1, "\n", 1);
+	}
+	return (1);
 }

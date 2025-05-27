@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 23:53:21 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/27 12:15:05 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 
 # define M "Minishell"
 # define MAX_MATCHES 1024
+# define IN 0
+# define OUT 1
 
 /* **************************************** */
 /*                 ENUMS                    */
@@ -66,17 +68,28 @@ typedef enum type
 /*             STRUCTURES                   */
 /* **************************************** */
 
+typedef struct s_pipeline
+{
+	int					type;
+	char				*cmd;
+	t_list				*sub;
+}						t_pipeline;
+
+typedef struct s_stream
+{
+	int	read;
+	int	write;
+}		t_stream;
+
 typedef struct s_pipe
 {
-	int		*fdo;
-	int		*fdi;
-	pid_t	pid1;
-	pid_t	pid2;
-	char	*path1;
-	char	*path2;
-	char	**args;
-	int		pipefd[2];
-}			t_pip;
+	t_list		*pipeline;
+	int			size;
+	int			pos;
+	int			exit_status;
+	pid_t		last_pid;
+	t_stream	*stream_line;
+}				t_pipe;
 
 typedef struct s_redir
 {
@@ -218,6 +231,11 @@ int		execute_cmd(t_shell *vars, t_list **ast);
 int		check_builts(char **arr, t_shell *vars, int i);
 void	extract_redirections(t_shell *vars, char **original);
 int		apply_redirections(t_shell *vars);
+int		checks(t_shell *vars, t_list **ast, char **cmd);
+int		process_cmd(t_shell *vars, t_list **ast, int flag);
+int		open_files(t_shell *vars);
+
+/*---------------------------- allocations ----------------------------*/
 
 void	*alloc(size_t n, void *content, char c);
 char	**ft_arrdup(char **arr);
@@ -225,4 +243,5 @@ t_list	*ft_arr2list(char **arr);
 char	**ft_list2arr(t_list *lst);
 void	clear(int sig);
 void	foo(int sig);
+
 #endif
