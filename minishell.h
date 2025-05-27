@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/27 12:15:05 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/27 23:19:19 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,20 @@ int		apply_redirections(t_shell *vars);
 int		checks(t_shell *vars, t_list **ast, char **cmd);
 int		process_cmd(t_shell *vars, t_list **ast, int flag);
 int		open_files(t_shell *vars);
+
+/*---------------------------- pipeline ----------------------------*/
+
+int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i);
+int	pipex(t_shell *vars, t_list **ast);
+pid_t	execute_pipe(t_shell *vars, t_pipe *pipe, int index);
+void	stream2io(t_stream *stream);
+void	shut_stream(t_stream *curr_stream);
+void	connect_pipe(t_stream *curr_stream);
+t_stream	*streams_init(int pipeline_len);
+int	exit_execve(char *cmd, t_shell *vars, t_list **ast);
+int	wait_child_processes(t_pipe *pipe);
+t_pipe	create_pipeline(t_list **ast);
+int	check_built(char **arr, t_shell *vars);
 
 /*---------------------------- allocations ----------------------------*/
 

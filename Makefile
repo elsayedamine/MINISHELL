@@ -25,6 +25,7 @@ sources = \
 		execution/execution.c \
 		execution/get_path.c \
 		execution/pipeline.c \
+		execution/pipeline_utils.c \
 		execution/ast_traversal.c \
 		execution/redirections.c \
 		execution/apply_redirections.c \
