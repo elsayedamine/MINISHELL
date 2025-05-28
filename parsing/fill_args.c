@@ -68,31 +68,31 @@ int	validater(t_shell *vars)
 	return (TRUE);
 }
 
-void	print_ast(t_list *node, int depth)
-{
-	while (node)
-	{
-		for (int i = 0; i < depth; i++)
-			printf("	");
-		if (node->content)
-			printf("- %s\n", (char *)node->content);
-		else
-			printf("- (group)\n");
-		if (node->arr)
-		{
-			printf("	Array elements:\n");
-			for (int i = 0; node->arr[i] != NULL; i++)
-			{
-				for (int j = 0; j < depth + 1; j++)
-					printf("	");
-				printf("- %s\n", node->arr[i]);
-			}
-		}
-		if (node->child)
-			print_ast(node->child, depth + 1);
-		node = node->next;
-	}
-}
+// void	print_ast(t_list *node, int depth)
+// {
+// 	while (node)
+// 	{
+// 		for (int i = 0; i < depth; i++)
+// 			printf("	");
+// 		if (node->content)
+// 			printf("- %s\n", (char *)node->content);
+// 		else
+// 			printf("- (group)\n");
+// 		if (node->arr)
+// 		{
+// 			printf("	Array elements:\n");
+// 			for (int i = 0; node->arr[i] != NULL; i++)
+// 			{
+// 				for (int j = 0; j < depth + 1; j++)
+// 					printf("	");
+// 				printf("- %s\n", node->arr[i]);
+// 			}
+// 		}
+// 		if (node->child)
+// 			print_ast(node->child, depth + 1);
+// 		node = node->next;
+// 	}
+// }
 
 int	fill_args(t_shell *vars)
 {
@@ -111,7 +111,6 @@ int	fill_args(t_shell *vars)
 		return (FALSE);
 	vars->tmp = vars->args;
 	vars->ast = ast_builder(&vars->tmp);
-	print_ast(vars->ast, 0);
 	return (TRUE);
 }
 

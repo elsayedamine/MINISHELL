@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 15:18:48 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:13:52 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ typedef struct s_shell
 {
 	int			exit;
 	int			bash_line_counter;
+	int			*fds;
 	char		**envp;
 	char		*cmd;
 	char		*cmd_not_found;
@@ -169,6 +170,16 @@ t_list	*create_node(void *content);
 char	*tokenizer(char *str, char const *delim);
 void	ft_nullenv(t_shell *vars);
 void	ft_shlvl(t_shell *vars);
+t_type	define_type(char *content);
+t_redir	*create_redir_node(t_shell *vars, t_type mode, char *target);
+t_list	*create_redir_list(t_shell *vars, t_list **s);
+t_list	*tokenize_command(char *cmd);
+int		*apply_redirect_shell(t_shell *vars);
+void	perform_dups(int save_in, int save_out);
+int		open_file(t_redir *r, char **filename);
+void	return_original_std(t_shell *vars);	
+int		*redirect_sub(t_shell *vars, t_list *node);
+
 
 /* Validation */
 int		all_checks(t_shell *vars);

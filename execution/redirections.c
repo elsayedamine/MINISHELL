@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 00:18:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 22:51:09 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:45:50 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ t_list	*tokenize_command(char *cmd)
 void	extract_redirections(t_shell *vars, char **original)
 {
 	int		i;
-	int		q;
 	t_list	*s;
 	char	**arr;
 
@@ -130,7 +129,7 @@ void	extract_redirections(t_shell *vars, char **original)
 		vars->redir = NULL;
 		return ;
 	}
-	ft_init(2, &q, &i);
+	i = 0;
 	s = tokenize_command(*original);
 	vars->redir = create_redir_list(vars, &s);
 	arr = ft_list2arr(s);

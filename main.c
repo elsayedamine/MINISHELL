@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 13:07:03 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:10:11 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	prompt_loop(t_shell *vars)
 			&vars->check.par, &vars->check.special, &vars->check.fpar, \
 				&vars->check.lpar, &g_var->flag);
 		vars->cmd = read_cmd(vars, vars->cmd);
+		vars->redir = NULL;
 		if (!vars->cmd)
 			return ((void)alloc(0, NULL, 'F'));
 		if (!*vars->cmd)

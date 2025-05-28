@@ -30,6 +30,7 @@ sources = \
 		execution/ast_traversal.c \
 		execution/redirections.c \
 		execution/apply_redirections.c \
+		execution/shell_redirections.c \
 		execution/execute_builtins.c \
 		\
 		\
