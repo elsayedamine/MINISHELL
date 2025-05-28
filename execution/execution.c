@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 18:28:19 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 20:19:14 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	return (process_cmd(vars, ast, 1));
 }
 
-int	execution(t_shell *vars, t_list **ast)
+int	execution(t_shell *vars, t_list **ast, t_list **parent)
 {
 	t_list	**node;
 
 	node = ast;
-	if (!vars->redir && redirect_sub(vars, *node) == NULL)
-		return (g_var->exit_status = 1, 1);
+	if (!vars->redir && redirect_sub(vars, ast, *parent) == NULL)
+		;
 	while (*node)
 	{
 		if ((*node) && (*node)->type == CMD && \
@@ -114,7 +114,7 @@ int	execution(t_shell *vars, t_list **ast)
 			g_var->exit_status = pipex(vars, node);
 		else if ((*node) && (*node)->type == SUBSHELL)
 		{
-			g_var->exit_status = execution(vars, &(*node)->child);
+			g_var->exit_status = execution(vars, &(*node)->child, &(*node));
 			traverse_sub(vars, node);
 			return_original_std(vars);
 		}

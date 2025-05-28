@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 09:42:43 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 13:35:44 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 20:01:13 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i)
 	cmd = "";
 	node = ft_lstgetnode(pipe.pipeline, i);
 	if (node->type == SUBSHELL)
-		return (execution(vars, &node->child));
+		return (execution(vars, &node->child, &node));
 	node->raw = alloc(0, ft_strdup(node->content), 0);
 	extract_redirections(vars, (char **)&node->content);
 	expand(vars, (char **)&node->content, &node->arr);

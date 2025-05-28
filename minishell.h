@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 18:33:17 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 20:15:53 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ int			is_built(char **arr, t_shell *vars);
 /*---------------------------- EXECUTION ----------------------------*/
 
 int			pipex(t_shell *vars, t_list **node);
-int			execution(t_shell *vars, t_list **ast);
+int			execution(t_shell *vars, t_list **ast, t_list **parent);
 char		*get_path(char *cmd, t_shell *vars);
 int			exit_execve(char *cmd, t_shell *vars, t_list **ast);
 void		skip(t_list **node, int op);
@@ -248,7 +248,7 @@ int			*apply_redirect_shell(t_shell *vars);
 void		perform_dups(int save_in, int save_out);
 int			open_file(t_redir *r, char **filename);
 void		return_original_std(t_shell *vars);	
-int			*redirect_sub(t_shell *vars, t_list *node);
+int			*redirect_sub(t_shell *vars, t_list **ast, t_list *node);
 int			open_files(t_shell *vars);
 
 /*---------------------------- PIPELINE ----------------------------*/

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:26:09 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 18:28:28 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 20:31:12 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	*apply_redirect_shell(t_shell *vars)
 	return (close(vars->fds[0]), close(vars->fds[1]), vars->fds);
 }
 
-int	*redirect_sub(t_shell *vars, t_list *node)
+int	*redirect_sub(t_shell *vars, t_list **ast, t_list *node)
 {
 	t_list	*s;
 	int		*fds;
@@ -77,13 +77,14 @@ int	*redirect_sub(t_shell *vars, t_list *node)
 	vars->fds = fds;
 	if (!node || (node->type != SUBSHELL && !node->next))
 		return (fds);
-	if (node->next->type == CMD && is_there_red(node->next->content))
+	if (node->next && node->next->type == CMD && \
+		is_there_red(node->next->content))
 	{
 		s = tokenize_command(node->next->content);
 		vars->redir = create_redir_list(vars, &s);
 		apply_redirect_shell(vars);
 		if (vars->fds == NULL)
-			return (NULL);
+			return (skip(ast, AND), NULL);
 	}
 	return (fds);
 }
