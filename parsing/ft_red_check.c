@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_red_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:54 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/24 16:48:49 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:30:19 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	isvalid_red(t_shell *vars)
 	t_list	*tmp;
 	char	*c;
 	char	*n;
+	char	**split;
 
 	tmp = vars->args;
 	while (tmp)
@@ -62,10 +63,13 @@ int	isvalid_red(t_shell *vars)
 		c = (char *)tmp->content;
 		if (tmp->next)
 			n = (char *)tmp->next->content;
+		// we will use count words of custom split  for n (handle it)
+		split = _ft_split(n, ' ');
 		if (is_red(c) && !tmp->next)
 			return (throw_error(SYNTAX, "newline", NULL), FALSE);
-		if (is_red(c) && tmp->next && (is_op(n) || is_red(n)))
+		if (is_red(c) && tmp->next && (is_op(n) || is_red(n) || ft_arrlen(split) != 1))
 			return (throw_error(SYNTAX, n, NULL), FALSE);
+		
 		tmp = tmp->next;
 	}
 	return (TRUE);

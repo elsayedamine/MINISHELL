@@ -20,6 +20,7 @@ sources = \
 		parsing/process_heredocs.c \
 		parsing/alloc.c \
 		parsing/arr_utils.c \
+		parsing/custom_split.c \
 		\
 		\
 		execution/execution.c \
