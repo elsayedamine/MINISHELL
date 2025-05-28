@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_traversal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 19:25:11 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/23 16:39:03 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/29 00:49:26 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	skip(t_list **node, int op)
 int	traverse_sub(t_shell *vars, t_list **node)
 {
 	(void)vars;
-	if (g_var->exit_status == 0 && (*node) && \
-		(*node)->next && (*node)->next->type == OR)
+	if ((*node) && !(*node)->content && (*node)->next && (*node)->next->type == CMD)
+		(*node) = (*node)->next;
+	if (g_var->exit_status == 0 && (*node) && (*node)->next && (*node)->next->type == OR)
 		skip(node, OR);
-	else if (g_var->exit_status != 0 && (*node) && \
-		(*node)->next && (*node)->next->type == AND)
+	else if (g_var->exit_status != 0 && (*node) && (*node)->next && (*node)->next->type == AND)
 		skip(node, AND);
 	else if ((*node) && (*node)->next)
 		(*node) = (*node)->next->next;

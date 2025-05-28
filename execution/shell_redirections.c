@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:26:09 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 20:31:12 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/29 00:08:34 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	*apply_redirect_shell(t_shell *vars)
 						vars->fds = NULL, NULL);
 		tmp = tmp->next;
 	}
-	return (close(vars->fds[0]), close(vars->fds[1]), vars->fds);
+	return (vars->fds);
 }
 
 int	*redirect_sub(t_shell *vars, t_list **ast, t_list *node)
@@ -84,7 +84,10 @@ int	*redirect_sub(t_shell *vars, t_list **ast, t_list *node)
 		vars->redir = create_redir_list(vars, &s);
 		apply_redirect_shell(vars);
 		if (vars->fds == NULL)
+		{
+			g_var->exit_status = 1;
 			return (skip(ast, AND), NULL);
+		}
 	}
 	return (fds);
 }
@@ -97,6 +100,8 @@ void	return_original_std(t_shell *vars)
 			dup2(vars->fds[2], 0);
 		if (vars->fds[3] != -1)
 			dup2(vars->fds[3], 1);
+		// close(vars->fds[0]);
+		// close(vars->fds[1]);
 		close(vars->fds[2]);
 		close(vars->fds[3]);
 	}

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 20:15:53 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 22:51:55 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ typedef struct s_shell
 	int			exit;
 	int			bash_line_counter;
 	int			*fds;
+	int			exec;
 	char		**envp;
 	char		*cmd;
 	char		*cmd_not_found;

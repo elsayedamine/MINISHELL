@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 19:56:05 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 22:52:21 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	prompt_loop(t_shell *vars)
 	g_var->exit_status = 0;
 	while (1)
 	{
-		ft_init(7, &vars->check.dquot, &vars->check.squot, \
+		ft_init(8, &vars->check.dquot, &vars->check.squot, \
 			&vars->check.par, &vars->check.special, &vars->check.fpar, \
-				&vars->check.lpar, &g_var->flag);
+				&vars->check.lpar, &g_var->flag, &vars->exec);
 		vars->cmd = read_cmd(vars, vars->cmd);
 		vars->redir = NULL;
 		if (!vars->cmd)

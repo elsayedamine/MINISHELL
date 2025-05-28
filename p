@@ -1,0 +1,14 @@
+built-ins
+execution
+garbage
+libft
+main.c
+Makefile
+minishell
+minishell.h
+p
+parsing
+readline.supp
+README.md
+testcases
+test.sh
