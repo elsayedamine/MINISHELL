@@ -6,11 +6,34 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:26:09 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 18:26:39 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:28:28 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	open_files(t_shell *vars)
+{
+	t_redir	*r;
+	t_list	*redir;
+	int		fd;
+	char	*exp;
+
+	redir = vars->redir;
+	while (redir)
+	{
+		r = (t_redir *)redir->content;
+		exp = alloc(0, ft_strdup(r->target), 0);
+		if (expand_target(vars, &exp) == FALSE)
+			return (FALSE);
+		fd = open(r->target, r->flag, 0644);
+		if (fd == -1)
+			return (perror(r->target), g_var->exit_status = errno, FALSE);
+		close(fd);
+		redir = redir->next;
+	}
+	return (TRUE);
+}
 
 int	*apply_redirect_shell(t_shell *vars)
 {
