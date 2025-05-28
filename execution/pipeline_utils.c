@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 23:15:45 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/27 23:18:14 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:46:54 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,25 @@ int	check_built(char **arr, t_shell *vars)
 	return (NOT_BUILT);
 }
 
+t_list	*pipe_node(t_list **line, t_list *node)
+{
+	t_list	*new;
+
+	if (node->type == CMD)
+	{
+		new = create_node(node->content);
+		new->type = CMD;
+		ft_lstadd_back(line, new);
+	}
+	if (node->type == SUBSHELL)
+	{
+		new = alloc(0, ft_lstnew(node->child), 0);
+		new->type = SUBSHELL;
+		ft_lstadd_back(line, new);
+	}
+	return (new);
+}
+
 t_pipe	create_pipeline(t_list **ast)
 {
 	int		len;
@@ -43,10 +62,8 @@ t_pipe	create_pipeline(t_list **ast)
 	while (*ast)
 	{
 		len++;
-		if ((*ast)->type == CMD)
-			ft_lstadd_back(&pipe_info.pipeline, create_node((*ast)->content));
-		if ((*ast)->type == SUBSHELL)
-			ft_lstadd_back(&pipe_info.pipeline, alloc(0, ft_lstnew((*ast)->child), 0));
+		if ((*ast)->type == CMD || (*ast)->type == SUBSHELL)
+			pipe_node(&pipe_info.pipeline, *ast);
 		if ((*ast)->next && (*ast)->next->type == PIPE)
 			*ast = (*ast)->next->next;
 		else
@@ -60,6 +77,25 @@ t_pipe	create_pipeline(t_list **ast)
 	return (pipe_info);
 }
 
+t_stream	*streams_init(int pipeline_len)
+{
+	int			i;
+	t_stream	*stream;
+
+	stream = (t_stream *)alloc(sizeof(t_stream) * (pipeline_len + 1), \
+		NULL, 'M');
+	if (!stream)
+		return (NULL);
+	i = 0;
+	while (i < pipeline_len)
+	{
+		stream[i].read = -1;
+		stream[i++].write = -1;
+	}
+	stream[0].read = STDIN;
+	stream[pipeline_len - 1].write = STDOUT;
+	return (stream);
+}
 
 int	wait_child_processes(t_pipe *pipe)
 {

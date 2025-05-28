@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 09:42:43 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/27 23:28:20 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:58:33 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,14 @@ int	exit_execve(char *cmd, t_shell *vars, t_list **ast)
 	return (errno);
 }
 
-t_stream	*streams_init(int pipeline_len)
-{
-	int			i;
-	t_stream	*stream;
-
-	stream = (t_stream *)alloc(sizeof(t_stream) * (pipeline_len + 1), \
-		NULL, 'M');
-	if (!stream)
-		return (NULL);
-	i = 0;
-	while (i < pipeline_len)
-	{
-		stream[i].read = -1;
-		stream[i++].write = -1;
-	}
-	stream[0].read = STDIN;
-	stream[pipeline_len - 1].write = STDOUT;
-	return (stream);
-}
-
 void	connect_pipe(t_stream *curr_stream)
 {
 	int	pipefd[2];
 
 	if (pipe(pipefd) == -1)
 		perror("pipe");
-	(*curr_stream).write = pipefd[IN];
-	(*(curr_stream + 1)).read = pipefd[OUT];
+	curr_stream->write = pipefd[OUT];
+	(curr_stream + 1)->read = pipefd[IN];
 }
 
 void	shut_stream(t_stream *curr_stream)
@@ -67,34 +47,34 @@ void	shut_stream(t_stream *curr_stream)
 
 void	stream2io(t_stream *stream)
 {
-	if (stream->read != STDIN_FILENO)
-		if (dup2(stream->read, STDIN_FILENO) == -1)
-			perror(strerror(errno));
-	if (stream->write != STDOUT_FILENO)
-		if (dup2(stream->write, STDOUT_FILENO) == -1)
-			perror(strerror(errno));
-	shut_stream(stream);
-}
+	if (stream->read != -1 && stream->read != STDIN_FILENO)
+	{
+		dup2(stream->read, STDIN_FILENO);
+		close(stream->read);
+	}
 
+	if (stream->write != -1 && stream->write != STDOUT_FILENO)
+	{
+		dup2(stream->write, STDOUT_FILENO);
+		close(stream->write);
+	}
+}
+		
 int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i)
 {
 	t_list	*node;
-	pid_t	pid;
 	char	*cmd;
 
 	node = ft_lstgetnode(pipe.pipeline, i);
 	if (node->type == SUBSHELL)
-		return (execution(vars, &node));
+		return (execution(vars, &node->child));
 	node->raw = alloc(0, ft_strdup(node->content), 0);
 	extract_redirections(vars, (char **)&node->content);
 	expand(vars, (char **)&node->content, &node->arr);
-	stream2io(&pipe.stream_line[i]);
-	// if (apply_redirections(vars) == -1)
-	// 	return (-1);
 	if (!*(char *)node->content && ft_strpbrk(node->raw, "'\""))
 	{
 		if (open_files(vars) == FALSE)
-			return (-1);
+			return (1);
 		return (g_var->exit_status = 0, 0);
 	}
 	else
@@ -102,22 +82,13 @@ int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i)
 	if (!cmd)
 	{
 		if (open_files(vars) == FALSE)
-			return (-1);
+			return (1);
 		throw_error(vars->err.errn, vars->err.str, NULL);
 		return (g_var->exit_status = 0, 0);
 	}
-	pid = fork();
-	if (pid < 0)
-		return (perror("fork"), -1);
-	if (pid > 0)
-		return (pid);
-	signal(SIGINT, clear);
-	if (i != pipe.size -1)
-		shut_stream	(&pipe.stream_line[i + 1]);
 	if (apply_redirections(vars) == -1)
-		return (-1);
-	int builts = check_built(node->arr, vars);
-	if (builts != NOT_BUILT)
+		return (1);
+	if (check_built(node->arr, vars) != NOT_BUILT)
 		clear(0);
 	execve(cmd, node->arr, vars->envp);
 	g_var->exit_status = 127;
@@ -140,8 +111,9 @@ pid_t	execute_pipe(t_shell *vars, t_pipe *pipe, int index)
 		return (pid);
 	}
 	signal(SIGINT, clear);
+	stream2io(&pipe->stream_line[index]);
 	if (index != pipe->size - 1)
-		shut_stream(&pipe->stream_line[index]);
+		shut_stream(&pipe->stream_line[index + 1]);
 	g_var->exit_status = execute_cmd_pipe(vars, *pipe, index);
 	clear(0);
 	return (-1);
