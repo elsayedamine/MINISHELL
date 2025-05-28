@@ -6,12 +6,12 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 14:10:51 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:58:49 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-// i found leaks here too in node join
+
 int	ft_nodejoin(t_shell *vars)
 {
 	char	*new_content;
@@ -22,7 +22,8 @@ int	ft_nodejoin(t_shell *vars)
 	while (tmp && tmp->next)
 	{
 		tmp_content = (char *)tmp->content;
-		if (is_word(tmp_content) && is_word((char *)tmp->next->content))
+		if (is_red(tmp_content, 'w') && \
+			is_red((char *)tmp->next->content, 'w'))
 		{
 			new_content = alloc(0, ft_strjoin(tmp_content, \
 				(char *)tmp->next->content), 0);

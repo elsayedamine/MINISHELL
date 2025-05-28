@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 05:26:59 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 18:53:13 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/28 15:52:14 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	open_file(t_redir *r, char **filename)
 
 	r->fd = open(*filename, r->flag, 0644);
 	if (r->fd < 0)
-		return (perror(*filename), FALSE);
+		return (printfd(2, M": %s: %s\n", \
+			*filename, strerror(errno)), FALSE);
 	if (r->mode == READ || r->mode == HEREDOC)
 		dup = dup2(r->fd, STDIN);
 	else
@@ -87,7 +88,6 @@ int	apply_redirections(t_shell *vars)
 	{
 		r = (t_redir *)tmp->content;
 		expanded = alloc(0, ft_strdup(r->target), 0);
-
 		if (r->mode != HEREDOC && expand_target(vars, &expanded) == FALSE)
 			return (perform_dups(in, out), -1);
 		if (open_file(r, &expanded) == FALSE)
