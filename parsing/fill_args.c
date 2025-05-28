@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/27 09:34:22 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 12:50:47 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	validater(t_shell *vars)
 		token = alloc(0, tokenizer(NULL, "'\"()|&<>"), 0);
 	}
 	if (!all_checks(vars))
-		return (FALSE);
+		return (g_var->exit_status = 2, FALSE);
 	if (process_heredocs(vars) == FALSE)
 		return (FALSE);
 	return (TRUE);

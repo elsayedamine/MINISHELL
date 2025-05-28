@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 16:21:03 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/28 13:07:03 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_sig	*g_var;
 
-char	*read_cmd(char *cmd)
+char	*read_cmd(t_shell *vars, char *cmd)
 {
 	char	*trim;
 
@@ -23,7 +23,8 @@ char	*read_cmd(char *cmd)
 	if (trim && *trim)
 		add_history(trim);
 	if (!trim || !ft_strcmp("exit", cmd))
-		return (NULL);
+		return (write(1, "exit\n", 5), clear(0), NULL);
+	vars->bash_line_counter++;
 	return (cmd);
 }
 
@@ -42,13 +43,14 @@ void	foo(int sig)
 
 void	prompt_loop(t_shell *vars)
 {
+	vars->bash_line_counter = 0;
 	g_var->exit_status = 0;
 	while (1)
 	{
 		ft_init(7, &vars->check.dquot, &vars->check.squot, \
 			&vars->check.par, &vars->check.special, &vars->check.fpar, \
 				&vars->check.lpar, &g_var->flag);
-		vars->cmd = read_cmd(vars->cmd);
+		vars->cmd = read_cmd(vars, vars->cmd);
 		if (!vars->cmd)
 			return ((void)alloc(0, NULL, 'F'));
 		if (!*vars->cmd)

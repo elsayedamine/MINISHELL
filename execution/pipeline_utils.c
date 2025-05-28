@@ -6,11 +6,26 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 23:15:45 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 11:46:54 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:43:00 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	is_built(char **arr, t_shell *vars)
+{
+	(void)vars;
+	if (!arr)
+		return (0);
+	return (!ft_strcmp("pwd", *arr)
+		|| !ft_strcmp("cd", *arr)
+		|| !ft_strcmp("echo", *arr)
+		|| !ft_strcmp("env", *arr)
+		|| !ft_strcmp("exit", *arr)
+		|| !ft_strcmp("export", *arr)
+		|| !ft_strcmp("unset", *arr));
+	return (0);
+}
 
 int	check_built(char **arr, t_shell *vars)
 {
@@ -58,7 +73,7 @@ t_pipe	create_pipeline(t_list **ast)
 	t_pipe	pipe_info;
 
 	pipe_info.pipeline = NULL;
-	len = 0;	
+	len = 0;
 	while (*ast)
 	{
 		len++;

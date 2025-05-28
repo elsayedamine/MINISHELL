@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 21:12:49 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/28 14:00:43 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ int	all_checks(t_shell *vars)
 		return (throw_error(SYNTAX, (char *)vars->args->content, NULL), 0);
 	if (isvalid_quotes(vars) == FALSE)
 		return (FALSE);
-	if (isvalid_op(vars) == FALSE)
-		return (FALSE);
 	if (isvalid_par(vars) == FALSE)
 		return (FALSE);
 	if (ft_nodejoin(vars) == FALSE)
@@ -104,12 +102,16 @@ int	all_checks(t_shell *vars)
 		return (FALSE);
 	if (isvalid_red(vars) == FALSE)
 		return (FALSE);
+	if (isvalid_op(vars) == FALSE)
+		return (FALSE);
 	return (TRUE);
 }
 
 void	throw_error(int error, char *file, int *exitt)
 {
-	(void)exitt;
+	if (error == EOOF)
+		printfd(1, M": warning: here-document at line \
+			%d delimited by end-of-file (wanted `%s')\n	", *exitt, file);
 	if (error == ENOENT || error == EACCES)
 		printfd(2, M": %s: %s\n", file, strerror(error));
 	if (error == SYNTAX)

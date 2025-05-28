@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_heredocs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 10:29:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 18:26:56 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/28 13:07:18 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	fill_heredoc(t_shell *vars, t_redir **r)
 			printfd((*r)->fd, "%s\n", line);
 			free(line);
 		}
+		throw_error(EOOF, (*r)->delim, &vars->bash_line_counter);
 		free(line);
 		alloc(0, NULL, 'F');
 	}

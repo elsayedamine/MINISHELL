@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/27 23:19:19 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:56:50 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef enum error
 	VALID_BUILT,
 	INVALID_BUILT,
 	NOT_BUILT,
+	EOOF,
 
 }			t_error;
 
@@ -136,6 +137,7 @@ typedef struct s_err
 typedef struct s_shell
 {
 	int			exit;
+	int			bash_line_counter;
 	char		**envp;
 	char		*cmd;
 	char		*cmd_not_found;
@@ -218,7 +220,7 @@ char	*ft_strjoin_f(char *s1, char *s2, int free_s);
 void	ft_printexport(t_shell	*vars);
 void	append_value(char *v, char *av, t_shell *vars);
 int		check_builts(char **arr, t_shell *vars, int i);
-
+int		is_built(char **arr, t_shell *vars);
 /*---------------------------- execution ----------------------------*/
 
 int		pipex(t_shell *vars, t_list **node);

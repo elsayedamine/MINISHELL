@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 09:42:43 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 11:58:33 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:35:44 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i)
 {
 	t_list	*node;
 	char	*cmd;
-
+	
+	cmd = "";
 	node = ft_lstgetnode(pipe.pipeline, i);
 	if (node->type == SUBSHELL)
 		return (execution(vars, &node->child));
@@ -77,7 +78,7 @@ int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i)
 			return (1);
 		return (g_var->exit_status = 0, 0);
 	}
-	else
+	else if (!is_built(node->arr, vars))
 		cmd = alloc(0, get_path(node->arr[0], vars), 0);
 	if (!cmd)
 	{
