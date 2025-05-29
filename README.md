@@ -39,7 +39,6 @@ redirections errors should be displayed before  command not found
 
 ## READ THAT
 ```bash
-
     after bzaf dyal lhandlage
     l9it l heardoc kan fih mochkil bdok WIFE macros so mchi tankharba9 ana o mos3ab ta l9ina fihom lmockil l9ina lhall
     daba we need to understand chno tidiro dok lmacros
@@ -47,9 +46,6 @@ redirections errors should be displayed before  command not found
 ```
 
 ```bash
-but the reirection of the subshell is not working : (ls) > test #it is wokring in bash#
-we have an error in shlvl i guess when env -i
-when we have a yes command like  then we do Ctrl+C the exit status is wrong and the minishell is wrongly placed
 little problem in makefile when we change in libft and make it says all done
 pwd exit status
 ```
