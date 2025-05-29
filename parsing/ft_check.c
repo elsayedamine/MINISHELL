@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 19:52:01 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/29 02:37:04 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	throw_error(int error, char *file, int *exitt)
 {
 	if (error == EOOF)
 		printfd(1, M": warning: here-document at line \
-			%d delimited by end-of-file (wanted `%s')\n	", *exitt, file);
+			%d delimited by end-of-file (wanted `%s')\n", *exitt, file);
 	if (error == ENOENT || error == EACCES)
 		printfd(2, M": %s: %s\n", file, strerror(error));
 	if (error == SYNTAX)

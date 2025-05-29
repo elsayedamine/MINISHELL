@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:54 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/28 19:51:57 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/29 02:34:31 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int	isvalid_red(t_shell *vars)
 			return (throw_error(SYNTAX, "newline", NULL), FALSE);
 		if (is_red(c, 'r') && tmp->next && (is_op(n) || is_red(n, 'r')))
 			return (throw_error(SYNTAX, *split, NULL), FALSE);
-		if (is_red(c, 'r') && tmp->next && ft_arrlen(split) != 1)
-			return (throw_error(SYNTAX, *(split + 1), NULL), FALSE);
+		// if (is_red(c, 'r') && tmp->next && ft_arrlen(split) != 1)
+		// 	return (throw_error(SYNTAX, *(split + 1), NULL), FALSE);
 		tmp = tmp->next;
 	}
 	return (TRUE);

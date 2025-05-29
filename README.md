@@ -79,3 +79,48 @@ execution  libft    main.o  minishell  minishell.h	readline.supp  testcases
 minishell$ (ls) asd'a<b'
 Minishell: syntax error near unexpected token `asd'
 ```
+
+check exit_ status of builts
+<< heredoc exit when find delim
+export a=a
+unset a=a
+aelsayed@c3r10p10:~/Desktop/minishell$ echo *in*****
+built-ins *main main main.c main.o minishell minishell.h parsing readline.supp
+aelsayed@c3r10p10:~/Desktop/minishell$ echo *ins*****
+built-ins
+aelsayed@c3r10p10:~/Desktop/minishell$ echo .*
+. .. .git .vscode
+
+minishell$ echo *ins*
+built-ins
+minishell$ echo *ins***********
+*ins***********
+minishell$ echo *ins**
+*ins**
+minishell$ echo *ins*
+built-ins
+minishell$ echo *ins****
+*ins****
+minishell$ echo *ins*
+built-ins
+minishell$ echo *in****
+built-ins main.c minishell.h parsing readline.supp main.o minishell
+minishell$ echo *ins*
+built-ins
+
+```bash
+minishell$ echo * *  *
+MaMaMakefile README.md built-ins execution garbage libft main.c minishell.h parsing readline.supp test.sh testcases main.o *m *main a aa main minishell
+minishell$ 
+minishell$ * ls *
+MakefMakefile: command not found
+minishell$ * * * 
+MaMaMakefile: command not found
+minishell$ * das
+Makefile: command not found
+minishell$ * da *
+MakefMakefile: command not found
+minishell$ * da * * *  * * * 8 
+MakefMaMaMaMaMaMakefile: command not found
+minishell$ * da * * *  * * * 
+```
