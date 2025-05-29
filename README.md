@@ -120,7 +120,15 @@ minishell$ * das
 Makefile: command not found
 minishell$ * da *
 MakefMakefile: command not found
-minishell$ * da * * *  * * * 8 
+minishell$ * da * * *  * * *
 MakefMaMaMaMaMaMakefile: command not found
 minishell$ * da * * *  * * * 
+```
+
+```bash
+minishell$ $123asdasd
+$123asdasd: command not found
+minishell$ $asdsd
+minishell$ $asd
+minishell$ 
 ```
