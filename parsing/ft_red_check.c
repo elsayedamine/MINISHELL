@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_red_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:54 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/29 17:25:13 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/29 22:23:06 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ int	is_there_red(char *str)
 
 void	feed_str(char **n, char *s)
 {
-	int i;
-	int q;
-	int j;
+	int	i;
+	int	q;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -117,17 +117,10 @@ int	isvalid_red(t_shell *vars)
 			return (throw_error(SYNTAX, "newline", NULL), FALSE);
 		if (is_red(c, 'r') && tmp->next && (is_op(n) || is_red(n, 'r')))
 			return (throw_error(SYNTAX, n, NULL), FALSE);
-		if (is_par(c) && *c == ')' && tmp->next && is_red(n, 'r') && ft_wc(tmp->next->next, &n))
+		if (is_par(c) && *c == ')' && tmp->next && \
+			is_red(n, 'r') && ft_wc(tmp->next->next, &n))
 			return (throw_error(SYNTAX, n, NULL), FALSE);
 		tmp = tmp->next;
 	}
-	return (TRUE);
-}
-
-int	nodejoin(t_shell *vars)
-{
-	if (ft_nodejoin(vars) == FALSE)
-		return (FALSE);
-	pop_spaces(vars);
 	return (TRUE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/29 17:59:47 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/29 22:19:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,16 @@ int	match_pattern(const char *pattern, const char *str)
 	return (*str == '\0');
 }
 
-int c_files(void)
+int	c_files(void)
 {
 	DIR				*dir;
-	struct dirent	*entry;
 	int				count;
 
 	count = 0;
 	dir = opendir(".");
 	if (!dir)
 		return (-1);
-	while ((entry = readdir(dir)) != NULL)
+	while (readdir(dir))
 		count++;
 	closedir(dir);
 	return (count);
@@ -92,7 +91,8 @@ char	**wildcard(char *pattern)
 	{
 		if (match_pattern(wc.tmp, wc.entry->d_name))
 		{
-			if (wc.entry->d_name[0] != '.' || (*pattern == '.' && wc.entry->d_name[0] == '.'))
+			if (wc.entry->d_name[0] != '.' || \
+				(*pattern == '.' && wc.entry->d_name[0] == '.'))
 				wc.matches[wc.count++] = alloc(0, \
 					ft_strdup(wc.entry->d_name), 0);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:49:07 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/25 15:46:28 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/29 22:20:39 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,3 +54,9 @@ void	*ft_list2(size_t size)
 	return (alloc(size, NULL, 'M'));
 }
 
+void	clear(int sig)
+{
+	if (sig == 2)
+		g_var->exit_status = 130;
+	alloc(0, NULL, 'F');
+}

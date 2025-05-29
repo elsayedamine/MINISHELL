@@ -82,3 +82,7 @@ minishell$ ls|(wc -l | cat -n) > p | ls
      1	13
 minishell$ ls|(wc -l | cat -n ) > p| ls
 ```
+
+```bash
+(ls) | (wc -l && ls) > p| (cat -e)
+```

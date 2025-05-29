@@ -6,39 +6,30 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 10:29:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 13:07:18 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:31:45 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*expand_heredoc_line(t_shell *vars, char **str)
+void	read_doc_line(t_shell *vars, t_redir **r)
 {
-	char	*s;
-	int		i;
-	int		q;
-	char	*new;
-	t_list	*lst;
+	char	*line;
 
-	s = *str;
-	ft_init(2, &i, &q);
-	lst = NULL;
-	while (s && s[i])
+	signal(SIGINT, clear);
+	while (1)
 	{
-		if (s[i] == '$')
-			i += extract_var_value(vars, &lst, &s[i], 0);
-		else
-			ft_lstadd_back(&lst, ft_lstnew(ft_strndup(&s[i++], 1)));
+		line = readline("> ");
+		if (!line || !ft_strcmp(line, (*r)->delim))
+			break ;
+		if (!(*r)->q)
+			line = expand_heredoc_line(vars, &line);
+		printfd((*r)->fd, "%s\n", line);
+		free(line);
 	}
-	free(*str);
-	new = ft_lst2str(lst);
-	return (ft_lstclear(&lst, free), new);
-}
-
-void	clear(int sig)
-{
-	if (sig == 2)
-		g_var->exit_status = 130;
+	if (!line)
+		throw_error(EOOF, (*r)->delim, &vars->bash_line_counter);
+	free(line);
 	alloc(0, NULL, 'F');
 }
 
@@ -47,34 +38,19 @@ void	fill_heredoc(t_shell *vars, t_redir **r)
 	char	*line;
 	pid_t	pid;
 	int		status;
-	
+
 	status = 0;
 	pid = fork();
 	if (pid == 0)
-	{
-		signal(SIGINT, clear);
-		while (1)
-		{
-			line = readline("> ");
-			if (!line || !ft_strcmp(line, (*r)->delim))
-				break ;
-			if (!(*r)->q)
-				line = expand_heredoc_line(vars, &line);
-			printfd((*r)->fd, "%s\n", line);
-			free(line);
-		}
-		throw_error(EOOF, (*r)->delim, &vars->bash_line_counter);
-		free(line);
-		alloc(0, NULL, 'F');
-	}
+		read_doc_line(vars, r);
 	else
 	{
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		signal(SIGINT, foo);
-		if(WIFEXITED(status) && WEXITSTATUS(status) == 130)
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
 			*r = NULL;
-		g_var->exit_status =  WEXITSTATUS(status);
+		g_var->exit_status = WEXITSTATUS(status);
 	}
 }
 

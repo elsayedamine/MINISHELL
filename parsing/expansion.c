@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 23:26:49 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:23:17 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	extract_var_value(t_shell *vars, t_list **s, char *str, int q)
 	if (*str == '$' && *(str + 1) == '?')
 		var_value = alloc(0, ft_itoa(g_var->exit_status), 0);
 	else if (get_var_len(str + 1) == 0)
-		return (ft_lstadd_back(s, alloc(0, ft_lstnew(alloc(0, ft_strdup("$"), 0)), 0)), 1);
+		return (ft_lstadd_back(s, alloc(0, \
+			ft_lstnew(alloc(0, ft_strdup("$"), 0)), 0)), 1);
 	if (!var_value)
 	{
 		var_name = alloc(0, ft_strndup(str + 1, get_var_len(str + 1)), 0);

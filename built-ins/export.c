@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 15:43:37 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/29 22:24:45 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_add(char *v, char *av, t_shell *vars)
 {
 	t_list	*tmp;
 	char	*new_value;
-	t_list 	*new_node;
+	t_list	*new_node;
 
 	tmp = vars->env;
 	while (tmp)
@@ -82,7 +82,6 @@ void	ft_add(char *v, char *av, t_shell *vars)
 		return ;
 	ft_lstadd_back(&vars->env, new_node);
 }
-
 
 int	ft_isvn(char *v, int flag, t_shell *vars)
 {

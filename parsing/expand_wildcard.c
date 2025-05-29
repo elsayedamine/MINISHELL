@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:18:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 19:41:53 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/29 22:23:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	*extract_pattern(char *str, int index, char sep, t_list *s)
 int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 {
 	t_wd	wd;
-	int 	size;
+	int		size;
 
 	size = ft_lstsize(*new);
 	wd.b = extract_pattern(str, index, ' ', s);

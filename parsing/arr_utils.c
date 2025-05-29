@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arr_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 02:15:03 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 18:19:48 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/29 22:24:05 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**ft_arrdup(char **arr)
 		if (!dup[i])
 		{
 			clear(0);
-			return (ft_free("2", dup), NULL);		
+			return (ft_free("2", dup), NULL);
 		}
 		i++;
 	}

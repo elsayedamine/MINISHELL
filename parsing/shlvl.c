@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shlvl.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:55:06 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 23:12:22 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/29 22:20:00 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_atoishell(char *str)
 	ft_init(2, &i, &sign);
 	n = 0;
 	if (!str)
-		return 1;
+		return (1);
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (sign++ && (str[i] == '-' || str[i] == '+'))

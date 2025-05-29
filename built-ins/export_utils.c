@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:14:29 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 21:47:59 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/29 22:24:56 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	append_value(char *v, char *av, t_shell *vars)
 		if (!ft_strncmp((char *)tmp->content, v, ft_strlen(v)) \
 			&& ((char *)tmp->content)[ft_strlen(v)] == '=')
 		{
-			old_val = alloc(0, ft_strdup((char *)tmp->content + ft_strlen(v) + 1), 0);
+			old_val = alloc(0, \
+				ft_strdup((char *)tmp->content + ft_strlen(v) + 1), 0);
 			new_val = av + ft_strlen(v) + 2;
 			appended = alloc(0, ft_strjoin(old_val, new_val), 0);
 			tmp->content = alloc(0, ft_strjoin(v, "="), 0);
