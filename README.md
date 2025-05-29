@@ -52,72 +52,6 @@ pwd exit status
 
 gcl https://github.com/LucasKuhn/minishell_tester.git
 
-```bash
-we have an error in validating syntax
-(ls && ls | grep a) | cat -e | ( | cat) | wc -l
-minishell$ (ls && ls | grep a) | cat -e | ( |& cat) | wc -l
-Minishell: syntax error near unexpected token `&'
-minishell$ (ls && ls | grep a) | cat -e | ( & cat) | wc -l
-Minishell: syntax error near unexpected token `newline'
-minishell$ (ls && ls | grep a) | cat -e | ( && cat) | wc -l
-
-```
-
-```bash
-minishell$ (ls) asd'a<b'
-Minishell: syntax error near unexpected token `asd'
-minishell$ (ls) 'a<b'
-- (group)
-	- ls
--  'a<b'
-built-ins  garbage  main.c  Makefile   minishell_bonus	parsing        README.md  test.sh
-execution  libft    main.o  minishell  minishell.h	readline.supp  testcases
-minishell$ (ls) asd'a<b'
-Minishell: syntax error near unexpected token `asd'
-```
-
-export a=a
-unset a=a
-aelsayed@c3r10p10:~/Desktop/minishell$ echo *in*****
-built-ins *main main main.c main.o minishell minishell.h parsing readline.supp
-aelsayed@c3r10p10:~/Desktop/minishell$ echo *ins*****
-built-ins
-aelsayed@c3r10p10:~/Desktop/minishell$ echo .*
-. .. .git .vscode
-
-minishell$ echo *ins*
-built-ins
-minishell$ echo *ins***********
-*ins***********
-minishell$ echo *ins**
-*ins**
-minishell$ echo *ins*
-built-ins
-minishell$ echo *ins****
-*ins****
-minishell$ echo *ins*
-built-ins
-minishell$ echo *in****
-built-ins main.c minishell.h parsing readline.supp main.o minishell
-minishell$ echo *ins*
-built-ins
-
-```bash
-minishell$ echo * *  *
-MaMaMakefile README.md built-ins execution garbage libft main.c minishell.h parsing readline.supp test.sh testcases main.o *m *main a aa main minishell
-minishell$ 
-minishell$ * ls *
-MakefMakefile: command not found
-minishell$ * * * 
-MaMaMakefile: command not found
-minishell$ * das
-Makefile: command not found
-minishell$ * da *
-MakefMakefile: command not found
-minishell$ * da * * *  * * *
-MakefMaMaMaMaMaMakefile: command not found
-minishell$ * da * * *  * * * 
-```
 
 ```bash
 minishell$ $123asdasd
@@ -130,4 +64,21 @@ check exit_ status of builts
 minishell$ << $''a
 > 
 
+```
+```bash
+minishell$ (cat | wc -l )|grep a > p | ls
+built-ins  execution  garbage  libft  main.c  Makefile	minishell  minishell.h	p  parsing  readline.supp  README.md  testcases  test.sh
+^Cminishell$ (cat | wc -l )|grep a > p | ls
+```
+
+```bash
+minishell$ ls|(wc -l | cat -n)
+     1	13
+minishell$ ls|(wc -l | cat -n) > p
+     1	13
+minishell$ ls|(wc -l | cat -n) > p
+     1	13
+minishell$ ls|(wc -l | cat -n) > p | ls
+     1	13
+minishell$ ls|(wc -l | cat -n ) > p| ls
 ```

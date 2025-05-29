@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:00:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/24 21:39:22 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:09:58 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	unset_variable(char *key, t_shell *vars)
 
 	new_env = NULL;
 	curr = vars->env;
+	if (!ft_isvn(key, 1, vars))
+		return (TRUE);
 	while (curr)
 	{
 		next = curr->next;

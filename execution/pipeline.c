@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 09:42:43 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 15:30:50 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:05:49 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i)
 	node = ft_lstgetnode(pipe.pipeline, i);
 	
 	if (node->type == SUBSHELL)
-		exit(execution(vars, (t_list **)&node->content, &node));
+	{
+		vars->exec = execution(vars, (t_list **)&node->content, &node);
+		clear(0);
+	}
 	node->raw = alloc(0, ft_strdup(node->content), 0);
 	extract_redirections(vars, (char **)&node->content);
 	expand(vars, (char **)&node->content, &node->arr);

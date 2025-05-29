@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:30:19 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 02:37:04 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:34:25 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int	isvalid_syntax(t_shell *vars)
 	{
 		c = (char *)tmp->content;
 		if (tmp->next)
-			n = alloc(0, ft_strtrim(alloc(0, \
-				tokenizer((char *)tmp->next->content, "<>"), 0), WHITE), 0);
+			n = alloc(0, ft_strtrim((char *)tmp->next->content, WHITE), 0);
 		if (is_par(c) && tmp->next && is_par(n) && *c != *n)
 			return (throw_error(SYNTAX, n, NULL), FALSE);
 		if (!is_par(c) && !is_op(c) && tmp->next && is_par(n) && *n == '(')
@@ -59,6 +58,8 @@ int	isvalid_syntax(t_shell *vars)
 			return (throw_error(SYNTAX, n, NULL), FALSE);
 		if (is_par(c) && *c == ')' && tmp->next && !is_op(n) && \
 			!is_par(n) && !is_there_red(n))
+			return (throw_error(SYNTAX, n, NULL), FALSE);
+		if (is_par(c) && *c == '(' && tmp->next && is_op(n))
 			return (throw_error(SYNTAX, n, NULL), FALSE);
 		tmp = tmp->next;
 	}

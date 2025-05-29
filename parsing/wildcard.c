@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:59:00 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/26 23:12:56 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/29 17:59:47 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,31 +55,50 @@ int c_files(void)
 	return (count);
 }
 
+char	*trim_pattern(char *pattern)
+{
+	int		start;
+	int		end;
+	char	*res;
+
+	start = 0;
+	end = 0;
+	if (pattern && *pattern == '*')
+		start = 1;
+	if (pattern[ft_strlen(pattern) - 1] == '*')
+		end = 1;
+	res = (char *)alloc(0, ft_strtrim(pattern, "*"), 0);
+	if (!res)
+		return (NULL);
+	if (start == 1)
+		res = alloc(0, ft_strjoin("*", res), 0);
+	if (end == 1)
+		res = alloc(0, ft_strjoin(res, "*"), 0);
+	return (res);
+}
+
 char	**wildcard(char *pattern)
 {
-	DIR				*dir;
-	struct dirent	*entry;
-	char			**matches;
-	int				count;
+	t_wc	wc;
 
-	matches = (char **)alloc(sizeof(char *) * (c_files() + 1), NULL, 'M');
-	count = 0;
-	dir = opendir(".");
-	if ((!matches && dir && closedir(dir)) || !dir)
+	wc.tmp = trim_pattern(pattern);
+	wc.matches = (char **)alloc(sizeof(char *) * (c_files() + 1), NULL, 'M');
+	wc.count = 0;
+	wc.dir = opendir(".");
+	if ((!wc.matches && wc.dir && closedir(wc.dir)) || !wc.dir)
 		return (throw_error(DIRECT, NULL, NULL), NULL);
-	entry = readdir(dir);
-	while (entry)
+	wc.entry = readdir(wc.dir);
+	while (wc.entry)
 	{
-		if (entry->d_name[0] != '.' && match_pattern(pattern, entry->d_name))
+		if (match_pattern(wc.tmp, wc.entry->d_name))
 		{
-			if (count < MAX_MATCHES)
-				matches[count++] = alloc(0, ft_strdup(entry->d_name), 0);
-			else
-				break ;
+			if (wc.entry->d_name[0] != '.' || (*pattern == '.' && wc.entry->d_name[0] == '.'))
+				wc.matches[wc.count++] = alloc(0, \
+					ft_strdup(wc.entry->d_name), 0);
 		}
-		entry = readdir(dir);
+		wc.entry = readdir(wc.dir);
 	}
-	if (!count)
-		return (closedir(dir), NULL);
-	return (closedir(dir), matches[count] = NULL, matches);
+	if (!wc.count)
+		return (closedir(wc.dir), NULL);
+	return (closedir(wc.dir), wc.matches[wc.count] = NULL, wc.matches);
 }

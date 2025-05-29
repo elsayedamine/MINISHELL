@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:18:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 23:53:01 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/29 19:41:53 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,48 +51,22 @@ int	*extract_pattern(char *str, int index, char sep, t_list *s)
 	return (borders);
 }
 
-// we have a problem in extract wildcard in free and performance and leaks
-// int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
-// {
-// 	int		*bord;
-// 	char	**wd.arr;
-// 	char	*pattern[2];
-// 	int		diff;
-// 	t_list	*node;
-
-// 	bord = extract_pattern(str, index, ' ', s);
-// 	if (!bord)
-// 		return (0);
-// 	pattern[0] = removequotes(alloc(0, \
-// 		ft_substr(str, bord[0], bord[1] - bord[0]), 0), s);
-// 	arr = wildcard(pattern[0]);
-// 	node = ft_lstgetnode(*new, bord[0] - 1);
-// 	while (node && node->next)
-// 		node->next = node->next->next;
-// 	if (arr)
-// 		pattern[0] = ft_arr2str(arr, ' ');
-// 	else
-// 		pattern[0] = ft_substr(str, bord[0], bord[1] - bord[0]);
-// 	pattern[1] = removequotes(pattern[0], *new);
-// 	ft_lstadd_back(new, ft_str_to_lst(alloc(0, pattern[1], 0), 1));
-// 	diff = bord[1] - index;
-// 	return (diff);
-// }
-
 int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 {
 	t_wd	wd;
+	int 	size;
 
+	size = ft_lstsize(*new);
 	wd.b = extract_pattern(str, index, ' ', s);
 	if (!wd.b)
 		return (0);
 	wd.pattern = removequotes(alloc(0, \
 		ft_substr(str, wd.b[0], wd.b[1] - wd.b[0]), 0), s);
 	wd.arr = wildcard(wd.pattern);
-	wd.node = ft_lstgetnode(*new, wd.b[0] - 1);
+	wd.node = ft_lstgetnode(*new, size - (index - wd.b[0]) - 1);
 	while (wd.node && wd.node->next)
 		wd.node->next = wd.node->next->next;
-	if (wd.b[0] - 1 <= 0)
+	if (size - (index - wd.b[0]) - 1 <= 0)
 		*new = NULL;
 	if (wd.arr)
 		wd.pattern = alloc(0, ft_arr2str(wd.arr, ' '), 0);
