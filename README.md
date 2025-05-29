@@ -76,8 +76,6 @@ minishell$ (ls) asd'a<b'
 Minishell: syntax error near unexpected token `asd'
 ```
 
-check exit_ status of builts
-<< heredoc exit when find delim
 export a=a
 unset a=a
 aelsayed@c3r10p10:~/Desktop/minishell$ echo *in*****
@@ -127,4 +125,9 @@ $123asdasd: command not found
 minishell$ $asdsd
 minishell$ $asd
 minishell$ 
+check exit_ status of builts
+<< heredoc exit when find delim
+minishell$ << $''a
+> 
+
 ```
