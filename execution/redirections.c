@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 00:18:51 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/28 16:45:50 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:42:04 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ t_list	*create_redir_list(t_shell *vars, t_list **s)
 		}
 		else
 		{
-			ft_lstadd_back(&raw, create_node(alloc(0, ft_strdup(tmp->content), 0)));
+			ft_lstadd_back(&raw, \
+				create_node(alloc(0, ft_strdup(tmp->content), 0)));
 			tmp = tmp->next;
 		}
 	}
@@ -107,11 +108,13 @@ t_list	*tokenize_command(char *cmd)
 		else if ((!ft_strncmp(&cmd[i], "<<", 2) \
 			|| !ft_strncmp(&cmd[i], ">>", 2)))
 		{
-			ft_lstadd_back(&lst, create_node(alloc(0, ft_strndup(cmd + i, 2), 0)));
+			ft_lstadd_back(&lst, \
+				create_node(alloc(0, ft_strndup(cmd + i, 2), 0)));
 			i += 2;
 		}
 		else if (cmd[i] == '<' || cmd[i] == '>')
-			ft_lstadd_back(&lst, create_node(alloc(0, ft_strndup(&cmd[i++], 1), 0)));
+			ft_lstadd_back(&lst, \
+				create_node(alloc(0, ft_strndup(&cmd[i++], 1), 0)));
 		else if (cmd[i])
 			i += add_token(cmd + i, &lst);
 	}

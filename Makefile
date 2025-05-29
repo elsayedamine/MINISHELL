@@ -18,9 +18,9 @@ sources = \
 		parsing/shlvl.c \
 		parsing/ft_red_check.c \
 		parsing/process_heredocs.c \
+		parsing/expand_heredoc.c \
 		parsing/alloc.c \
 		parsing/arr_utils.c \
-		parsing/custom_split.c \
 		\
 		\
 		execution/execution.c \
@@ -32,6 +32,8 @@ sources = \
 		execution/apply_redirections.c \
 		execution/shell_redirections.c \
 		execution/execute_builtins.c \
+		execution/stream.c \
+		execution/builts.c \
 		\
 		\
 		built-ins/cd.c \

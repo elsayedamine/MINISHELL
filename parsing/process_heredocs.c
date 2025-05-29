@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 10:29:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 22:31:45 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:37:26 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	read_doc_line(t_shell *vars, t_redir **r)
 
 void	fill_heredoc(t_shell *vars, t_redir **r)
 {
-	char	*line;
 	pid_t	pid;
 	int		status;
 

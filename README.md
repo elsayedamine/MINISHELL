@@ -85,4 +85,8 @@ minishell$ ls|(wc -l | cat -n ) > p| ls
 
 ```bash
 (ls) | (wc -l && ls) > p| (cat -e)
+minishell$ (ls) > p | cat
+minishell$ (ls) < Makefile| cat
+minishell$ bash
+
 ```

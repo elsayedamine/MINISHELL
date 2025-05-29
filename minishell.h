@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 22:32:19 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:40:59 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,8 @@ void		append_value(char *v, char *av, t_shell *vars);
 int			check_builts(char **arr, t_shell *vars, int i);
 int			is_built(char **arr, t_shell *vars);
 int			ft_isvn(char *v, int flag, t_shell *vars);
+int			check_built(char **arr, t_shell *vars);
+int			is_built(char **arr, t_shell *vars);
 
 /*---------------------------- EXECUTION ----------------------------*/
 
@@ -276,6 +278,9 @@ int			exit_execve(char *cmd, t_shell *vars, t_list **ast);
 int			wait_child_processes(t_pipe *pipe);
 t_pipe		create_pipeline(t_list **ast);
 int			check_built(char **arr, t_shell *vars);
+void		connect_pipe(t_stream *curr_stream);
+void		stream2io(t_stream *stream);
+void		shut_stream(t_stream *curr_stream);
 
 /*---------------------------- ALLOCS ----------------------------*/
 
