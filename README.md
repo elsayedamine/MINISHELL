@@ -91,3 +91,7 @@ ASD: command not found
 /tmp/minishell0: No such file or directory
 minishell$ 
 ```
+
+```bash
+handle eof and redirect exit msg into the STDERR
+``` 
