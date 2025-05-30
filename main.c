@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 22:22:13 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 01:14:54 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	prompt_loop(t_shell *vars)
 		if (!fill_args(vars))
 			continue ;
 		else
-			execution(vars, &vars->ast, &vars->ast);
+			execution(vars, &vars->ast, vars->ast);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 22:40:59 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 01:06:08 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ typedef struct s_pipe
 	t_list		*pipeline;
 	int			size;
 	int			pos;
-	int			exit_status;
 	pid_t		last_pid;
 	t_stream	*stream_line;
 }				t_pipe;
@@ -244,7 +243,7 @@ int			is_built(char **arr, t_shell *vars);
 /*---------------------------- EXECUTION ----------------------------*/
 
 int			pipex(t_shell *vars, t_list **node);
-int			execution(t_shell *vars, t_list **ast, t_list **parent);
+int			execution(t_shell *vars, t_list **ast, t_list *parent);
 char		*get_path(char *cmd, t_shell *vars);
 int			exit_execve(char *cmd, t_shell *vars, t_list **ast);
 void		skip(t_list **node, int op);

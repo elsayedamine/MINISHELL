@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 22:35:03 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 01:50:20 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	process_cmd(t_shell *vars, t_list **ast, int flag)
 		expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
 		is_builtin = check_builts((*ast)->arr, vars, 0);
 		if (is_builtin == INVALID_BUILT || is_builtin == VALID_BUILT)
-			return (skip(ast, is_builtin / 2), is_builtin);
+			return (skip(ast, is_builtin % 2), is_builtin);
 		if (is_builtin == NOT_BUILT)
 			return (is_builtin);
 	}
@@ -63,6 +63,16 @@ int	checks(t_shell *vars, t_list **ast, char **cmd)
 	return (-1);
 }
 
+void	child_cmd(t_shell *vars, t_list **ast, char *cmd)
+{
+	signal(SIGINT, clear);
+	if (apply_redirections(vars) == -1)
+		clear(0);
+	execve(cmd, (*ast)->arr, vars->envp);
+	g_var->exit_status = exit_execve(cmd, vars, ast);
+	clear(0);
+}
+
 int	execute_cmd(t_shell *vars, t_list **ast)
 {
 	char	*cmd;
@@ -73,14 +83,7 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 		return (g_var->exit_status);
 	pid = fork();
 	if (pid == 0)
-	{
-		signal(SIGINT, clear);
-		if (apply_redirections(vars) == -1)
-			clear(0);
-		execve(cmd, (*ast)->arr, vars->envp);
-		g_var->exit_status = exit_execve(cmd, vars, ast);
-		clear(0);
-	}
+		child_cmd(vars, ast, cmd);
 	else
 	{
 		signal(SIGINT, SIG_IGN);
@@ -97,12 +100,12 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 	return (process_cmd(vars, ast, 1));
 }
 
-int	execution(t_shell *vars, t_list **ast, t_list **parent)
+int	execution(t_shell *vars, t_list **ast, t_list *parent)
 {
 	t_list	**node;
 
 	node = ast;
-	if (!vars->redir && redirect_sub(vars, ast, *parent) == NULL)
+	if (!vars->redir && redirect_sub(vars, ast, parent))
 		;
 	while (*node)
 	{
@@ -114,12 +117,13 @@ int	execution(t_shell *vars, t_list **ast, t_list **parent)
 			g_var->exit_status = pipex(vars, node);
 		else if ((*node) && (*node)->type == SUBSHELL)
 		{
-			g_var->exit_status = execution(vars, &(*node)->child, &(*node));
+			g_var->exit_status = execution(vars, &(*node)->child, *node);
 			traverse_sub(vars, node);
 			return_original_std(vars);
 		}
 		else
 			(*node) = (*node)->next;
+		vars->redir = NULL;
 	}
 	return (g_var->exit_status);
 }

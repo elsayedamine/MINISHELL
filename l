@@ -1,0 +1,15 @@
+built-ins$
+execution$
+garbage$
+l$
+libft$
+main.c$
+Makefile$
+minishell$
+minishell.h$
+p$
+parsing$
+readline.supp$
+README.md$
+testcases$
+test.sh$

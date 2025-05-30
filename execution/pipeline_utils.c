@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 23:15:45 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 22:40:19 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 01:22:54 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_list	*pipe_node(t_list **line, t_list *node)
 	if (node->type == SUBSHELL)
 	{
 		new = alloc(0, ft_lstnew(node->child), 0);
+		new->child = node;
 		new->type = SUBSHELL;
 		ft_lstadd_back(line, new);
 	}
@@ -52,7 +53,6 @@ t_pipe	create_pipeline(t_list **ast)
 	pipe_info.pos = 0;
 	pipe_info.last_pid = -1;
 	pipe_info.stream_line = streams_init(len);
-	pipe_info.exit_status = 0;
 	return (pipe_info);
 }
 
