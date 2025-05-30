@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 22:35:54 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 22:36:36 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 05:22:11 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	connect_pipe(t_stream *curr_stream)
 
 void	shut_stream(t_stream *curr_stream)
 {
-	if (curr_stream->read >= 0 && curr_stream->read)
+	if (curr_stream->read >= 0 && curr_stream->read != STDIN)
 	{
 		close(curr_stream->read);
 		curr_stream->read = -1;

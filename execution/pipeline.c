@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 09:42:43 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/30 03:57:46 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 04:59:19 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,17 @@ void	process_input(t_shell *vars, t_list *node, char *cmd, int flag)
 		clear(0);
 	}
 }
-
+void	ft_lstiterd(t_list *lst, int (*f)(int fd, char const *, ...))
+{
+	if (lst && f)
+	{
+		while (lst)
+		{
+			f(2, "%s ", (char *)lst->content);
+			lst = lst->next;
+		}
+	}
+}
 int	execute_cmd_pipe(t_shell *vars, t_pipe pipe, int i)
 {
 	t_list	*node;

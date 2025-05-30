@@ -1,0 +1,12 @@
+a
+built-ins
+execution(null)  > P  | cat o
+Makefile
+minishell
+minishell.h
+P
+parsing
+readline.supp
+README.md
+testcases
+test.sh

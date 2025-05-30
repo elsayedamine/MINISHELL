@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/30 01:14:54 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 04:54:23 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
 	vars.envp = ft_arrdup(envp);
+	printf("%d\n", getpid());
 	if (!*vars.envp)
 		ft_nullenv(&vars);
 	vars.env = ft_arr2list(vars.envp);
