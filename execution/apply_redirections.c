@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 05:26:59 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 22:34:04 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:51:54 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ void	perform_dups(int save_in, int save_out)
 
 	i = dup2(save_in, STDIN_FILENO);
 	i = dup2(save_out, STDOUT_FILENO);
-	close(save_in);
-	close(save_out);
+	if (save_in != -1)
+		close(save_in);
+	if (save_out != -1)
+		close(save_out);
 	if (i <= -1)
 		return (perror("dup2"));
 }

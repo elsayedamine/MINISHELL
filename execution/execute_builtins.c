@@ -6,7 +6,7 @@
 /*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 01:35:39 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 18:46:17 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/30 15:38:05 by ahakki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ int	execute_builtins(t_shell *vars, t_fct *fct, char **arr)
 	exit = fct(ft_arrlen(arr), arr, vars);
 	if (dup2(in, STDIN) == -1 || dup2(out, STDOUT) == -1)
 		return (perror("dup2"), FALSE);
-	close(in);
-	close(out);
+	if (in != -1)
+		close(in);
+	if (out != -1)
+		close(out);
 	if (exit != EXIT_SUCCESS)
 		return (INVALID_BUILT);
 	return (VALID_BUILT);

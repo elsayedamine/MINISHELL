@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/30 22:12:59 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:25:10 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,10 @@ int	execution(t_shell *vars, t_list **ast, t_list *parent)
 		if ((*node) && (*node)->type == CMD && \
 			(!(*node)->next || (*node)->next->type <= AND))
 			g_var->exit_status = execute_cmd(vars, node);
-		else if ((*node) && ((*node)->type == CMD \
-			|| ((*node)->type == 2 && (((*node)->next && \
-			(*node)->next->next && (*node)->next->next->type == PIPE) \
-			|| ((*node)->next && (*node)->next->type == PIPE)))))
+		else if ((*node) && ((*node)->type == CMD || \
+		((*node)->type == SUBSHELL && (((*node)->next && \
+		(*node)->next->next && (*node)->next->next->type == PIPE) || \
+		((*node)->next && (*node)->next->type == PIPE)))))
 			g_var->exit_status = pipex(vars, node);
 		else if ((*node) && (*node)->type == SUBSHELL)
 		{
@@ -127,3 +127,9 @@ int	execution(t_shell *vars, t_list **ast, t_list *parent)
 	}
 	return (return_original_std(vars), g_var->exit_status);
 }
+
+// ls || (ls | ls | ls && ls) || ls && ls
+// p (char *)node->content
+// ls && (ls -l && ls -a || asasd||ASDSA||ASD && touch a) && touch ls
+//(ls && (echo A || (echo B && echo C))) || ((echo D && echo E) 
+// && (echo F || echo G)) && (echo H || (echo I && (echo J || echo K)))
