@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 23:15:45 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/30 06:18:05 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:15:40 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,22 @@ t_list	*pipe_node(t_list **line, t_list *node)
 	return (new);
 }
 
+int	traverse_pipie(t_list **ast)
+{
+	if ((*ast)->next && (*ast)->next->type == CMD)
+	{
+		if ((*ast)->next->next && (*ast)->next->next->type == PIPE)
+			(*ast) = (*ast)->next->next->next;
+		else
+			(*ast) = (*ast)->next;
+	}
+	else if ((*ast)->next && (*ast)->next->type == PIPE)
+		(*ast) = (*ast)->next->next;
+	else
+		return (FALSE);
+	return (TRUE);
+}
+
 t_pipe	create_pipeline(t_list **ast)
 {
 	t_pipe	pipe_info;
@@ -45,24 +61,12 @@ t_pipe	create_pipeline(t_list **ast)
 			pipe_node(&pipe_info.pipeline, (*ast));
 			pipe_info.size++;
 		}
-		if ((*ast)->type == SUBSHELL)
-		{
-			if ((*ast)->next && (*ast)->next->type == CMD)
-				{
-					if ((*ast)->next->next && (*ast)->next->next->type == PIPE)
-						(*ast) = (*ast)->next->next->next;
-					else
-						(*ast) = (*ast)->next;
-				}
-			else if ((*ast)->next && (*ast)->next->type == PIPE)
-				(*ast) = (*ast)->next->next;
-			else
-				break;
-		}
+		if ((*ast)->type == SUBSHELL && traverse_pipie(ast) == FALSE)
+			break ;
 		else if ((*ast)->next && (*ast)->next->type == PIPE)
 			(*ast) = (*ast)->next->next;
 		else
-			break;
+			break ;
 	}
 	pipe_info.last_pid = -1;
 	pipe_info.stream_line = streams_init(pipe_info.size);
