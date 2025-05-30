@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 23:15:45 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/30 04:15:31 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 06:18:05 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,48 +35,39 @@ t_list	*pipe_node(t_list **line, t_list *node)
 t_pipe	create_pipeline(t_list **ast)
 {
 	t_pipe	pipe_info;
-	int		len;
-	t_list	*cur;
 
 	pipe_info.pipeline = NULL;
-	len = 0;
-	cur = *ast;
-
-	while (cur)
+	ft_init(2, &pipe_info.size, &pipe_info.pos);
+	while ((*ast))
 	{
-		if (cur->type == CMD || cur->type == SUBSHELL)
+		if ((*ast)->type == CMD || (*ast)->type == SUBSHELL)
 		{
-			pipe_node(&pipe_info.pipeline, cur);
-			len++;
+			pipe_node(&pipe_info.pipeline, (*ast));
+			pipe_info.size++;
 		}
-		if (cur->type == SUBSHELL)
+		if ((*ast)->type == SUBSHELL)
 		{
-			if (cur->next && cur->next->type == CMD)
-			{
-				if (cur->next->next && cur->next->next->type == PIPE)
-					cur = cur->next->next->next; // Rule 1: SUB → CMD → PIPE
-				else
-					cur = cur->next; // Rule 2: SUB → CMD → Operator/NULL
-			}
-			else if (cur->next && cur->next->type == PIPE)
-				cur = cur->next->next; // Rule 3: SUB → PIPE
+			if ((*ast)->next && (*ast)->next->type == CMD)
+				{
+					if ((*ast)->next->next && (*ast)->next->next->type == PIPE)
+						(*ast) = (*ast)->next->next->next;
+					else
+						(*ast) = (*ast)->next;
+				}
+			else if ((*ast)->next && (*ast)->next->type == PIPE)
+				(*ast) = (*ast)->next->next;
 			else
 				break;
 		}
-		else if (cur->next && cur->next->type == PIPE)
-			cur = cur->next->next; // Regular CMD → PIPE → CMD
+		else if ((*ast)->next && (*ast)->next->type == PIPE)
+			(*ast) = (*ast)->next->next;
 		else
 			break;
 	}
-	printf("%d\n", len);
-	pipe_info.size = len;
-	pipe_info.pos = 0;
 	pipe_info.last_pid = -1;
-	pipe_info.stream_line = streams_init(len);
-	*ast = cur;
+	pipe_info.stream_line = streams_init(pipe_info.size);
 	return (pipe_info);
 }
-
 
 t_stream	*streams_init(int pipeline_len)
 {

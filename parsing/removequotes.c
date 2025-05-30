@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   removequotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:58:10 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/26 23:41:08 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/30 06:39:36 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,21 +93,6 @@ t_list	*remove_quotes_from_list(t_list *lst)
 	}
 	return (ft_lstclear(&lst, free), new_lst);
 }
-
-// char	**removequotes_arr(char **arr)
-// {
-// 	int		i;
-
-// 	if (!arr)
-// 		return (NULL);
-// 	i = 0;
-// 	while (arr[i])
-// 	{
-// 		arr[i] = removequotes(arr[i]);
-// 		i++;
-// 	}
-// 	return (arr);
-// }
 
 t_list	*ft_str_to_lst(char *str, int flag)
 {

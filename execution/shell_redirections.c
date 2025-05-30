@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:26:09 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/30 05:18:31 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 06:24:39 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	*redirect_sub(t_shell *vars, t_list **ast, t_list *node)
 	fds[1] = -1;
 	fds[2] = dup(0);
 	fds[3] = dup(1);
-	ft_lstiter(node, printf);
 	vars->fds = fds;
 	if (!node || (node->type != SUBSHELL && !node->next))
 		return (fds);

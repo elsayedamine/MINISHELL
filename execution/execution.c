@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/30 05:39:57 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/30 06:13:32 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ int	execution(t_shell *vars, t_list **ast, t_list *parent)
 		{
 			g_var->exit_status = execution(vars, &(*node)->child, *node);
 			traverse_sub(vars, node);
-			return_original_std(vars);
 		}
 		else
 			(*node) = (*node)->next;
