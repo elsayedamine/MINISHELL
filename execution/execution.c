@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 06:50:51 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 06:00:45 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,7 @@ int	execution(t_shell *vars, t_list **ast, t_list *parent)
 	{
 		if ((*node) && (*node)->type == CMD && \
 			(!(*node)->next || (*node)->next->type <= AND))
-			g_var->exit_status = (g_var->fst_cmd != -1) * \
-			execute_cmd(vars, node) + g_var->exit_status * \
-			(g_var->fst_cmd == -1);
+			g_var->exit_status = (g_var->fst_cmd != -1) * execute_cmd(vars, node) + g_var->exit_status * (g_var->fst_cmd == -1);
 		else if (is_valid_pipex(node))
 			g_var->exit_status = pipex(vars, node);
 		else if ((*node) && (*node)->type == SUBSHELL)
