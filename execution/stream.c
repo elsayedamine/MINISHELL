@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 22:35:54 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/30 05:22:11 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 05:57:52 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,12 @@ void	stream2io(t_stream *stream)
 		dup2(stream->write, STDOUT_FILENO);
 		close(stream->write);
 	}
+}
+
+int	is_valid_pipex(t_list **node)
+{
+	return ((*node) && ((*node)->type == CMD || \
+	((*node)->type == SUBSHELL && (((*node)->next && \
+	(*node)->next->next && (*node)->next->next->type == PIPE) || \
+	((*node)->next && (*node)->next->type == PIPE)))));
 }

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 19:25:11 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 01:01:47 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 06:06:34 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 void	skip(t_list **node, int op)
 {
+	if (g_var->fst_cmd == -1)
+	{
+		(*node) = (*node)->next->next;
+		return ;
+	}
 	while (*node && (*node)->next && (*node)->type != !op)
 		*node = (*node)->next;
 	if ((*node)->type == SUBSHELL || \

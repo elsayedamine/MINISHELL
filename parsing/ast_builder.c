@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 02:20:13 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 02:20:25 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 03:32:20 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,27 @@
 
 t_list	*ast_builder(t_list **cursor)
 {
-	t_list	*node;
-	t_list	*sub;
-	char	*content;
+	t_ast	ast;
 
-	node = NULL;
+	ast.node = NULL;
 	while (*cursor)
 	{
-		content = (char *)(*cursor)->content;
-		if (!ft_strcmp(content, "("))
+		ast.content = (char *)(*cursor)->content;
+		if (!ft_strcmp(ast.content, "("))
 		{
 			(*cursor) = (*cursor)->next;
-			sub = create_node(NULL);
-			sub->child = ast_builder(cursor);
-			ft_lstadd_back(&node, sub);
+			ast.sub = create_node(NULL);
+			ast.sub->child = ast_builder(cursor);
+			ft_lstadd_back(&ast.node, ast.sub);
 		}
-		else if (!ft_strcmp(content, ")"))
-			return ((*cursor) = (*cursor)->next, node);
+		else if (!ft_strcmp(ast.content, ")"))
+			return ((*cursor) = (*cursor)->next, ast.node);
 		else
 		{
-			ft_lstadd_back(&node, create_node(alloc(0, ft_strdup(content), 0)));
+			ft_lstadd_back(&ast.node, \
+				create_node(alloc(0, ft_strdup(ast.content), 0)));
 			(*cursor) = (*cursor)->next;
 		}
 	}
-	return (node);
+	return (ast.node);
 }

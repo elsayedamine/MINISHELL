@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 23:15:45 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 01:00:56 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 05:19:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int	traverse_pipie(t_list **ast)
 	{
 		if ((*ast)->next->next && (*ast)->next->next->type == PIPE)
 			(*ast) = (*ast)->next->next->next;
-		else
-			(*ast) = (*ast)->next;
+		return (FALSE);
 	}
 	else if ((*ast)->next && (*ast)->next->type == PIPE)
 		(*ast) = (*ast)->next->next;
@@ -56,13 +55,16 @@ t_pipe	create_pipeline(t_list **ast)
 	ft_init(2, &pipe_info.size, &pipe_info.pos);
 	while ((*ast))
 	{
-		if ((*ast)->type == CMD || (*ast)->type == SUBSHELL)
+		if (((*ast)->type == CMD || (*ast)->type == SUBSHELL))
 		{
 			pipe_node(&pipe_info.pipeline, (*ast));
 			pipe_info.size++;
 		}
-		if ((*ast)->type == SUBSHELL && traverse_pipie(ast) == FALSE)
-			break ;
+		if ((*ast)->type == SUBSHELL)
+		{
+			if (traverse_pipie(ast) == FALSE)
+				break ;
+		}
 		else if ((*ast)->next && (*ast)->next->type == PIPE)
 			(*ast) = (*ast)->next->next;
 		else

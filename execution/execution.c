@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 02:27:57 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 06:00:45 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,15 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		signal(SIGINT, foo);
-		if (WIFEXITED(status))
+		if (WIFEXITED(status) && g_var->fst_cmd != -1)
 			g_var->exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 		{
-			g_var->exit_status = 128 + WTERMSIG(status);
+			g_var->exit_status = 130;
 			write(1, "\n", 1);
 		}
 	}
-	return (process_cmd(vars, ast, 1));
+	return (process_cmd(vars, ast, 1), g_var->exit_status);
 }
 
 int	execution(t_shell *vars, t_list **ast, t_list *parent)
@@ -110,27 +110,18 @@ int	execution(t_shell *vars, t_list **ast, t_list *parent)
 	{
 		if ((*node) && (*node)->type == CMD && \
 			(!(*node)->next || (*node)->next->type <= AND))
-			g_var->exit_status = execute_cmd(vars, node);
-		else if ((*node) && ((*node)->type == CMD || \
-		((*node)->type == SUBSHELL && (((*node)->next && \
-		(*node)->next->next && (*node)->next->next->type == PIPE) || \
-		((*node)->next && (*node)->next->type == PIPE)))))
+			g_var->exit_status = (g_var->fst_cmd != -1) * execute_cmd(vars, node) + g_var->exit_status * (g_var->fst_cmd == -1);
+		else if (is_valid_pipex(node))
 			g_var->exit_status = pipex(vars, node);
 		else if ((*node) && (*node)->type == SUBSHELL)
 		{
 			g_var->exit_status = execution(vars, &(*node)->child, *node);
-			return_original_std(vars);
 			traverse_sub(vars, node);
 		}
 		else
 			(*node) = (*node)->next;
 		vars->redir = NULL;
+		g_var->fst_cmd = 0;
 	}
 	return (return_original_std(vars), g_var->exit_status);
 }
-	
-// ls || (ls | ls | ls && ls) || ls && ls
-// p (char *)node->content
-// ls && (ls -l && ls -a || asasd||ASDSA||ASD && touch a) && touch ls
-//(ls && (echo A || (echo B && echo C))) || ((echo D && echo E) 
-// && (echo F || echo G)) && (echo H || (echo I && (echo J || echo K)))

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 02:54:13 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 05:58:00 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct s_sig
 {
 	int		flag;
 	int		exit_status;
+	int		fst_cmd;
 }			t_sig;
 
 typedef struct s_check
@@ -139,6 +140,13 @@ typedef struct s_err
 	int		errn;
 	char	*str;
 }			t_err;
+
+typedef struct s_ast
+{
+	t_list	*node;
+	t_list	*sub;
+	char	*content;	
+}			t_ast;
 
 // Main shell structure
 typedef struct s_shell
@@ -253,6 +261,7 @@ int			execute_cmd(t_shell *vars, t_list **ast);
 int			check_builts(char **arr, t_shell *vars, int i);
 int			checks(t_shell *vars, t_list **ast, char **cmd);
 int			process_cmd(t_shell *vars, t_list **ast, int flag);
+int			is_valid_pipex(t_list **node);
 
 /*---------------------------- REIRECTIONS ----------------------------*/
 
@@ -265,7 +274,6 @@ void		return_original_std(t_shell *vars);
 int			*redirect_sub(t_shell *vars, t_list **ast, t_list *node);
 int			open_files(t_shell *vars);
 void		clean_heredoc(t_shell *vars);
-
 
 /*---------------------------- PIPELINE ----------------------------*/
 
