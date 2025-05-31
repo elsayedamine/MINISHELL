@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 22:22:53 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 02:27:36 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,32 +68,6 @@ int	validater(t_shell *vars)
 	return (TRUE);
 }
 
-// void	print_ast(t_list *node, int depth)
-// {
-// 	while (node)
-// 	{
-// 		for (int i = 0; i < depth; i++)
-// 			printf("	");
-// 		if (node->content)
-// 			printf("- %s\n", (char *)node->content);
-// 		else
-// 			printf("- (group)\n");
-// 		if (node->arr)
-// 		{
-// 			printf("	Array elements:\n");
-// 			for (int i = 0; node->arr[i] != NULL; i++)
-// 			{
-// 				for (int j = 0; j < depth + 1; j++)
-// 					printf("	");
-// 				printf("- %s\n", node->arr[i]);
-// 			}
-// 		}
-// 		if (node->child)
-// 			print_ast(node->child, depth + 1);
-// 		node = node->next;
-// 	}
-// }
-
 int	fill_args(t_shell *vars)
 {
 	char	*token;
@@ -101,6 +75,8 @@ int	fill_args(t_shell *vars)
 	if (validater(vars) == FALSE)
 		return (FALSE);
 	vars->args = NULL;
+	ft_lstadd_front(&vars->args, create_node(alloc(0, ft_strdup("&&"), 0)));
+	ft_lstadd_front(&vars->args, create_node(alloc(0, ft_strdup("true"), 0)));
 	token = alloc(0, tokenizer(vars->cmd, "'\"()|&"), 0);
 	while (token)
 	{
@@ -113,32 +89,4 @@ int	fill_args(t_shell *vars)
 	vars->tmp = vars->args;
 	vars->ast = ast_builder(&vars->tmp);
 	return (TRUE);
-}
-
-t_list	*ast_builder(t_list **cursor)
-{
-	t_list	*node;
-	t_list	*sub;
-	char	*content;
-
-	node = NULL;
-	while (*cursor)
-	{
-		content = (char *)(*cursor)->content;
-		if (!ft_strcmp(content, "("))
-		{
-			(*cursor) = (*cursor)->next;
-			sub = create_node(NULL);
-			sub->child = ast_builder(cursor);
-			ft_lstadd_back(&node, sub);
-		}
-		else if (!ft_strcmp(content, ")"))
-			return ((*cursor) = (*cursor)->next, node);
-		else
-		{
-			ft_lstadd_back(&node, create_node(alloc(0, ft_strdup(content), 0)));
-			(*cursor) = (*cursor)->next;
-		}
-	}
-	return (node);
 }

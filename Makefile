@@ -6,6 +6,7 @@ lib = $(LIB_DIR)/libft.a
 
 sources = \
 		main.c \
+		parsing/ast_builder.c \
 		parsing/fill_args.c \
 		parsing/ft_isvalid.c \
 		parsing/removequotes.c \
