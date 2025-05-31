@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 23:15:45 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 05:19:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 06:31:27 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ int	traverse_pipie(t_list **ast)
 	{
 		if ((*ast)->next->next && (*ast)->next->next->type == PIPE)
 			(*ast) = (*ast)->next->next->next;
-		return (FALSE);
+		else
+		{
+			(*ast) = (*ast)->next;
+			return (FALSE);
+		}
 	}
 	else if ((*ast)->next && (*ast)->next->type == PIPE)
 		(*ast) = (*ast)->next->next;
