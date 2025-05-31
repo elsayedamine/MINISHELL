@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 05:26:59 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 02:43:44 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 02:55:43 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ int	open_file(t_redir *r, char **filename)
 		dup = dup2(r->fd, STDOUT);
 	if (dup == -1)
 		return (perror("dup2"), close(r->fd), FALSE);
-	if (r->mode == HEREDOC)
-		unlink(r->target);
 	close(r->fd);
 	return (TRUE);
 }
