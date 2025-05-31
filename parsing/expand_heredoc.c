@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 22:31:56 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 22:32:05 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 02:52:51 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,18 @@ char	*expand_heredoc_line(t_shell *vars, char **str)
 	free(*str);
 	new = ft_lst2str(lst);
 	return (ft_lstclear(&lst, free), new);
+}
+
+void	clean_heredoc(t_shell *vars)
+{
+	t_list	*tmp;
+	t_redir	*r;
+
+	tmp = vars->hd;
+	while (tmp)
+	{
+		r = (t_redir *)tmp->content;
+		unlink(r->target);
+		tmp = tmp->next;
+	}
 }

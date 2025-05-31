@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 00:43:25 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 02:54:13 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ typedef struct s_shell
 	char		*cmd_not_found;
 	char		*pwd;
 	t_list		*heredoc;
+	t_list		*hd;
 	t_list		*env;
 	t_list		*args;
 	t_list		*tmp;
@@ -263,6 +264,8 @@ int			open_file(t_redir *r, char **filename);
 void		return_original_std(t_shell *vars);	
 int			*redirect_sub(t_shell *vars, t_list **ast, t_list *node);
 int			open_files(t_shell *vars);
+void		clean_heredoc(t_shell *vars);
+
 
 /*---------------------------- PIPELINE ----------------------------*/
 

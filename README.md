@@ -51,16 +51,9 @@ check exit_ status of builts
 minishell$ << $''a
 > 
 
-```
-```bash
-minishell$ (cat | wc -l )|grep a > p | ls
-built-ins  execution  garbage  libft  main.c  Makefile	minishell  minishell.h	p  parsing  readline.supp  README.md  testcases  test.sh
-^Cminishell$ (cat | wc -l )|grep a > p | ls
-```
-
 ```bash
 minishell$ bash
-aelsayed@c3r9p1:~/Desktop/minishel$ << e"f" | asdd aSD|ASD ASD}ASD| (ls << e"  "f-l ) << e""""""""''f
+aelsayed@c3r9p1:~/Desktop/minishel$ 
 > 
 bash: warning: here-document at line 1 delimited by end-of-file (wanted `ef')
 > 

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 10:29:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 00:20:57 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 02:47:51 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int	process_heredocs(t_shell *vars)
 		}
 		vars->tmp = vars->tmp->next;
 	}
+	vars->hd = heredocs;
 	vars->heredoc = heredocs;
 	return (TRUE);
 }
