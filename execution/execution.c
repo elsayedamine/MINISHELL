@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/30 22:25:10 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 01:29:32 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	execution(t_shell *vars, t_list **ast, t_list *parent)
 	t_list	**node;
 
 	node = ast;
+	// (ls) > p && ls
 	redirect_sub(vars, ast, parent);
 	while (*node)
 	{
@@ -125,9 +126,10 @@ int	execution(t_shell *vars, t_list **ast, t_list *parent)
 			(*node) = (*node)->next;
 		vars->redir = NULL;
 	}
+	printfd(2, "-----------------\n");
 	return (return_original_std(vars), g_var->exit_status);
 }
-
+	
 // ls || (ls | ls | ls && ls) || ls && ls
 // p (char *)node->content
 // ls && (ls -l && ls -a || asasd||ASDSA||ASD && touch a) && touch ls

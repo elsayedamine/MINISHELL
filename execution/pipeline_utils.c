@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 23:15:45 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/30 22:25:40 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 01:00:56 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,25 +97,26 @@ int	wait_child_processes(t_pipe *pipe)
 {
 	int		status;
 	int		last_status;
+	int		sigint_flag;
 	pid_t	wait_pid;
 
-	last_status = 0;
+	ft_init(2, &last_status, &sigint_flag);
 	while (1)
 	{
 		wait_pid = wait(&status);
 		if (wait_pid == -1)
 			break ;
+		if (WIFSIGNALED(status))
+		{
+			if (WTERMSIG(status) == SIGINT)
+				sigint_flag = 1;
+		}
 		if (wait_pid == pipe->last_pid)
 			last_status = status;
 	}
-	if (errno == EINTR)
-		return (130);
+	if (errno == EINTR || sigint_flag)
+		return (write(1, "\n", 1), g_var->exit_status = 130, 130);
 	if (WIFEXITED(last_status))
 		return (WEXITSTATUS(last_status));
-	if (WIFSIGNALED(last_status))
-	{
-		g_var->exit_status = 128 + WTERMSIG(last_status);
-		write(1, "\n", 1);
-	}
 	return (1);
 }

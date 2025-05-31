@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 10:29:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 22:37:26 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 00:20:57 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ void	fill_heredoc(t_shell *vars, t_redir **r)
 		waitpid(pid, &status, 0);
 		signal(SIGINT, foo);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+		{
+			write(1, "\n", 1);
 			*r = NULL;
+		}
 		g_var->exit_status = WEXITSTATUS(status);
 	}
 }

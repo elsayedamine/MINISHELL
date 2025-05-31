@@ -70,15 +70,6 @@ bash: warning: here-document at line 1 delimited by end-of-file (wanted `ef')
 built-ins  execution  libft  main.c  Makefile  minishell  minishell.h  parsing	readline.supp  README.md  testcases  test.sh
 ASD: command not found
 Command 'asdd' not found, did you mean:
-  command 'ssdd' from deb rt-tests (2.2-1)
-  command 'wsdd' from deb wsdd (2:0.7.0-1)
-  command 'ascd' from deb ascd (0.13.2-7)
-Try: apt install <deb name>
-aelsayed@c3r9p1:~/Desktop/minishel$ make
-./m	Minishell Compiled Successfully! ✅
-aelsayed@c3r9p1:~/Desktop/minishel$ ./minishell 
-minishell$ << e"f" | asdd aSD|ASD ASD}ASD| (ls << e"  "f'-l ) << e""""""""''f
-Minishell: syntax error near unexpected token `newline'
 minishell$ << e"f" | asdd aSD|ASD ASD}ASD| (ls << e"  "f-l ) << e""""""""''f
 > 
 Minishell: warning: here-document at line 2 delimited by end-of-file (wanted `ef')
@@ -95,3 +86,7 @@ minishell$
 ```bash
 handle eof and redirect exit msg into the STDERR
 ``` 
+
+```bash
+MAkefile
+```

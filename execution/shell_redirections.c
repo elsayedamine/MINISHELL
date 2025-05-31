@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:26:09 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/30 22:26:23 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 01:58:40 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ int	*apply_redirect_shell(t_shell *vars)
 	t_list	*tmp;
 	char	*expanded;
 
-	vars->fds[0] = dup(STDIN);
-	vars->fds[1] = dup(STDOUT);
-	if (vars->fds[0] == -1 || vars->fds[1] == -1)
+	if (vars->fds[2] == -1 || vars->fds[3] == -1)
 		return (perror("dup"), NULL);
 	tmp = vars->redir;
 	while (tmp)
@@ -51,11 +49,11 @@ int	*apply_redirect_shell(t_shell *vars)
 		r = (t_redir *)tmp->content;
 		expanded = alloc(0, ft_strdup(r->target), 0);
 		if (r->mode != HEREDOC && expand_target(vars, &expanded) == FALSE)
-			return (perform_dups(vars->fds[0], vars->fds[1]), \
+			return (perform_dups(vars->fds[2], vars->fds[3]), \
 				vars->fds = NULL, NULL);
 		if (open_file(r, &expanded) == FALSE)
 			return (g_var->exit_status = 1, \
-					perform_dups(vars->fds[0], vars->fds[1]), \
+					perform_dups(vars->fds[2], vars->fds[3]), \
 						vars->fds = NULL, NULL);
 		tmp = tmp->next;
 	}
@@ -72,8 +70,8 @@ int	*redirect_sub(t_shell *vars, t_list **ast, t_list *node)
 		return (NULL);
 	fds[0] = -1;
 	fds[1] = -1;
-	fds[2] = dup(0);
-	fds[3] = dup(1);
+	fds[2] = dup(STDIN);
+	fds[3] = dup(STDOUT);
 	vars->fds = fds;
 	if (!node || (node->type != SUBSHELL && !node->next))
 		return (fds);
