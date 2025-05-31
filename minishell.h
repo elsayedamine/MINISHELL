@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 05:58:00 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 06:43:55 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ int			process_heredocs(t_shell *vars);
 t_redir		*get_heredoc_node(t_shell *vars);
 
 /* Expansion */
-char		**split_list(t_list *lst, char sep);
+char		**split_list(t_list *lst, char *sep);
 void		expand(t_shell *vars, char **str, char ***arr);
 char		**wildcard(char *pattern);
 int			append(t_list **s, char c, int type);

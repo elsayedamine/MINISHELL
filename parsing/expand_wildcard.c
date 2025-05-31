@@ -6,24 +6,24 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:18:12 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 22:23:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 06:48:47 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	handle_quotes(char *quote, char c, char sep, int type)
+int	handle_quotes(char *quote, char c, char *sep, int type)
 {
 	if (!type && c == *quote && *quote)
 		*quote = 0;
 	else if (!type && (c == '\'' || c == '"') && !*quote)
 		*quote = c;
-	else if (!*quote && c == sep)
+	else if (!*quote && ft_strchr(sep, c))
 		return (TRUE);
 	return (FALSE);
 }
 
-int	*extract_pattern(char *str, int index, char sep, t_list *s)
+int	*extract_pattern(char *str, int index, char *sep, t_list *s)
 {
 	int		*borders;
 	char	quote;
@@ -57,7 +57,7 @@ int	extract_wildcard(char *str, t_list **new, int index, t_list *s)
 	int		size;
 
 	size = ft_lstsize(*new);
-	wd.b = extract_pattern(str, index, ' ', s);
+	wd.b = extract_pattern(str, index, WHITE, s);
 	if (!wd.b)
 		return (0);
 	wd.pattern = removequotes(alloc(0, \
@@ -84,7 +84,7 @@ int	canbexpanded(char *str, int i)
 {
 	if (!ft_strncmp(str, "export ", 7))
 	{
-		while (i > 0 && str[i] != ' ' && str[i] != '=')
+		while (i > 0 && ft_strchr(WHITE, str[i]) && str[i] != '=')
 			i--;
 		if (str[i] == '=')
 			return (FALSE);

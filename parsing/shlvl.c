@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:55:06 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/29 22:20:00 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/05/31 06:42:07 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_atoishell(char *str)
 	n = 0;
 	if (!str)
 		return (1);
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+	while (ft_strchr(WHITE, str[i]) || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (sign++ && (str[i] == '-' || str[i] == '+'))
 		if (str[i++] == '-')

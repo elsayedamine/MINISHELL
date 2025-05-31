@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:58:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/25 13:41:40 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/05/31 06:47:06 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	handle_quote(char *quote, t_list **chunk, char *c, t_list *n)
 {
 	if (!*quote)
 		*quote = *c;
-	else if (*quote == *c && ((n && *(char *)(*n).content == ' ' ) || !n))
+	else if (*quote == *c && ((n && \
+		ft_strchr(WHITE, *(char *)(*n).content)) || !n))
 	{
 		*quote = 0;
 		ft_lstadd_back(chunk, ft_lstnew(ft_strdup("\0")));
@@ -40,18 +41,18 @@ void	handle_quote(char *quote, t_list **chunk, char *c, t_list *n)
 		ft_lstadd_back(chunk, ft_lstnew(ft_strdup(c)));
 }
 
-void	split_space(t_list **chunk, t_list **new, t_list **lst, char sep)
+void	split_space(t_list **chunk, t_list **new, t_list **lst, char *sep)
 {
 	if (chunk && *chunk)
 	{
 		ft_lstadd_back(new, ft_lstnew(ft_lst2str(*chunk)));
 		ft_lstclear(chunk, free);
 	}
-	while ((*lst)->next && *(char *)(*lst)->next->content == sep)
+	while ((*lst)->next && ft_strchr(sep, *(char *)(*lst)->next->content))
 		(*lst) = (*lst)->next;
 }
 
-t_list	*create_list(t_list *lst, char sep)
+t_list	*create_list(t_list *lst, char *sep)
 {
 	char	quote;
 	t_list	*new;
@@ -64,7 +65,7 @@ t_list	*create_list(t_list *lst, char sep)
 	{
 		if (lst->type != 1 && ft_strchr("'\"", *(char *)lst->content))
 			handle_quote(&quote, &chunk, lst->content, lst->next);
-		else if (!quote && *(char *)lst->content == sep)
+		else if (!quote && ft_strchr(WHITE, *(char *)lst->content))
 			split_space(&chunk, &new, &lst, sep);
 		else
 			ft_lstadd_back(&chunk, ft_lstnew(ft_strdup((char *)lst->content)));
@@ -75,7 +76,7 @@ t_list	*create_list(t_list *lst, char sep)
 	return (ft_lstclear(&chunk, free), new);
 }
 
-char	**split_list(t_list *lst, char sep)
+char	**split_list(t_list *lst, char *sep)
 {
 	char	**arr;
 	t_list	*new;
