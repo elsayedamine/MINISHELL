@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:08 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 05:50:50 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/06/01 13:43:29 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ int	main(int ac, char **av, char **envp)
 	t_shell		vars;
 
 	(void)av;
-	g_var = (t_sig *)alloc(sizeof(t_sig), NULL, 'M');
 	if (ac != 1 || !envp)
 		return (EXIT_FAILURE);
+	g_var = (t_sig *)alloc(sizeof(t_sig), NULL, 'M');
 	vars.envp = ft_arrdup(envp);
 	if (!*vars.envp)
 		ft_nullenv(&vars);
