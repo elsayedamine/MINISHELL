@@ -101,5 +101,5 @@ minishell/
 
 ## 👤 Authors
 
-- **Amine ELSAYED** ([@aelsayed1337](https://github.com/aelsayed1337))
+- **Amine ELSAYED** ([@elsayedamine](https://github.com/aelsayed1337))
 - **Aziz HAKKI** ([@a-hakki](https://github.com/aelsayed1337))
