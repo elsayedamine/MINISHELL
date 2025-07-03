@@ -6,36 +6,11 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:12:24 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 06:50:51 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/03 09:46:43 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	process_cmd(t_shell *vars, t_list **ast, int flag)
-{
-	int	is_builtin;
-
-	if (flag == 0)
-	{
-		extract_redirections(vars, (char **)&((*ast)->content));
-		expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
-		is_builtin = check_builts((*ast)->arr, vars, 0);
-		if (is_builtin == INVALID_BUILT || is_builtin == VALID_BUILT)
-			return (skip(ast, is_builtin % 2), is_builtin);
-		if (is_builtin == NOT_BUILT)
-			return (is_builtin);
-	}
-	else if (flag == 1)
-	{
-		if (g_var->exit_status == 0)
-			skip(ast, OR);
-		else
-			traverse_sub(vars, ast);
-		return (g_var->exit_status);
-	}
-	return (1);
-}
 
 int	checks(t_shell *vars, t_list **ast, char **cmd)
 {
@@ -66,11 +41,21 @@ int	checks(t_shell *vars, t_list **ast, char **cmd)
 void	child_cmd(t_shell *vars, t_list **ast, char *cmd)
 {
 	signal(SIGINT, clear);
+	signal(SIGQUIT, clear);
 	if (apply_redirections(vars) == -1)
 		clear(0);
 	execve(cmd, (*ast)->arr, vars->envp);
 	g_var->exit_status = exit_execve(cmd, vars, ast);
 	clear(0);
+}
+
+void	set_signals(int *status, pid_t pid)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	waitpid(pid, status, 0);
+	signal(SIGINT, foo);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 int	execute_cmd(t_shell *vars, t_list **ast)
@@ -86,15 +71,17 @@ int	execute_cmd(t_shell *vars, t_list **ast)
 		child_cmd(vars, ast, cmd);
 	else
 	{
-		signal(SIGINT, SIG_IGN);
-		waitpid(pid, &status, 0);
-		signal(SIGINT, foo);
+		set_signals(&status, pid);
 		if (WIFEXITED(status) && g_var->fst_cmd != -1)
 			g_var->exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 		{
-			g_var->exit_status = 130;
-			write(1, "\n", 1);
+			if (WTERMSIG(status) == SIGINT)
+				write(1, "\n", 1);
+			else if (WTERMSIG(status) == SIGQUIT)
+				write(2, "Quit (core dumped)\n", 19);
+			if (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT)
+				g_var->exit_status = 128 + WTERMSIG(status);
 		}
 	}
 	return (process_cmd(vars, ast, 1), g_var->exit_status);

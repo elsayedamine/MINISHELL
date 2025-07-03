@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 09:42:43 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 05:44:28 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/03 09:17:55 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,13 @@ pid_t	execute_pipe(t_shell *vars, t_pipe *pipe, int index)
 	else if (pid > 0)
 	{
 		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		if (index == pipe->size - 1)
 			signal(SIGINT, foo);
 		return (pid);
 	}
 	signal(SIGINT, clear);
+	signal(SIGQUIT, SIG_DFL);
 	stream2io(&pipe->stream_line[index]);
 	if (index != pipe->size - 1)
 		shut_stream(&pipe->stream_line[index + 1]);

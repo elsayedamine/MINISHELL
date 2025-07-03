@@ -27,7 +27,7 @@ This project strengthens skills in:
 - ✅ Redirections: `<`, `>`, `>>`, `<<` (heredoc)
 - ✅ Piping with `|`
 - ✅ Quote handling (`'`, `"`) with proper parsing
-- ✅ Signal management (e.g., `Ctrl-C`, `Ctrl-\`)
+- ✅ Signal management (e.g., `Ctrl-C`, `Ctrl-\`, in interactive/shell mode)
 - ✅ Error handling (syntax and execution)
 - ✅ Exit status propagation
 
@@ -39,11 +39,9 @@ This project strengthens skills in:
 - Wildcard expansion (*)
 - Subshells: (...)
 - Logical operators: &&, ||
-- Command grouping with {} or (...)
 - History handling (using readline)
 - Line editing (readline handles this)
 - Custom builtins (e.g., help or clear)
-- 
 
 ## 🔧 Installation & Usage
 
@@ -94,7 +92,9 @@ minishell/
 ├── parsing/        # Tokenizer and syntax parser
 ├── execution/      # Command execution & redirection
 ├── builtins/      # Built-in commands
-└── Makefile
+├── main.c
+├── Makefile
+└── minishell.h
 ```
 
 ---

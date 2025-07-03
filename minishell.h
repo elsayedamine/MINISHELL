@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:18:16 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/31 06:43:55 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/03 09:06:40 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,6 +262,7 @@ int			check_builts(char **arr, t_shell *vars, int i);
 int			checks(t_shell *vars, t_list **ast, char **cmd);
 int			process_cmd(t_shell *vars, t_list **ast, int flag);
 int			is_valid_pipex(t_list **node);
+int			process_cmd(t_shell *vars, t_list **ast, int flag);
 
 /*---------------------------- REIRECTIONS ----------------------------*/
 

@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahakki <ahakki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 22:07:20 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/05/26 21:17:41 by ahakki           ###   ########.fr       */
+/*   Updated: 2025/07/03 09:06:21 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	process_cmd(t_shell *vars, t_list **ast, int flag)
+{
+	int	is_builtin;
+
+	if (flag == 0)
+	{
+		extract_redirections(vars, (char **)&((*ast)->content));
+		expand(vars, (char **)&((*ast)->content), &((*ast)->arr));
+		is_builtin = check_builts((*ast)->arr, vars, 0);
+		if (is_builtin == INVALID_BUILT || is_builtin == VALID_BUILT)
+			return (skip(ast, is_builtin % 2), is_builtin);
+		if (is_builtin == NOT_BUILT)
+			return (is_builtin);
+	}
+	else if (flag == 1)
+	{
+		if (g_var->exit_status == 0)
+			skip(ast, OR);
+		else
+			traverse_sub(vars, ast);
+		return (g_var->exit_status);
+	}
+	return (1);
+}
 
 void	store_err(t_shell *vars, int err, char *str)
 {

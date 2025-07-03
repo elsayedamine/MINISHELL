@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:49:07 by ahakki            #+#    #+#             */
-/*   Updated: 2025/05/29 22:20:39 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/03 09:17:02 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,7 @@ void	clear(int sig)
 {
 	if (sig == 2)
 		g_var->exit_status = 130;
+	if (sig == 3)
+		g_var->exit_status = 131;
 	alloc(0, NULL, 'F');
 }
